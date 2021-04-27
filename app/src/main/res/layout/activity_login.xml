@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.LoginActivity">
+
+    <FrameLayout
+        android:id="@+id/loginHeaderFrame"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/loginHeaderBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/image"
+            android:scaleType="fitXY"
+            android:src="@drawable/background" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/splashLogo"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:contentDescription="@string/image"
+                android:src="@drawable/stop_n_shop_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.30" />
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/splashTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/splashTitle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_25sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/splashLogo"
+                app:layout_constraintHorizontal_bias="0.35"
+                app:layout_constraintStart_toStartOf="@+id/splashLogo"
+                app:layout_constraintTop_toTopOf="@+id/splashLogo"
+                app:layout_constraintVertical_bias="0.75" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/SNSTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="@string/login"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginHeaderFrame" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginEmailInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_20sdp"
+        android:hint="@string/email"
+        app:boxStrokeColor="@color/primaryColor"
+        app:hintTextAppearance="@style/TextLabel"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SNSTextView"
+        app:startIconDrawable="@drawable/email">
+
+        <com.macode.stopnshop.utilities.SNSEditText
+            android:id="@+id/loginEmailEditInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/_16sdp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginPasswordInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_20sdp"
+        android:hint="@string/password"
+        app:boxStrokeColor="@color/primaryColor"
+        app:hintTextAppearance="@style/TextLabel"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/loginEmailInput"
+        app:layout_constraintStart_toStartOf="@+id/loginEmailInput"
+        app:layout_constraintTop_toBottomOf="@+id/loginEmailInput"
+        app:startIconDrawable="@drawable/password">
+
+        <com.macode.stopnshop.utilities.SNSEditText
+            android:id="@+id/loginPasswordEditInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/_16sdp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/loginForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:text="@string/forgotPassword"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/loginPasswordInput"
+        app:layout_constraintTop_toBottomOf="@+id/loginPasswordInput" />
+
+    <com.macode.stopnshop.utilities.SNSButton
+        android:id="@+id/loginButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/button_background"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="@+id/loginPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/loginPasswordInput"
+        app:layout_constraintTop_toBottomOf="@+id/loginForgotPassword" />
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/dontHaveAnAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:text="@string/dontHaveAnAccount"
+        android:textStyle="italic"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toStartOf="@+id/register"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="@string/register"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dontHaveAnAccount"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
