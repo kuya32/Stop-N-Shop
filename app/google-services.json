@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "341561953533",
+    "project_id": "stop-n-shop-16a32",
+    "storage_bucket": "stop-n-shop-16a32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341561953533:android:cdd5fe8fcd6b17571d0294",
+        "android_client_info": {
+          "package_name": "com.macode.stopnshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341561953533-br3s37mlht7hmeai8l6ucdmhkhq9cdd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjwNIDathniniCVPtD_RG7EquNBOfdMA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341561953533-br3s37mlht7hmeai8l6ucdmhkhq9cdd7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
