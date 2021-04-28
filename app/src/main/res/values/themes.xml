@@ -21,7 +21,6 @@
     </style>
 
     <style name="CustomNoActionBarTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/primaryDarkColor</item>
     </style>
 

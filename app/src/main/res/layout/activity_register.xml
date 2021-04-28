@@ -7,14 +7,28 @@
     android:background="@drawable/background"
     tools:context=".view.activities.RegisterActivity">
 
+    <include
+        android:id="@+id/registerToolbar"
+        layout="@layout/main_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/registerCardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:backgroundTint="@color/primaryUltraLightColor"
-        android:layout_margin="@dimen/_20sdp"
+        android:elevation="@dimen/_20sdp"
         app:cardCornerRadius="@dimen/_20sdp"
-        android:elevation="@dimen/_20sdp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerToolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,12 +38,12 @@
                 android:id="@+id/createAnAccount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:gravity="center"
                 android:text="@string/createAnAccount"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
-                android:layout_margin="@dimen/_20sdp"
-                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +53,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_15sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:hint="@string/firstName"
                 app:boxStrokeColor="@color/primaryColor"
                 app:hintTextAppearance="@style/TextLabel"
@@ -63,7 +77,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_15sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:hint="@string/lastName"
                 app:boxStrokeColor="@color/primaryColor"
                 app:hintTextAppearance="@style/TextLabel"
@@ -87,7 +101,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_15sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:hint="@string/email"
                 app:boxStrokeColor="@color/primaryColor"
                 app:hintTextAppearance="@style/TextLabel"
@@ -111,7 +125,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_15sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:hint="@string/password"
                 app:boxStrokeColor="@color/primaryColor"
                 app:hintTextAppearance="@style/TextLabel"
@@ -135,8 +149,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_15sdp"
-                android:hint="@string/password"
+                android:layout_margin="@dimen/_10sdp"
+                android:hint="@string/confirmPassword"
                 app:boxStrokeColor="@color/primaryColor"
                 app:hintTextAppearance="@style/TextLabel"
                 app:hintTextColor="@color/black"
@@ -154,6 +168,78 @@
                     android:textSize="@dimen/_16sdp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/termsAndConditionsLinear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/registerConfirmPasswordInput"
+                app:layout_constraintStart_toStartOf="@+id/registerConfirmPasswordInput"
+                app:layout_constraintTop_toBottomOf="@+id/registerConfirmPasswordInput">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/termsAndConditionsCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primaryDarkColor"
+                    android:checked="false" />
+
+                <com.macode.stopnshop.utilities.SNSTextView
+                    android:id="@+id/termsAndConditionsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:text="@string/iAgreeToTerms"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+            <com.macode.stopnshop.utilities.SNSButton
+                android:id="@+id/registerButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/button_background"
+                android:text="@string/register"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/registerConfirmPasswordInput"
+                app:layout_constraintStart_toStartOf="@+id/registerConfirmPasswordInput"
+                app:layout_constraintTop_toBottomOf="@+id/termsAndConditionsLinear" />
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/alreadyHaveAnAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:text="@string/alreadyHaveAnAccount"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/login"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:text="@string/login"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/alreadyHaveAnAccount"
+                app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

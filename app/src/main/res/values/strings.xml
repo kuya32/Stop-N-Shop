@@ -11,4 +11,7 @@
     <string name="createAnAccount">Create an account</string>
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
+    <string name="iAgreeToTerms"><![CDATA[I Agree To The Terms & Conditions]]></string>
+    <string name="alreadyHaveAnAccount">Already have an account?</string>
+    <string name="confirmPassword">Confirm Password</string>
 </resources>
