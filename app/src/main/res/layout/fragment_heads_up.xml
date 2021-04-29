@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_2"
+    tools:context=".view.fragments.HeadsUpFragment">
+
+    <ImageView
+        android:id="@+id/headsUpImage"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_300sdp"
+        android:layout_marginTop="@dimen/_65sdp"
+        android:src="@drawable/heads_up"
+        android:contentDescription="@string/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/headsUpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_265sdp"
+        android:text="@string/beforeYouStart"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/headsUpImage"
+        app:layout_constraintStart_toStartOf="@+id/headsUpImage"
+        app:layout_constraintTop_toTopOf="@+id/headsUpImage" />
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/headsUpDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:gravity="center"
+        android:text="@string/headsUpMessage"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/headsUpImage"
+        app:layout_constraintStart_toStartOf="@+id/headsUpImage"
+        app:layout_constraintTop_toBottomOf="@+id/headsUpTitle" />
+
+    <TextView
+        android:id="@+id/headsUpSkipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/skip"
+        android:textColor="@color/primaryColor"
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/headsUpImage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

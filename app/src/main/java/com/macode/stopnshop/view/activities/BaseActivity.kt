@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.macode.stopnshop.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -18,16 +20,21 @@ open class BaseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_base)
     }
 
+    fun getDate(): String {
+        val sdf = SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US)
+        return sdf.format(Date())
+    }
+
     fun showErrorSnackBar(message: String, errorMessage: Boolean) {
-        val snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-        val snackbarView = snackbar.view
+        val snackBar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
 
         if (errorMessage) {
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this@BaseActivity, R.color.red))
+            snackBarView.setBackgroundColor(ContextCompat.getColor(this@BaseActivity, R.color.red))
         } else {
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this@BaseActivity, R.color.green))
+            snackBarView.setBackgroundColor(ContextCompat.getColor(this@BaseActivity, R.color.green))
         }
-        snackbar.show()
+        snackBar.show()
     }
 
     fun showError(layout: TextInputLayout, message: String) {

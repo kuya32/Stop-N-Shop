@@ -15,4 +15,5 @@
     <color name="primaryUltraLightColor">#FFE6FF</color>
     <color name="green">#0ED300</color>
     <color name="red">#FF0000</color>
+    <color name="grey">#B3B3B3</color>
 </resources>
