@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseUser
@@ -102,7 +104,10 @@ class RegisterActivity : BaseActivity() {
                         user.firstName = firstName
                         user.lastName = lastName
                         user.email = email
-                        fireStoreClass.registerUser(this@RegisterActivity, user)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            fireStoreClass.registerUser(this@RegisterActivity, user)
+                        }, 1500)
+
                     } else {
                         Log.e("Registration", "Registration failure", task.exception)
                         showErrorSnackBar(task.exception!!.message.toString(), true)

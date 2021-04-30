@@ -13,10 +13,12 @@ data class User (
     var image: String = "",
     var phone: String = "",
     var location: String = "",
+    var gender: String = "",
     var fcmToken: String = "",
     var status: String = "Online"
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -40,6 +42,7 @@ data class User (
         parcel.writeString(image)
         parcel.writeString(phone)
         parcel.writeString(location)
+        parcel.writeString(gender)
         parcel.writeString(fcmToken)
         parcel.writeString(status)
     }
