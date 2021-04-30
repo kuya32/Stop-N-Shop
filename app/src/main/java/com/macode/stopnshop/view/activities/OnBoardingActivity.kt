@@ -1,5 +1,6 @@
 package com.macode.stopnshop.view.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,7 +13,7 @@ import com.macode.stopnshop.view.fragments.AppDescriptionFragment
 import com.macode.stopnshop.view.fragments.HeadsUpFragment
 import com.macode.stopnshop.view.fragments.WelcomeFragment
 
-class OnBoardingActivity : AppCompatActivity() {
+class OnBoardingActivity : BaseActivity() {
     private lateinit var binding: ActivityOnBoardingBinding
     private var position: Int = 0
 
@@ -37,7 +38,7 @@ class OnBoardingActivity : AppCompatActivity() {
 
         binding.viewPager.adapter = adapter
 
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) {tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) {_, _ ->
 
         }.attach()
 
@@ -56,7 +57,10 @@ class OnBoardingActivity : AppCompatActivity() {
         }
 
         binding.onBoardingGetStartedButton.setOnClickListener {
-
+            val intent = Intent(this@OnBoardingActivity, SetUpActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
     }
 

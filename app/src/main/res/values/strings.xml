@@ -28,4 +28,8 @@
     <string name="beforeYouStart">Before you start</string>
     <string name="getStarted">Get started</string>
     <string name="skip">Skip</string>
+    <string name="pleaseWait">Please wait...</string>
+    <string name="enterEmail">Enter email</string>
+    <string name="send">Send</string>
+    <string name="backToLogin">Back to Login</string>
 </resources>

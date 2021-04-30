@@ -3,17 +3,13 @@ package com.macode.stopnshop.view.activities
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityRegisterBinding
+import com.macode.stopnshop.model.User
 
 class RegisterActivity : BaseActivity() {
 
@@ -28,6 +24,13 @@ class RegisterActivity : BaseActivity() {
 
         binding.registerButton.setOnClickListener {
             validateRegisterDetails()
+        }
+
+        binding.login.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -86,20 +89,33 @@ class RegisterActivity : BaseActivity() {
                 showErrorSnackBar("Please agree to terms and conditions!", true)
             }
             else -> {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                showProgressDialog("Registering new user...")
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val firebaseUser: FirebaseUser = task.result!!.user!!
+                        firebaseAuth.currentUser!!.sendEmailVerification()
                         Log.i("Registration", "Registration success")
-                        Toast.makeText(this@RegisterActivity, "Registration was successful", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@RegisterActivity, OnBoardingActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
+                        showErrorSnackBar("Registration was successful. Check your email for a verification link!", false)
+                        val firebaseUser: FirebaseUser = task.result!!.user!!
+                        val user = User()
+                        user.id = firebaseUser.uid
+                        user.dateUserCreated = getDate()
+                        user.firstName = firstName
+                        user.lastName = lastName
+                        user.email = email
+                        fireStoreClass.registerUser(this@RegisterActivity, user)
                     } else {
                         Log.e("Registration", "Registration failure", task.exception)
-                        Toast.makeText(this@RegisterActivity, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
+                        showErrorSnackBar(task.exception!!.message.toString(), true)
                     }
                 }
             }
         }
+    }
+
+    fun successfulLogout() {
+        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

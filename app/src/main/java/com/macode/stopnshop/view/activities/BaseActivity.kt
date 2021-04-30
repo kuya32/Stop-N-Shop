@@ -1,11 +1,17 @@
 package com.macode.stopnshop.view.activities
 
+import android.app.Dialog
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.macode.stopnshop.R
+import com.macode.stopnshop.firebase.FireStoreClass
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,6 +21,10 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val fireStoreClass: FireStoreClass = FireStoreClass()
+    private var progressDialog: Dialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
@@ -23,6 +33,20 @@ open class BaseActivity : AppCompatActivity() {
     fun getDate(): String {
         val sdf = SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US)
         return sdf.format(Date())
+    }
+
+    fun showProgressDialog(text: String) {
+        progressDialog = Dialog(this)
+        progressDialog!!.setContentView(R.layout.custom_dialog_progress)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val progressText = progressDialog!!.requireViewById<TextView>(R.id.pleaseWaitText)
+            progressText.text = text
+        }
+        progressDialog!!.show()
+    }
+
+    fun hideProgressDialog() {
+        progressDialog?.dismiss()
     }
 
     fun showErrorSnackBar(message: String, errorMessage: Boolean) {
