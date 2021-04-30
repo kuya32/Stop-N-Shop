@@ -1,12 +1,15 @@
 package com.macode.stopnshop.firebase
 
 import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.macode.stopnshop.model.User
+import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.LoginActivity
 import com.macode.stopnshop.view.activities.RegisterActivity
 
@@ -27,11 +30,15 @@ class FireStoreClass {
 
     fun establishUser(activity: Activity) {
         userReference.document(getCurrentUserID()).get().addOnSuccessListener { document ->
-            val loggedUser = document.toObject(User::class.java)
+            val loggedUser = document.toObject(User::class.java)!!
+            val sharedPreferences = activity.getSharedPreferences(Constants.STOP_N_SHOP_PREFERENCE, Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+            editor.putString(Constants.LOGGED_IN_USERS_NAME, "${loggedUser.firstName} ${loggedUser.lastName}")
+            editor.apply()
             when (activity) {
                 is LoginActivity -> {
                     userReference.document(getCurrentUserID()).update("status", "Online").addOnSuccessListener {
-                        activity.loginSuccess(loggedUser!!)
+                        activity.loginSuccess(loggedUser)
                     }.addOnFailureListener { e ->
                         activity.hideProgressDialog()
                         Log.e(activity.javaClass.simpleName, "Error logging in user", e)

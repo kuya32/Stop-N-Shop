@@ -109,6 +109,7 @@ class RegisterActivity : BaseActivity() {
                         }, 1500)
 
                     } else {
+                        hideProgressDialog()
                         Log.e("Registration", "Registration failure", task.exception)
                         showErrorSnackBar(task.exception!!.message.toString(), true)
                     }
