@@ -1,6 +1,7 @@
 package com.macode.stopnshop.view.activities
 
 import android.app.Dialog
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.macode.stopnshop.R
 import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.User
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,6 +22,9 @@ open class BaseActivity : AppCompatActivity() {
     companion object {
 
     }
+
+    var userDetails: User = User()
+    var selectedImageUri: Uri? = null
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val fireStoreClass: FireStoreClass = FireStoreClass()

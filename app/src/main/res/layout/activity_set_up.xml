@@ -4,7 +4,180 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".view.activities.SetUpActivity">
 
+    <include
+        android:id="@+id/setUpToolbar"
+        layout="@layout/titled_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_20sdp"
+        app:cardCornerRadius="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setUpToolbar" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/setUpUserImageFrame"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <ImageView
+                    android:id="@+id/setUpProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@color/grey"
+                    android:contentDescription="@string/image"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/profile_place_holder" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/profile_image_background" />
+            </FrameLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/setUpUsernameInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:hint="@string/username"
+                app:boxStrokeColor="@color/primaryColor"
+                app:hintTextAppearance="@style/TextLabel"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/setUpUserImageFrame">
+
+                <com.macode.stopnshop.utilities.SNSEditText
+                    android:id="@+id/setUpUsernameEditInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/_16sdp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/setUpPhoneInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:hint="@string/phone"
+                app:boxStrokeColor="@color/primaryColor"
+                app:hintTextAppearance="@style/TextLabel"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@+id/setUpUsernameInput"
+                app:layout_constraintStart_toStartOf="@+id/setUpUsernameInput"
+                app:layout_constraintTop_toBottomOf="@+id/setUpUsernameInput">
+
+                <com.macode.stopnshop.utilities.SNSEditText
+                    android:id="@+id/setUpPhoneEditInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/_16sdp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/setUpLocationInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:hint="@string/location"
+                app:boxStrokeColor="@color/primaryColor"
+                app:hintTextAppearance="@style/TextLabel"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@+id/setUpPhoneInput"
+                app:layout_constraintStart_toStartOf="@+id/setUpPhoneInput"
+                app:layout_constraintTop_toBottomOf="@+id/setUpPhoneInput">
+
+                <com.macode.stopnshop.utilities.SNSEditText
+                    android:id="@+id/setUpLocationEditInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/_16sdp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:id="@+id/setUpGenderRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/_15sdp"
+                app:layout_constraintEnd_toEndOf="@+id/setUpLocationInput"
+                app:layout_constraintStart_toStartOf="@+id/setUpLocationInput"
+                app:layout_constraintTop_toBottomOf="@+id/setUpLocationInput">
+
+                <com.macode.stopnshop.utilities.SNSRadioButton
+                    android:id="@+id/maleRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/gender_tab_selector"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="@string/male"
+                    android:textColor="@drawable/gender_tab_text_color_selector"
+                    android:textStyle="bold" />
+
+                <com.macode.stopnshop.utilities.SNSRadioButton
+                    android:id="@+id/femaleRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/gender_tab_selector"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="@string/female"
+                    android:textColor="@drawable/gender_tab_text_color_selector"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <com.macode.stopnshop.utilities.SNSButton
+                android:id="@+id/setUpSaveButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/button_background"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/setUpGenderRadioGroup"
+                app:layout_constraintStart_toStartOf="@+id/setUpGenderRadioGroup"
+                app:layout_constraintTop_toBottomOf="@+id/setUpGenderRadioGroup" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

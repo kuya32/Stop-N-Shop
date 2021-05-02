@@ -8,6 +8,7 @@ import android.view.View
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityLoginBinding
 import com.macode.stopnshop.model.User
+import com.macode.stopnshop.utilities.Constants
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
 
@@ -74,7 +75,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             finish()
         } else {
-            startActivity(Intent(this@LoginActivity, OnBoardingActivity::class.java))
+            val intent = Intent(this@LoginActivity, OnBoardingActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, loggedUser)
+            startActivity(intent)
             finish()
         }
         finish()

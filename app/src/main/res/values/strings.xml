@@ -31,4 +31,15 @@
     <string name="send">Send</string>
     <string name="backToLogin">Back to Login</string>
     <string name="forgotPasswordMessage">Please enter your email address and we will send you an email to reset your password.</string>
+    <string name="title">Title</string>
+    <string name="username">Username</string>
+    <string name="phone">Phone</string>
+    <string name="location">Location</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="save">Save</string>
+    <string name="setUpTitle">Complete Account Info</string>
+    <string name="selectImageAction">Select Image Action</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 </resources>
