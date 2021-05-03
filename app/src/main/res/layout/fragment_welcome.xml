@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_2"
+    tools:context=".view.fragments.WelcomeFragment">
+
+    <ImageView
+        android:id="@+id/welcomeImage"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_300sdp"
+        android:layout_marginTop="@dimen/_65sdp"
+        android:src="@drawable/welcome"
+        android:contentDescription="@string/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/welcomeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_250sdp"
+        android:text="@string/welcome"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_30sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/welcomeImage"
+        app:layout_constraintStart_toStartOf="@+id/welcomeImage"
+        app:layout_constraintTop_toTopOf="@+id/welcomeImage" />
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/welcomeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/thankYou"
+        android:textSize="@dimen/_16sdp"
+        android:gravity="center"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/welcomeTitle"
+        app:layout_constraintStart_toStartOf="@+id/welcomeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTitle" />
+
+    <TextView
+        android:id="@+id/welcomeSkipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/skip"
+        android:textColor="@color/primaryColor"
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/welcomeImage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
