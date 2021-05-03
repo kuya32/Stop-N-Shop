@@ -5,13 +5,17 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.macode.stopnshop.R
 import com.macode.stopnshop.model.User
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.LoginActivity
 import com.macode.stopnshop.view.activities.RegisterActivity
+import com.macode.stopnshop.view.activities.SetUpActivity
 
 class FireStoreClass {
     private val fireStore = FirebaseFirestore.getInstance()
@@ -56,6 +60,26 @@ class FireStoreClass {
         }
     }
 
+    fun updateUserAccountInfo(activity: Activity, userHashMap: HashMap<String, Any>) {
+        userReference.document(getCurrentUserID()).update(userHashMap).addOnSuccessListener {
+            Log.i(activity.javaClass.simpleName, "User info updated successfully")
+            showErrorSnackBar(activity, "Account info updated!", false)
+            when (activity) {
+                is SetUpActivity -> {
+                    activity.updateUserSuccess()
+                }
+            }
+        }.addOnFailureListener { e ->
+            when (activity) {
+                is SetUpActivity -> {
+                    activity.hideProgressDialog()
+                }
+            }
+            Log.e(activity.javaClass.simpleName, "Error while updating user info", e)
+            showErrorSnackBar(activity, "Error while updating user info!", true)
+        }
+    }
+
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()
@@ -77,5 +101,17 @@ class FireStoreClass {
             currentUserID = currentUser.uid
         }
         return currentUserID
+    }
+
+    private fun showErrorSnackBar(activity: Activity, message: String, errorMessage: Boolean) {
+        val snackBar = Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+
+        if (errorMessage) {
+            snackBarView.setBackgroundColor(ContextCompat.getColor(activity, R.color.red))
+        } else {
+            snackBarView.setBackgroundColor(ContextCompat.getColor(activity, R.color.green))
+        }
+        snackBar.show()
     }
 }

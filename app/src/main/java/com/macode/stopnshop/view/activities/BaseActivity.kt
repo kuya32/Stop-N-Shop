@@ -15,12 +15,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.storage.FirebaseStorage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -39,20 +43,29 @@ import java.io.IOException
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 open class BaseActivity : AppCompatActivity() {
 
     companion object {
         const val CAMERA = 1
         const val GALLERY = 2
+        const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 3
         const val IMAGE_DIRECTORY = "StopNShopImages"
     }
 
     var userDetails: User = User()
+    var userHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var selectedImageUri: Uri? = null
-
+    var profileImageURL: String? = ""
     val firebaseAuth = FirebaseAuth.getInstance()
     val fireStoreClass: FireStoreClass = FireStoreClass()
+    val tokenRef = FirebaseMessaging.getInstance().token
+    private val storageRef = FirebaseStorage.getInstance()
+    val profileImageRef = storageRef.reference.child("ProfileImage${System.currentTimeMillis()}.png")
+    lateinit var fcmToken: String
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    var phoneNumberFormattingTextWatcher: PhoneNumberFormattingTextWatcher = PhoneNumberFormattingTextWatcher()
     private var progressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
