@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.DashboardFragment">
 
+    <include
+        android:id="@+id/dashboardFragmentToolbar"
+        layout="@layout/main_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/text_dashboard"
         android:layout_width="match_parent"
@@ -18,5 +25,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/dashboardFragmentToolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
