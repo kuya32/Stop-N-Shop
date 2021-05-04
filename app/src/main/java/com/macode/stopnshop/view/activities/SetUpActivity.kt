@@ -105,12 +105,7 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
                 data?.extras?.let {
                     val bitmap: Bitmap = data.extras!!.get("data") as Bitmap
                     selectedImageUri = convertToImageFile(bitmap)
-                    Glide
-                        .with(this@SetUpActivity)
-                        .load(selectedImageUri)
-                        .centerCrop()
-                        .placeholder(R.drawable.profile_place_holder)
-                        .into(binding!!.setUpProfileImage)
+                    loadUserImage(this@SetUpActivity, selectedImageUri!!, binding!!.setUpProfileImage)
                 }
             } else if (requestCode == GALLERY) {
                 data?.let {

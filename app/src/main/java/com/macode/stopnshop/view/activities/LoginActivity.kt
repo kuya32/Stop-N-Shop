@@ -72,7 +72,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val phone = loggedUser.phone
 
         if (image != "" && username != "" && location != "" && phone != "") {
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
             finish()
         } else {
             val intent = Intent(this@LoginActivity, OnBoardingActivity::class.java)
