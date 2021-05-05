@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -40,6 +41,8 @@ class OrdersFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.ordersToolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.orders)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
+            ContextCompat.getDrawable(requireActivity(), R.drawable.gradient_background))
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"))
     }
 }
