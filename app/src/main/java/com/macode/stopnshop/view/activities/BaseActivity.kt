@@ -173,11 +173,11 @@ open class BaseActivity : AppCompatActivity() {
         return Uri.fromFile(file.absoluteFile)
     }
 
-    fun loadUserImage(activity: Activity, imageUri: Uri, imageView: ImageView) {
+    fun loadUserImage(activity: Activity, image: Any, imageView: ImageView) {
         try {
             Glide
                 .with(activity)
-                .load(imageUri)
+                .load(image)
                 .centerCrop()
                 .placeholder(R.drawable.profile_place_holder)
                 .into(imageView)

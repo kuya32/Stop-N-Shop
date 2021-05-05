@@ -16,6 +16,7 @@ import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.LoginActivity
 import com.macode.stopnshop.view.activities.RegisterActivity
 import com.macode.stopnshop.view.activities.SetUpActivity
+import com.macode.stopnshop.view.activities.SettingsActivity
 
 class FireStoreClass {
     private val fireStore = FirebaseFirestore.getInstance()
@@ -49,10 +50,16 @@ class FireStoreClass {
                         Toast.makeText(activity, "Error logging in user. Please try again!", Toast.LENGTH_SHORT).show()
                     }
                 }
+                is SettingsActivity -> {
+                    activity.userDetailsSuccess(loggedUser)
+                }
             }
         }.addOnFailureListener { e ->
             when (activity) {
                 is LoginActivity -> {
+                    activity.hideProgressDialog()
+                }
+                is SettingsActivity -> {
                     activity.hideProgressDialog()
                 }
             }
@@ -85,6 +92,9 @@ class FireStoreClass {
             FirebaseAuth.getInstance().signOut()
             when (activity) {
                 is RegisterActivity -> {
+                    activity.successfulLogout()
+                }
+                is SettingsActivity -> {
                     activity.successfulLogout()
                 }
             }
