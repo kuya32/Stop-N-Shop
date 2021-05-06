@@ -18,6 +18,7 @@ import com.macode.stopnshop.view.activities.LoginActivity
 import com.macode.stopnshop.view.activities.RegisterActivity
 import com.macode.stopnshop.view.activities.SetUpActivity
 import com.macode.stopnshop.view.activities.SettingsActivity
+import com.macode.stopnshop.view.fragments.EditEmailFragment
 
 class FireStoreClass {
     private val fireStore = FirebaseFirestore.getInstance()
@@ -85,6 +86,15 @@ class FireStoreClass {
             }
             Log.e(activity.javaClass.simpleName, "Error while updating user info", e)
             showErrorSnackBar(activity, "Error while updating user info!", true)
+        }
+    }
+
+    fun updateUserEmail(fragment: EditEmailFragment, newEmail: String) {
+        userReference.document(getCurrentUserID()).update("email", newEmail).addOnSuccessListener {
+            fragment.updateEmailSuccess()
+        }.addOnFailureListener { e ->
+            Log.e(fragment.javaClass.simpleName, "Failed to update email in FireStore", e)
+            fragment.showErrorSnackBar("Sorry, we could't update your email to the database!", true)
         }
     }
 

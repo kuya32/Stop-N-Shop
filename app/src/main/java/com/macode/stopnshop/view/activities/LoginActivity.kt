@@ -56,6 +56,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 fireStoreClass.establishUser(this@LoginActivity)
                 Log.i("Login", "User login was successful!")
             } else {
+                hideProgressDialog()
                 showErrorSnackBar("Please check your email to verify account!", true)
             }
         }.addOnFailureListener { e ->

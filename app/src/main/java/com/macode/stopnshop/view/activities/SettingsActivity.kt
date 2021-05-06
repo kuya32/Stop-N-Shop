@@ -23,9 +23,9 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
 
     private var binding: ActivitySettingsBinding? = null
     private lateinit var authCredential: AuthCredential
-    private lateinit var detailBundle: Bundle
-    private lateinit var editEmailFragment: EditEmailFragment
-    private lateinit var editPasswordFragment: EditPasswordFragment
+    private var detailBundle: Bundle = Bundle()
+    private var editEmailFragment: EditEmailFragment = EditEmailFragment()
+    private var editPasswordFragment: EditPasswordFragment = EditPasswordFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,7 +125,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                         binding!!.settingsSecondaryRelative.visibility = View.VISIBLE
                         detailBundle.putString("fragmentId", credentials)
                         editEmailFragment.arguments = detailBundle
-                        supportFragmentManager.beginTransaction().replace(R.id.settingsFragmentContainer, editEmailFragment).commit()
+                        supportFragmentManager.beginTransaction().replace(R.id.settingsFragmentContainer, editEmailFragment, Constants.EMAIL_FRAGMENT).commit()
                     } else if (credentials == "Password") {
                         dialog.dismiss()
                         binding!!.settingsMainRelative.visibility = View.GONE
