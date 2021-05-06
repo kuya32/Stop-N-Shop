@@ -54,4 +54,11 @@
     <string name="gender">Gender</string>
     <string name="address">Addresses</string>
     <string name="logout">Logout</string>
+    <string name="sensitiveAccountInfo">Sensitive Account Info</string>
+    <string name="accountInfo">Account Info</string>
+    <string name="sensitiveUserInfo"><b>Sensitive User Information:</b><br> </br><u>Please provide account authorization credentials.</u></string>
+    <string name="sensitiveSelection">Select credentials to change:</string>
+    <string name="submit">Submit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

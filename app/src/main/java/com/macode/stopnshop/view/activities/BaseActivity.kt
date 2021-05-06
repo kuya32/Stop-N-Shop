@@ -63,6 +63,7 @@ open class BaseActivity : AppCompatActivity() {
     var selectedImageUri: Uri? = null
     var profileImageURL: String? = ""
     val firebaseAuth = FirebaseAuth.getInstance()
+    val firebaseUser = firebaseAuth.currentUser
     val fireStoreClass: FireStoreClass = FireStoreClass()
     val tokenRef = FirebaseMessaging.getInstance().token
     private val storageRef = FirebaseStorage.getInstance()

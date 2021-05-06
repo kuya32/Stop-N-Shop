@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomNoActionBarTheme">
-        <activity android:name=".view.activities.SettingsActivity"></activity>
+        <activity android:name=".view.activities.EditUserProfileActivity"></activity>
+        <activity android:name=".view.activities.SettingsActivity" />
         <activity
             android:name=".view.activities.DashboardActivity"
             android:label="@string/app_name"

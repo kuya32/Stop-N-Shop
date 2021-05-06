@@ -141,7 +141,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/setUpLocationInput">
 
                 <com.macode.stopnshop.utilities.SNSRadioButton
-                    android:id="@+id/maleRadioButton"
+                    android:id="@+id/setUpMaleRadioButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/_10sdp"
@@ -155,7 +155,7 @@
                     android:textStyle="bold" />
 
                 <com.macode.stopnshop.utilities.SNSRadioButton
-                    android:id="@+id/femaleRadioButton"
+                    android:id="@+id/setUpFemaleRadioButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

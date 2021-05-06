@@ -160,7 +160,7 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
         val username = binding!!.setUpUsernameEditInput.text.toString()
         val phone = binding!!.setUpPhoneEditInput.text.toString()
         val location = binding!!.setUpLocationEditInput.text.toString()
-        val gender = if (binding!!.maleRadioButton.isChecked) "Male" else "Female"
+        val gender = if (binding!!.setUpMaleRadioButton.isChecked) "Male" else "Female"
         when {
             selectedImageUri == null -> {
                 showErrorSnackBar("Please select an image!", true)
@@ -227,16 +227,16 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
         binding!!.setUpLocationEditInput.setText(userDetails.location)
         when (userDetails.gender) {
             "Male" -> {
-                binding!!.maleRadioButton.isChecked = true
-                binding!!.femaleRadioButton.isChecked = false
+                binding!!.setUpMaleRadioButton.isChecked = true
+                binding!!.setUpFemaleRadioButton.isChecked = false
             }
             "Female" -> {
-                binding!!.maleRadioButton.isChecked = false
-                binding!!.femaleRadioButton.isChecked = true
+                binding!!.setUpMaleRadioButton.isChecked = false
+                binding!!.setUpFemaleRadioButton.isChecked = true
             }
             else -> {
-                binding!!.maleRadioButton.isChecked = false
-                binding!!.femaleRadioButton.isChecked = false
+                binding!!.setUpMaleRadioButton.isChecked = false
+                binding!!.setUpFemaleRadioButton.isChecked = false
             }
         }
     }
