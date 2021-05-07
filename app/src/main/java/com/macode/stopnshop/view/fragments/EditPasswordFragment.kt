@@ -1,60 +1,51 @@
 package com.macode.stopnshop.view.fragments
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
+import android.widget.ScrollView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.macode.stopnshop.R
+import com.macode.stopnshop.databinding.FragmentEditPasswordBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EditPasswordFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EditPasswordFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var binding: FragmentEditPasswordBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_password, container, false)
+    ): View {
+        binding = FragmentEditPasswordBinding.inflate(inflater, container, false)
+        val view = binding!!.root
+
+        setUpToolbar(view)
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditPasswordFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditPasswordFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun setUpToolbar(view: View) {
+        val toolbar = view.findViewById<Toolbar>(R.id.editPasswordToolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(
+            Color.TRANSPARENT))
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Edit Password"
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"))
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.back_white)
+        toolbar.setNavigationOnClickListener {
+            val main = requireActivity().findViewById<ScrollView>(R.id.settingsMainRelative)
+            val secondary = requireActivity().findViewById<RelativeLayout>(R.id.settingsSecondaryRelative)
+            secondary.visibility = View.GONE
+            main.visibility = View.VISIBLE
+        }
     }
+
 }

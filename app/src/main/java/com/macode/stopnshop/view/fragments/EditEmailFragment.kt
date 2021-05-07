@@ -82,10 +82,10 @@ class EditEmailFragment : Fragment() {
         }
     }
 
+    // TODO: Find a way to inform user about the verification email
     fun updateEmailSuccess() {
         requireActivity().finish()
         startActivity(requireActivity().intent)
-        showErrorSnackBar("Verification email sent!", false)
     }
 
     fun showErrorSnackBar(message: String, errorMessage: Boolean) {
