@@ -63,4 +63,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="editEmailMessage">We will send a verification link to your new email.</string>
     <string name="newEmail">New Email</string>
+    <string name="newPassword">New Password</string>
+    <string name="passwordMessage">Enter the password you use to login.</string>
+    <string name="confirmNewPassword">Confirm New Password</string>
 </resources>

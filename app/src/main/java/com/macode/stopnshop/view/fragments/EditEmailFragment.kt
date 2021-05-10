@@ -46,10 +46,10 @@ class EditEmailFragment : Fragment() {
     }
 
     private fun saveNewEmail() {
-        val newEmail = binding!!.loginEmailEditInput.text.toString()
+        val newEmail = binding!!.editEmailEditInput.text.toString()
 
         if (newEmail.isEmpty() || !newEmail.contains("@") || !newEmail.contains(".")) {
-            showError(binding!!.loginEmailInput, "Please enter a valid email!")
+            showError(binding!!.editEmailInput, "Please enter a valid email!")
         } else {
             firebaseUser!!.updateEmail(newEmail).addOnSuccessListener {
                 firebaseUser!!.sendEmailVerification().addOnSuccessListener {

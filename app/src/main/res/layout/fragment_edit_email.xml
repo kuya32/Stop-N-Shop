@@ -33,7 +33,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginEmailInput"
+            android:id="@+id/editEmailInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             app:startIconDrawable="@drawable/email">
 
             <com.macode.stopnshop.utilities.SNSEditText
-                android:id="@+id/loginEmailEditInput"
+                android:id="@+id/editEmailEditInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -68,8 +68,8 @@
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/loginEmailInput"
-            app:layout_constraintStart_toStartOf="@+id/loginEmailInput" />
+            app:layout_constraintEnd_toEndOf="@+id/editEmailInput"
+            app:layout_constraintStart_toStartOf="@+id/editEmailInput" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

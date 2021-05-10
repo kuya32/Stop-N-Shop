@@ -11,13 +11,18 @@ import android.widget.RelativeLayout
 import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.FragmentEditPasswordBinding
+import com.macode.stopnshop.firebase.FireStoreClass
 
 
 class EditPasswordFragment : Fragment() {
 
     private var binding: FragmentEditPasswordBinding? = null
+    private var firebaseAuth = FirebaseAuth.getInstance()
+    private var firebaseUser = firebaseAuth.currentUser
+    private var fireStoreClass = FireStoreClass()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
