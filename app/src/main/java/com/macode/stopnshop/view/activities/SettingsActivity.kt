@@ -90,7 +90,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
             R.id.addressesButton -> {
 
             }
-            R.id.loginButton -> {
+            R.id.logoutButton -> {
                 fireStoreClass.logoutUser(this@SettingsActivity)
             }
         }

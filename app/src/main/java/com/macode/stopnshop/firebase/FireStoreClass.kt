@@ -93,6 +93,7 @@ class FireStoreClass {
         userReference.document(getCurrentUserID()).update("email", newEmail).addOnSuccessListener {
             fragment.updateEmailSuccess()
         }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
             Log.e(fragment.javaClass.simpleName, "Failed to update email in FireStore", e)
             fragment.showErrorSnackBar("Sorry, we could't update your email to the database!", true)
         }
