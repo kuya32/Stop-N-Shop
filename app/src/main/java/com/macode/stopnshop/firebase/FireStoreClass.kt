@@ -14,10 +14,7 @@ import com.google.firebase.firestore.SetOptions
 import com.macode.stopnshop.R
 import com.macode.stopnshop.model.User
 import com.macode.stopnshop.utilities.Constants
-import com.macode.stopnshop.view.activities.LoginActivity
-import com.macode.stopnshop.view.activities.RegisterActivity
-import com.macode.stopnshop.view.activities.SetUpActivity
-import com.macode.stopnshop.view.activities.SettingsActivity
+import com.macode.stopnshop.view.activities.*
 import com.macode.stopnshop.view.fragments.EditEmailFragment
 
 class FireStoreClass {
@@ -77,10 +74,16 @@ class FireStoreClass {
                 is SetUpActivity -> {
                     activity.updateUserSuccess()
                 }
+                is EditUserProfileActivity -> {
+                    activity.updateUserSuccess()
+                }
             }
         }.addOnFailureListener { e ->
             when (activity) {
                 is SetUpActivity -> {
+                    activity.hideProgressDialog()
+                }
+                is EditUserProfileActivity -> {
                     activity.hideProgressDialog()
                 }
             }
