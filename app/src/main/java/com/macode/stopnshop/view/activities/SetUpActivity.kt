@@ -63,8 +63,6 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
 
         setUpToolbar()
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@SetUpActivity)
-
         if (!Places.isInitialized()) {
             Places.initialize(this@SetUpActivity, resources.getString(R.string.google_maps_key))
         }
@@ -101,59 +99,58 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == CAMERA) {
-                data?.extras?.let {
-                    val bitmap: Bitmap = data.extras!!.get("data") as Bitmap
-                    selectedImageUri = convertToImageFile(bitmap)
-                    Glide
-                        .with(this@SetUpActivity)
-                        .load(selectedImageUri)
-                        .centerCrop()
-                        .placeholder(R.drawable.profile_place_holder)
-                        .into(binding!!.setUpProfileImage)
+            when (requestCode) {
+                CAMERA -> {
+                    data?.extras?.let {
+                        val bitmap: Bitmap = data.extras!!.get("data") as Bitmap
+                        selectedImageUri = convertToImageFile(bitmap)
+                        loadUserImage(this@SetUpActivity, selectedImageUri!!, binding!!.setUpProfileImage)
+                    }
                 }
-            } else if (requestCode == GALLERY) {
-                data?.let {
-                    Glide
-                        .with(this@SetUpActivity)
-                        .load(data.data)
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .listener(object: RequestListener<Drawable> {
-                            override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                Log.e("GallerySelection", "Error loading image!", e)
-                                showErrorSnackBar("Error loading the image from gallery!", true)
-                                return false
-                            }
-
-                            override fun onResourceReady(
-                                resource: Drawable?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                resource?.let {
-                                    val bitmap: Bitmap = resource.toBitmap()
-                                    selectedImageUri = convertToImageFile(bitmap)
-                                    Log.i("ImagePath", selectedImageUri.toString())
+                GALLERY -> {
+                    data?.let {
+                        Glide
+                            .with(this@SetUpActivity)
+                            .load(data.data)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .listener(object: RequestListener<Drawable> {
+                                override fun onLoadFailed(
+                                    e: GlideException?,
+                                    model: Any?,
+                                    target: Target<Drawable>?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    Log.e("GallerySelection", "Error loading image!", e)
+                                    showErrorSnackBar("Error loading the image from gallery!", true)
+                                    return false
                                 }
-                                return false
-                            }
-                        })
-                        .placeholder(R.drawable.profile_place_holder)
-                        .into(binding!!.setUpProfileImage)
+
+                                override fun onResourceReady(
+                                    resource: Drawable?,
+                                    model: Any?,
+                                    target: Target<Drawable>?,
+                                    dataSource: DataSource?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    resource?.let {
+                                        val bitmap: Bitmap = resource.toBitmap()
+                                        selectedImageUri = convertToImageFile(bitmap)
+                                        Log.i("ImagePath", selectedImageUri.toString())
+                                    }
+                                    return false
+                                }
+                            })
+                            .placeholder(R.drawable.profile_place_holder)
+                            .into(binding!!.setUpProfileImage)
+                    }
                 }
-            } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
-                val place: Place = Autocomplete.getPlaceFromIntent(data!!)
-                val regex = "([^,]+), ([A-Z]{2,})".toRegex()
-                val matchResult = regex.find(place.address.toString())
-                binding!!.setUpLocationEditInput.setText(matchResult?.value.toString())
+                PLACE_AUTOCOMPLETE_REQUEST_CODE -> {
+                    val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                    val regex = "([^,]+), ([A-Z]{2,})".toRegex()
+                    val matchResult = regex.find(place.address.toString())
+                    binding!!.setUpLocationEditInput.setText(matchResult?.value.toString())
+                }
             }
         } else if (resultCode == Activity.RESULT_CANCELED){
             Log.e("SetUpActionCancelled", "User cancelled action!")
@@ -165,7 +162,7 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
         val username = binding!!.setUpUsernameEditInput.text.toString()
         val phone = binding!!.setUpPhoneEditInput.text.toString()
         val location = binding!!.setUpLocationEditInput.text.toString()
-        val gender = if (binding!!.maleRadioButton.isChecked) "Male" else "Female"
+        val gender = if (binding!!.setUpMaleRadioButton.isChecked) "Male" else "Female"
         when {
             selectedImageUri == null -> {
                 showErrorSnackBar("Please select an image!", true)
@@ -232,16 +229,16 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
         binding!!.setUpLocationEditInput.setText(userDetails.location)
         when (userDetails.gender) {
             "Male" -> {
-                binding!!.maleRadioButton.isChecked = true
-                binding!!.femaleRadioButton.isChecked = false
+                binding!!.setUpMaleRadioButton.isChecked = true
+                binding!!.setUpFemaleRadioButton.isChecked = false
             }
             "Female" -> {
-                binding!!.maleRadioButton.isChecked = false
-                binding!!.femaleRadioButton.isChecked = true
+                binding!!.setUpMaleRadioButton.isChecked = false
+                binding!!.setUpFemaleRadioButton.isChecked = true
             }
             else -> {
-                binding!!.maleRadioButton.isChecked = false
-                binding!!.femaleRadioButton.isChecked = false
+                binding!!.setUpMaleRadioButton.isChecked = false
+                binding!!.setUpFemaleRadioButton.isChecked = false
             }
         }
     }

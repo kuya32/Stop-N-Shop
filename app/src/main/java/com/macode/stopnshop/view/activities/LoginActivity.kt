@@ -56,6 +56,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 fireStoreClass.establishUser(this@LoginActivity)
                 Log.i("Login", "User login was successful!")
             } else {
+                hideProgressDialog()
                 showErrorSnackBar("Please check your email to verify account!", true)
             }
         }.addOnFailureListener { e ->
@@ -72,7 +73,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val phone = loggedUser.phone
 
         if (image != "" && username != "" && location != "" && phone != "") {
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
             finish()
         } else {
             val intent = Intent(this@LoginActivity, OnBoardingActivity::class.java)

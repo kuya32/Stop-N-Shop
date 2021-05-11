@@ -13,11 +13,15 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -59,6 +63,7 @@ open class BaseActivity : AppCompatActivity() {
     var selectedImageUri: Uri? = null
     var profileImageURL: String? = ""
     val firebaseAuth = FirebaseAuth.getInstance()
+    val firebaseUser = firebaseAuth.currentUser
     val fireStoreClass: FireStoreClass = FireStoreClass()
     val tokenRef = FirebaseMessaging.getInstance().token
     private val storageRef = FirebaseStorage.getInstance()
@@ -67,6 +72,7 @@ open class BaseActivity : AppCompatActivity() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var phoneNumberFormattingTextWatcher: PhoneNumberFormattingTextWatcher = PhoneNumberFormattingTextWatcher()
     private var progressDialog: Dialog? = null
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,6 +174,19 @@ open class BaseActivity : AppCompatActivity() {
         return Uri.fromFile(file.absoluteFile)
     }
 
+    fun loadUserImage(activity: Activity, image: Any, imageView: ImageView) {
+        try {
+            Glide
+                .with(activity)
+                .load(image)
+                .centerCrop()
+                .placeholder(R.drawable.profile_place_holder)
+                .into(imageView)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
     fun getDate(): String {
         val sdf = SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US)
         return sdf.format(Date())
@@ -206,5 +225,20 @@ open class BaseActivity : AppCompatActivity() {
 
     fun hideError(layout: TextInputLayout) {
         layout.error = null
+    }
+
+    fun doubleBackToExit() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+
+        showErrorSnackBar("Please click back again to exit application", false)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            doubleBackToExitPressedOnce = false
+        }, 2000)
     }
 }

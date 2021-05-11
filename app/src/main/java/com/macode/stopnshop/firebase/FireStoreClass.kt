@@ -7,15 +7,15 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.macode.stopnshop.R
 import com.macode.stopnshop.model.User
 import com.macode.stopnshop.utilities.Constants
-import com.macode.stopnshop.view.activities.LoginActivity
-import com.macode.stopnshop.view.activities.RegisterActivity
-import com.macode.stopnshop.view.activities.SetUpActivity
+import com.macode.stopnshop.view.activities.*
+import com.macode.stopnshop.view.fragments.EditEmailFragment
 
 class FireStoreClass {
     private val fireStore = FirebaseFirestore.getInstance()
@@ -49,10 +49,16 @@ class FireStoreClass {
                         Toast.makeText(activity, "Error logging in user. Please try again!", Toast.LENGTH_SHORT).show()
                     }
                 }
+                is SettingsActivity -> {
+                    activity.userDetailsSuccess(loggedUser)
+                }
             }
         }.addOnFailureListener { e ->
             when (activity) {
                 is LoginActivity -> {
+                    activity.hideProgressDialog()
+                }
+                is SettingsActivity -> {
                     activity.hideProgressDialog()
                 }
             }
@@ -68,10 +74,16 @@ class FireStoreClass {
                 is SetUpActivity -> {
                     activity.updateUserSuccess()
                 }
+                is EditUserProfileActivity -> {
+                    activity.updateUserSuccess()
+                }
             }
         }.addOnFailureListener { e ->
             when (activity) {
                 is SetUpActivity -> {
+                    activity.hideProgressDialog()
+                }
+                is EditUserProfileActivity -> {
                     activity.hideProgressDialog()
                 }
             }
@@ -80,11 +92,24 @@ class FireStoreClass {
         }
     }
 
+    fun updateUserEmail(fragment: EditEmailFragment, newEmail: String) {
+        userReference.document(getCurrentUserID()).update("email", newEmail).addOnSuccessListener {
+            fragment.updateEmailSuccess()
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Failed to update email in FireStore", e)
+            fragment.showErrorSnackBar("Sorry, we could't update your email to the database!", true)
+        }
+    }
+
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()
             when (activity) {
                 is RegisterActivity -> {
+                    activity.successfulLogout()
+                }
+                is SettingsActivity -> {
                     activity.successfulLogout()
                 }
             }

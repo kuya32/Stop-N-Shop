@@ -27,5 +27,4 @@
     <style name="TextLabel" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">@dimen/_16sdp</item>
     </style>
-
 </resources>

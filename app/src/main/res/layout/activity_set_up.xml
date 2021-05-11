@@ -19,8 +19,10 @@
         android:layout_height="0dp"
         android:layout_margin="@dimen/_20sdp"
         app:cardCornerRadius="@dimen/_20sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setUpToolbar" >
+        app:layout_constraintTop_toBottomOf="@+id/setUpToolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,7 +35,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/setUpProfileImage"
@@ -56,8 +58,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:hint="@string/username"
                 app:boxStrokeColor="@color/primaryColor"
@@ -96,10 +98,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
+                    android:maxLength="14"
                     android:padding="@dimen/_10sdp"
                     android:textColor="@color/primaryColor"
-                    android:textSize="@dimen/_16sdp"
-                    android:maxLength="14"/>
+                    android:textSize="@dimen/_16sdp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -120,31 +122,31 @@
                     android:id="@+id/setUpLocationEditInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:inputType="text"
                     android:padding="@dimen/_10sdp"
                     android:textColor="@color/primaryColor"
-                    android:textSize="@dimen/_16sdp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false" />
+                    android:textSize="@dimen/_16sdp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <RadioGroup
                 android:id="@+id/setUpGenderRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:orientation="horizontal"
                 android:layout_margin="@dimen/_15sdp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/setUpLocationInput"
                 app:layout_constraintStart_toStartOf="@+id/setUpLocationInput"
                 app:layout_constraintTop_toBottomOf="@+id/setUpLocationInput">
 
                 <com.macode.stopnshop.utilities.SNSRadioButton
-                    android:id="@+id/maleRadioButton"
+                    android:id="@+id/setUpMaleRadioButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:background="@drawable/gender_tab_selector"
-                    android:layout_marginEnd="@dimen/_10sdp"
                     android:button="@null"
                     android:checked="false"
                     android:gravity="center"
@@ -153,7 +155,7 @@
                     android:textStyle="bold" />
 
                 <com.macode.stopnshop.utilities.SNSRadioButton
-                    android:id="@+id/femaleRadioButton"
+                    android:id="@+id/setUpFemaleRadioButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
