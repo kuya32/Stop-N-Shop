@@ -1,11 +1,13 @@
 package com.macode.stopnshop.view.activities
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +23,9 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityAddProductBinding
+import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.Product
+import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.utilities.SNSTextView
 
 class AddProductActivity : BaseActivity() {
@@ -139,9 +144,38 @@ class AddProductActivity : BaseActivity() {
             }
             else -> {
                 showProgressDialog("Adding product...")
-                
+                savingProductInfoToFirebase(selectedImageUri!!, title, price, description, quantity)
             }
         }
+    }
+
+    private fun savingProductInfoToFirebase(image: Uri, title: String, price: String, description: String, quantity: String) {
+        productImageRef.putFile(image).addOnSuccessListener { taskSnapshot ->
+            Log.i("ProductImageURL", taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
+            taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
+                Log.i("DownloadableImageURL", uri.toString())
+                profileImageURL = uri.toString()
+                val usersName = this.getSharedPreferences(Constants.STOP_N_SHOP_PREFERENCE, Context.MODE_PRIVATE).getString(Constants.LOGGED_IN_USERS_NAME, "")
+                val product = Product(
+                    fireStoreClass.getCurrentUserID(),
+                    usersName!!,
+                    title,
+                    price,
+                    description,
+                    quantity,
+                    profileImageURL.toString()
+                )
+                fireStoreClass.uploadProductDetails(this@AddProductActivity, product)
+            }
+        }.addOnFailureListener { e ->
+            showErrorSnackBar("${e.message}", true)
+            hideProgressDialog()
+        }
+    }
+
+    fun productUploadSuccessful() {
+        hideProgressDialog()
+        finish()
     }
 
 }

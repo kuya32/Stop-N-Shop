@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +13,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.FragmentProductsBinding
+import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.view.activities.AddProductActivity
 import com.macode.stopnshop.view.activities.BaseActivity
 
-class ProductsFragment : Fragment() {
+class ProductsFragment : BaseFragment() {
 
     private var binding: FragmentProductsBinding? = null
 
@@ -34,9 +37,12 @@ class ProductsFragment : Fragment() {
 
         setUpToolbar(view)
 
-        binding!!.textProduct.text = "This is product fragment"
-
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getProductsListFromFireStore()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -61,5 +67,18 @@ class ProductsFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
             ContextCompat.getDrawable(requireActivity(), R.drawable.gradient_background))
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"))
+    }
+
+    private fun getProductsListFromFireStore() {
+        showProgressDialog("Retrieving user product items...")
+        fireStoreClass.getProductsList(this@ProductsFragment)
+    }
+
+    fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
+        hideProgressDialog()
+
+        for (i in productsList) {
+            Log.i("ProductName", i.title)
+        }
     }
 }

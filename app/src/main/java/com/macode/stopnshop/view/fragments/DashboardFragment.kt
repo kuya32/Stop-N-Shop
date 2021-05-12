@@ -18,7 +18,7 @@ import com.macode.stopnshop.view.activities.BaseActivity
 import com.macode.stopnshop.view.activities.SettingsActivity
 import com.macode.stopnshop.viewmodel.ui.dashboard.DashboardViewModel
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : BaseFragment() {
 
     private var binding: FragmentDashboardBinding? = null
 

@@ -60,6 +60,7 @@ open class BaseActivity : AppCompatActivity() {
 
     var userDetails: User = User()
     var userHashMap: HashMap<String, Any> = HashMap<String, Any>()
+    var productHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var selectedImageUri: Uri? = null
     var profileImageURL: String? = ""
     val firebaseAuth = FirebaseAuth.getInstance()
@@ -68,6 +69,7 @@ open class BaseActivity : AppCompatActivity() {
     val tokenRef = FirebaseMessaging.getInstance().token
     private val storageRef = FirebaseStorage.getInstance()
     val profileImageRef = storageRef.reference.child("ProfileImage${System.currentTimeMillis()}.png")
+    val productImageRef = storageRef.reference.child("ProductImage${System.currentTimeMillis()}.png")
     lateinit var fcmToken: String
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var phoneNumberFormattingTextWatcher: PhoneNumberFormattingTextWatcher = PhoneNumberFormattingTextWatcher()

@@ -30,13 +30,9 @@ import com.macode.stopnshop.firebase.FireStoreClass
 import com.macode.stopnshop.view.activities.ForgotPasswordActivity
 
 
-class EditPasswordFragment : Fragment() {
+class EditPasswordFragment : BaseFragment() {
 
     private var binding: FragmentEditPasswordBinding? = null
-    private var firebaseAuth = FirebaseAuth.getInstance()
-    private var firebaseUser = firebaseAuth.currentUser
-    private lateinit var authCredential: AuthCredential
-    private var progressDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -129,41 +125,6 @@ class EditPasswordFragment : Fragment() {
             secondary.visibility = View.GONE
             main.visibility = View.VISIBLE
         }
-    }
-
-    private fun showProgressDialog(text: String) {
-        progressDialog = Dialog(requireActivity())
-        progressDialog!!.setContentView(R.layout.custom_dialog_progress)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val progressText = progressDialog!!.requireViewById<TextView>(R.id.pleaseWaitText)
-            progressText.text = text
-        }
-        progressDialog!!.show()
-    }
-
-    private fun hideProgressDialog() {
-        progressDialog?.dismiss()
-    }
-
-    private fun showErrorSnackBar(message: String, errorMessage: Boolean) {
-        val snackBar = Snackbar.make(requireActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-        val snackBarView = snackBar.view
-
-        if (errorMessage) {
-            snackBarView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.red))
-        } else {
-            snackBarView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.green))
-        }
-        snackBar.show()
-    }
-
-    private fun showError(layout: TextInputLayout, message: String) {
-        layout.error = message
-        layout.requestFocus()
-    }
-
-    private fun hideError(layout: TextInputLayout) {
-        layout.error = null
     }
 
 }
