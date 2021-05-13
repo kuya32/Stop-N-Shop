@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_3sdp"
+    android:background="@drawable/dashboard_item_background">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/firstSingleDashboardCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:backgroundTint="@color/primaryUltraLightColor"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/singleDashboardImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@color/grey"
+            android:contentDescription="@string/image"
+            android:scaleType="fitXY"
+            android:src="@drawable/products" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/secondSingleDashboardCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:backgroundTint="@color/primaryUltraLightColor"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstSingleDashboardCardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/singleDashboardTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:hint="@string/title"
+                android:textColor="@color/primaryDarkColor"
+                android:textColorHint="@color/primaryDarkColor"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/singleDashboardPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/price"
+                android:textColor="@color/primaryDarkColor"
+                android:textColorHint="@color/primaryDarkColor"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="@+id/singleDashboardTitle"
+                app:layout_constraintStart_toStartOf="@+id/singleDashboardTitle"
+                app:layout_constraintTop_toBottomOf="@+id/singleDashboardTitle" />
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/singleDashboardQuantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:hint="@string/quantity"
+                android:textColor="@color/primaryDarkColor"
+                android:textColorHint="@color/primaryDarkColor"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/singleDashboardPrice"
+                app:layout_constraintStart_toStartOf="@+id/singleDashboardPrice"
+                app:layout_constraintTop_toBottomOf="@+id/singleDashboardPrice" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

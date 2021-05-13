@@ -11,11 +11,15 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.FragmentDashboardBinding
 import com.macode.stopnshop.databinding.FragmentProductsBinding
+import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.view.activities.BaseActivity
 import com.macode.stopnshop.view.activities.SettingsActivity
+import com.macode.stopnshop.view.adapters.DashboardListAdapter
 import com.macode.stopnshop.viewmodel.ui.dashboard.DashboardViewModel
 
 class DashboardFragment : BaseFragment() {
@@ -37,9 +41,12 @@ class DashboardFragment : BaseFragment() {
 
         setUpToolbar(view)
 
-        binding!!.textDashboard.text = "This is the dashboard fragment"
-
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getDashboardItemsList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -69,4 +76,27 @@ class DashboardFragment : BaseFragment() {
             (requireActivity() as BaseActivity).doubleBackToExit()
         }
     }
+    private fun getDashboardItemsList() {
+        showProgressDialog("Retrieving all available product items...")
+        fireStoreClass.getDashboardList(this@DashboardFragment)
+    }
+
+    fun successDashboardListFromFireStore(productList: ArrayList<Product>) {
+        hideProgressDialog()
+
+        if (productList.size > 0) {
+            binding!!.noProductsAvailableDashboard.visibility = View.GONE
+            binding!!.dashboardListRecyclerView.visibility = View.VISIBLE
+
+            binding!!.dashboardListRecyclerView.layoutManager = GridLayoutManager(activity, 2)
+            binding!!.dashboardListRecyclerView.setHasFixedSize(true)
+            val dashboardAdapter = DashboardListAdapter(requireActivity(), productList)
+            binding!!.dashboardListRecyclerView.adapter = dashboardAdapter
+        } else {
+            binding!!.dashboardListRecyclerView.visibility = View.GONE
+            binding!!.noProductsAvailableDashboard.visibility = View.VISIBLE
+        }
+    }
+
+
 }

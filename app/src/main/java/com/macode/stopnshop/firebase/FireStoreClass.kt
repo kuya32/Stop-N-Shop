@@ -16,6 +16,7 @@ import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.model.User
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.*
+import com.macode.stopnshop.view.fragments.DashboardFragment
 import com.macode.stopnshop.view.fragments.EditEmailFragment
 import com.macode.stopnshop.view.fragments.ProductsFragment
 
@@ -142,6 +143,23 @@ class FireStoreClass {
         }.addOnFailureListener { e ->
             Log.e(fragment.javaClass.simpleName, "Error accessing products list", e)
             showErrorSnackBar(fragment.requireActivity(), "Sorry, we could not retrieve the products list!", true)
+        }
+    }
+
+    fun getDashboardList(fragment: DashboardFragment) {
+        productReference.get().addOnSuccessListener { document ->
+            Log.i("DashboardList", document.documents.toString())
+            val productList: ArrayList<Product> = ArrayList()
+            for (i in document.documents) {
+                val product = i.toObject(Product::class.java)
+                product!!.id = i.id
+
+                productList.add(product)
+            }
+            fragment.successDashboardListFromFireStore(productList)
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list", e)
         }
     }
 

@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.FragmentProductsBinding
 import com.macode.stopnshop.firebase.FireStoreClass
 import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.view.activities.AddProductActivity
 import com.macode.stopnshop.view.activities.BaseActivity
+import com.macode.stopnshop.view.adapters.MyProductsListAdapter
 
 class ProductsFragment : BaseFragment() {
 
@@ -77,8 +79,17 @@ class ProductsFragment : BaseFragment() {
     fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
         hideProgressDialog()
 
-        for (i in productsList) {
-            Log.i("ProductName", i.title)
+        if (productsList.size > 0) {
+            binding!!.noProductsAvailable.visibility = View.GONE
+            binding!!.productItemsRecyclerView.visibility = View.VISIBLE
+
+            binding!!.productItemsRecyclerView.layoutManager = LinearLayoutManager(activity)
+            binding!!.productItemsRecyclerView.setHasFixedSize(true)
+            val productAdapter = MyProductsListAdapter(requireActivity(), productsList)
+            binding!!.productItemsRecyclerView.adapter = productAdapter
+        } else {
+            binding!!.productItemsRecyclerView.visibility = View.GONE
+            binding!!.noProductsAvailable.visibility = View.VISIBLE
         }
     }
 }
