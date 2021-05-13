@@ -3,10 +3,14 @@ package com.macode.stopnshop.view.fragments
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -85,11 +89,47 @@ class ProductsFragment : BaseFragment() {
 
             binding!!.productItemsRecyclerView.layoutManager = LinearLayoutManager(activity)
             binding!!.productItemsRecyclerView.setHasFixedSize(true)
-            val productAdapter = MyProductsListAdapter(requireActivity(), productsList)
+            val productAdapter = MyProductsListAdapter(requireActivity(), productsList, this@ProductsFragment)
             binding!!.productItemsRecyclerView.adapter = productAdapter
         } else {
             binding!!.productItemsRecyclerView.visibility = View.GONE
             binding!!.noProductsAvailable.visibility = View.VISIBLE
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun showAlertDialogToDeleteProduct(id: String, title: String) {
+        val builder = AlertDialog.Builder(requireActivity())
+        val inflater: LayoutInflater = LayoutInflater.from(requireContext())
+        val view: View = inflater.inflate(R.layout.alert_dialog_title, null)
+        builder.setCustomTitle(view)
+        builder.setMessage("Are you sure you want to delete $title")
+        builder.setPositiveButton("Yes") { dialogInterface, _ ->
+            dialogInterface.dismiss()
+            fireStoreClass.deleteProduct(this@ProductsFragment, id)
+        }
+        builder.setNegativeButton("No") { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        val messageView: TextView = alertDialog.requireViewById(android.R.id.message)
+        messageView.gravity = Gravity.CENTER
+        val positiveButton = alertDialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = alertDialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE)
+        positiveButton.setTextColor(Color.BLACK)
+        negativeButton.setTextColor(Color.BLACK)
+        val positiveButtonLinearLayout: LinearLayout.LayoutParams = positiveButton.layoutParams as LinearLayout.LayoutParams
+        positiveButtonLinearLayout.weight = 10.0f
+        positiveButton.layoutParams = positiveButtonLinearLayout
+        negativeButton.layoutParams = positiveButtonLinearLayout
+    }
+
+    fun deleteProductSuccess() {
+        hideProgressDialog()
+        showErrorSnackBar("Product deleted successfully", false)
+        getProductsListFromFireStore()
+    }
+
 }

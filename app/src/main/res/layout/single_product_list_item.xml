@@ -20,17 +20,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/singleProductImage"
-                android:layout_width="@dimen/_75sdp"
-                android:layout_height="@dimen/_75sdp"
+            <FrameLayout
+                android:id="@+id/singleProductImageFrame"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:layout_margin="@dimen/_10sdp"
-                android:contentDescription="@string/image"
-                android:scaleType="fitXY"
-                android:src="@drawable/orders"
+                android:background="@drawable/button_background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/singleProductImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:contentDescription="@string/image"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/orders" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/profile_image_background" />
+            </FrameLayout>
 
             <com.macode.stopnshop.utilities.SNSTextView
                 android:id="@+id/singleProductTitle"
@@ -45,9 +58,9 @@
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/singleProductPrice"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cardView"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/singleProductImage"
+                app:layout_constraintStart_toEndOf="@+id/singleProductImageFrame"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
 
@@ -64,9 +77,9 @@
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toTopOf="@+id/singleProductQuantity"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cardView"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/singleProductImage"
+                app:layout_constraintStart_toEndOf="@+id/singleProductImageFrame"
                 app:layout_constraintTop_toBottomOf="@+id/singleProductTitle" />
 
             <com.macode.stopnshop.utilities.SNSTextView
@@ -82,14 +95,29 @@
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cardView"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/singleProductImage"
+                app:layout_constraintStart_toEndOf="@+id/singleProductImageFrame"
                 app:layout_constraintTop_toBottomOf="@+id/singleProductPrice" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primaryUltraLightColor"
+                app:cardCornerRadius="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/singleProductQuantity"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/deleteProductButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/delete" />
+            </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

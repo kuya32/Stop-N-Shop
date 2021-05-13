@@ -146,6 +146,16 @@ class FireStoreClass {
         }
     }
 
+    fun deleteProduct(fragment: ProductsFragment, productID: String) {
+        productReference.document(productID).delete().addOnSuccessListener {
+            fragment.deleteProductSuccess()
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error deleting product from Firestore", e)
+            showErrorSnackBar(fragment.requireActivity(), "Sorry, we couldn't delete the product from the database!", true)
+        }
+    }
+
     fun getDashboardList(fragment: DashboardFragment) {
         productReference.get().addOnSuccessListener { document ->
             Log.i("DashboardList", document.documents.toString())
