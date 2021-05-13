@@ -6,20 +6,24 @@ import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.macode.stopnshop.R
+import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.model.User
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.*
+import com.macode.stopnshop.view.fragments.DashboardFragment
 import com.macode.stopnshop.view.fragments.EditEmailFragment
+import com.macode.stopnshop.view.fragments.ProductsFragment
 
 class FireStoreClass {
     private val fireStore = FirebaseFirestore.getInstance()
     private val userReference = fireStore.collection("Users")
+    private val productReference = fireStore.collection("Products")
 
     fun registerUser(activity: RegisterActivity, userInfo: User) {
         userReference.document(getCurrentUserID()).set(userInfo, SetOptions.merge()).addOnSuccessListener {
@@ -28,25 +32,25 @@ class FireStoreClass {
         }.addOnFailureListener { e ->
             activity.hideProgressDialog()
             Log.e(activity.javaClass.simpleName, "User registration failed", e)
-            Toast.makeText(activity, "Error registering user. Please try again!", Toast.LENGTH_SHORT).show()
+            showErrorSnackBar(activity, "Error registering user. Please try again!", true)
         }
     }
 
     fun establishUser(activity: Activity) {
         userReference.document(getCurrentUserID()).get().addOnSuccessListener { document ->
             val loggedUser = document.toObject(User::class.java)!!
-            val sharedPreferences = activity.getSharedPreferences(Constants.STOP_N_SHOP_PREFERENCE, Context.MODE_PRIVATE)
-            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-            editor.putString(Constants.LOGGED_IN_USERS_NAME, "${loggedUser.firstName} ${loggedUser.lastName}")
-            editor.apply()
             when (activity) {
                 is LoginActivity -> {
+                    val sharedPreferences = activity.getSharedPreferences(Constants.STOP_N_SHOP_PREFERENCE, Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putString(Constants.LOGGED_IN_USERS_NAME, "${loggedUser.firstName} ${loggedUser.lastName}")
+                    editor.apply()
                     userReference.document(getCurrentUserID()).update("status", "Online").addOnSuccessListener {
                         activity.loginSuccess(loggedUser)
                     }.addOnFailureListener { e ->
                         activity.hideProgressDialog()
                         Log.e(activity.javaClass.simpleName, "Error logging in user", e)
-                        Toast.makeText(activity, "Error logging in user. Please try again!", Toast.LENGTH_SHORT).show()
+                        showErrorSnackBar(activity, "Error logging in user. Please try again!", true)
                     }
                 }
                 is SettingsActivity -> {
@@ -98,7 +102,74 @@ class FireStoreClass {
         }.addOnFailureListener { e ->
             fragment.hideProgressDialog()
             Log.e(fragment.javaClass.simpleName, "Failed to update email in FireStore", e)
-            fragment.showErrorSnackBar("Sorry, we could't update your email to the database!", true)
+            fragment.showErrorSnackBar("Sorry, we couldn't update your email to the database!", true)
+        }
+    }
+
+    fun uploadProductDetails(activity: Activity, productInfo: Product) {
+        productReference.document().set(productInfo, SetOptions.merge()).addOnSuccessListener {
+            when (activity) {
+                is AddProductActivity -> {
+                    activity.productUploadSuccessful()
+                }
+            }
+        }.addOnFailureListener { e ->
+            when (activity) {
+                is AddProductActivity -> {
+                    activity.hideProgressDialog()
+                }
+            }
+            Log.e(activity.javaClass.simpleName, "Error while uploading the product details.", e)
+            showErrorSnackBar(activity, "Error while uploading the product details", true)
+        }
+    }
+
+    fun getProductsList(fragment: Fragment) {
+        productReference.whereEqualTo(Constants.USER_ID, getCurrentUserID()).get().addOnSuccessListener { document ->
+            Log.i("ProductList", document.documents.toString())
+            val productsList: ArrayList<Product> = ArrayList()
+            for (i in document.documents) {
+                val product = i.toObject(Product::class.java)
+                product!!.id = i.id
+
+                productsList.add(product)
+            }
+
+            when (fragment) {
+                is ProductsFragment -> {
+                    fragment.successProductsListFromFireStore(productsList)
+                }
+            }
+        }.addOnFailureListener { e ->
+            Log.e(fragment.javaClass.simpleName, "Error accessing products list", e)
+            showErrorSnackBar(fragment.requireActivity(), "Sorry, we could not retrieve the products list!", true)
+        }
+    }
+
+    fun deleteProduct(fragment: ProductsFragment, productID: String) {
+        productReference.document(productID).delete().addOnSuccessListener {
+            fragment.deleteProductSuccess()
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error deleting product from Firestore", e)
+            showErrorSnackBar(fragment.requireActivity(), "Sorry, we couldn't delete the product from the database!", true)
+        }
+    }
+
+    fun getDashboardList(fragment: DashboardFragment) {
+        productReference.get().addOnSuccessListener { document ->
+            Log.i("DashboardList", document.documents.toString())
+            val productList: ArrayList<Product> = ArrayList()
+            for (i in document.documents) {
+                val product = i.toObject(Product::class.java)
+                product!!.id = i.id
+
+                productList.add(product)
+            }
+            fragment.successDashboardListFromFireStore(productList)
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list", e)
         }
     }
 
@@ -119,7 +190,7 @@ class FireStoreClass {
         }
     }
 
-    private fun getCurrentUserID(): String {
+    fun getCurrentUserID(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserID = ""
         if (currentUser != null) {

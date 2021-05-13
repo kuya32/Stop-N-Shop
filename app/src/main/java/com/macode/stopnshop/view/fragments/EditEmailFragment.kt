@@ -29,13 +29,9 @@ import com.macode.stopnshop.firebase.FireStoreClass
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.DashboardActivity
 
-class EditEmailFragment : Fragment() {
+class EditEmailFragment : BaseFragment() {
 
     private var binding: FragmentEditEmailBinding? = null
-    private var firebaseAuth = FirebaseAuth.getInstance()
-    private var firebaseUser = firebaseAuth.currentUser
-    private var fireStoreClass = FireStoreClass()
-    private var progressDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,12 +63,12 @@ class EditEmailFragment : Fragment() {
                 }.addOnFailureListener { e ->
                     hideProgressDialog()
                     Log.e(requireActivity().javaClass.simpleName, "Failed to send verification email", e)
-                    showErrorSnackBar("Sorry, we couldn\'t send verification email!", false)
+                    showErrorSnackBar("Sorry, we couldn't send verification email!", false)
                 }
             }.addOnFailureListener { e ->
                 hideProgressDialog()
                 Log.e(requireActivity().javaClass.simpleName, "Failed to update user email", e)
-                showErrorSnackBar("Sorry, we couldn\'t update your email!", false)
+                showErrorSnackBar("Sorry, we couldn't update your email!", false)
             }
         }
     }
@@ -102,36 +98,5 @@ class EditEmailFragment : Fragment() {
             startActivity(requireActivity().intent)
         }, 1500)
 
-    }
-
-    private fun showProgressDialog(text: String) {
-        progressDialog = Dialog(requireActivity())
-        progressDialog!!.setContentView(R.layout.custom_dialog_progress)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val progressText = progressDialog!!.requireViewById<TextView>(R.id.pleaseWaitText)
-            progressText.text = text
-        }
-        progressDialog!!.show()
-    }
-
-    fun hideProgressDialog() {
-        progressDialog?.dismiss()
-    }
-
-    fun showErrorSnackBar(message: String, errorMessage: Boolean) {
-        val snackBar = Snackbar.make(requireActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-        val snackBarView = snackBar.view
-
-        if (errorMessage) {
-            snackBarView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.red))
-        } else {
-            snackBarView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.green))
-        }
-        snackBar.show()
-    }
-
-    private fun showError(layout: TextInputLayout, message: String) {
-        layout.error = message
-        layout.requestFocus()
     }
 }

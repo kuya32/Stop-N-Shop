@@ -66,4 +66,10 @@
     <string name="newPassword">New Password</string>
     <string name="passwordMessage">Enter the password you use to login.</string>
     <string name="confirmNewPassword">Confirm New Password</string>
+    <string name="addProduct">Add Product</string>
+    <string name="price">Price ($)</string>
+    <string name="description">Description</string>
+    <string name="quantity">Quantity</string>
+    <string name="noProductsAvailable">No Products Available</string>
+    <string name="warning">Warning!</string>
 </resources>

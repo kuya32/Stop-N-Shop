@@ -5,4 +5,5 @@ object Constants {
     const val LOGGED_IN_USERS_NAME: String = "loggedInUsersName"
     const val EXTRA_USER_DETAILS: String = "extraUserDetails"
     const val EMAIL_FRAGMENT: String = "EmailFragment"
+    const val USER_ID: String = "userID"
 }

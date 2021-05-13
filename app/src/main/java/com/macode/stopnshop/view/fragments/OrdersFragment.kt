@@ -18,7 +18,7 @@ import com.macode.stopnshop.databinding.FragmentOrdersBinding
 import com.macode.stopnshop.view.activities.BaseActivity
 import com.macode.stopnshop.viewmodel.ui.notifications.NotificationsViewModel
 
-class OrdersFragment : Fragment() {
+class OrdersFragment : BaseFragment() {
 
     private var binding: FragmentOrdersBinding? = null
 
