@@ -97,6 +97,5 @@ class EditEmailFragment : BaseFragment() {
             requireActivity().finish()
             startActivity(requireActivity().intent)
         }, 1500)
-
     }
 }

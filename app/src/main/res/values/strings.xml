@@ -72,4 +72,8 @@
     <string name="quantity">Quantity</string>
     <string name="noProductsAvailable">No Products Available</string>
     <string name="warning">Warning!</string>
+    <string name="productDescription">Product Description</string>
+    <string name="stockQuantity">Stock Quantity</string>
+    <string name="sellersInfo">Seller Info</string>
+    <string name="status">Status</string>
 </resources>
