@@ -1,6 +1,7 @@
 package com.macode.stopnshop.view.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.macode.stopnshop.databinding.SingleProductListItemBinding
 import com.macode.stopnshop.model.Product
+import com.macode.stopnshop.utilities.Constants
+import com.macode.stopnshop.view.activities.ProductDetailActivity
 import com.macode.stopnshop.view.fragments.ProductsFragment
 
 open class MyProductsListAdapter(private val context: Context, private val list: ArrayList<Product>, private val fragment: ProductsFragment): RecyclerView.Adapter<MyProductsListAdapter.ViewHolder>() {
@@ -34,6 +37,12 @@ open class MyProductsListAdapter(private val context: Context, private val list:
 
             binding.deleteProductButton.setOnClickListener {
                 fragment.showAlertDialogToDeleteProduct(product.id, product.title)
+            }
+
+            itemView.setOnClickListener {
+                val intent = Intent(context, ProductDetailActivity::class.java)
+                intent.putExtra(Constants.PRODUCT_DETAILS, product)
+                context.startActivity(intent)
             }
         }
     }

@@ -70,6 +70,17 @@ class FireStoreClass {
         }
     }
 
+    fun establishSeller(activity: ProductDetailActivity, sellersID: String) {
+        userReference.document(sellersID).get().addOnSuccessListener { document ->
+            val sellersInfo = document.toObject(User::class.java)
+            activity.receiveSellerInfoSuccess(sellersInfo)
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e("ProductSellersInfo", "Error retrieving product sellers info", e)
+            showErrorSnackBar(activity, "Sorry, couldn't get sellers info!", true)
+        }
+    }
+
     fun updateUserAccountInfo(activity: Activity, userHashMap: HashMap<String, Any>) {
         userReference.document(getCurrentUserID()).update(userHashMap).addOnSuccessListener {
             Log.i(activity.javaClass.simpleName, "User info updated successfully")

@@ -40,6 +40,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ImageSelectionDialogBinding
 import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.model.User
 import java.io.File
 import java.io.FileOutputStream
@@ -59,6 +60,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     var userDetails: User = User()
+    var productDetails: Product = Product()
     var userHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var productHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var selectedImageUri: Uri? = null
@@ -71,7 +73,6 @@ open class BaseActivity : AppCompatActivity() {
     val profileImageRef = storageRef.reference.child("ProfileImage${System.currentTimeMillis()}.png")
     val productImageRef = storageRef.reference.child("ProductImage${System.currentTimeMillis()}.png")
     lateinit var fcmToken: String
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var phoneNumberFormattingTextWatcher: PhoneNumberFormattingTextWatcher = PhoneNumberFormattingTextWatcher()
     private var progressDialog: Dialog? = null
     private var doubleBackToExitPressedOnce = false

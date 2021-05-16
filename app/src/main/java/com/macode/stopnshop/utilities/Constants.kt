@@ -6,4 +6,5 @@ object Constants {
     const val EXTRA_USER_DETAILS: String = "extraUserDetails"
     const val EMAIL_FRAGMENT: String = "EmailFragment"
     const val USER_ID: String = "userID"
+    const val PRODUCT_DETAILS: String = "productDetails"
 }

@@ -8,8 +8,8 @@
     tools:context=".view.activities.ProductDetailActivity">
 
     <include
-        android:id="@+id/productDetailToolbar"
-        layout="@layout/titled_toolbar"
+        android:id="@+id/productDetailsToolbar"
+        layout="@layout/main_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,14 +22,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productDetailToolbar" >
+        app:layout_constraintTop_toBottomOf="@+id/productDetailsToolbar" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/productDetailsImage"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_150sdp"
                 android:layout_margin="@dimen/_5sdp"
@@ -50,7 +50,7 @@
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView">
+                app:layout_constraintTop_toBottomOf="@+id/productDetailsImage">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -133,8 +133,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/item_grey_border_background"
-                        android:hint="@string/quantity"
-                        android:padding="@dimen/_5sdp"
+                        android:hint="@string/number"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:textColor="@color/primaryColor"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold"
