@@ -78,4 +78,8 @@
     <string name="status">Status</string>
     <string name="number">1</string>
     <string name="editProduct">Edit Product</string>
+    <string name="addToCart">Add to Cart</string>
+    <string name="productAmountMessage">How many items of the product do you want to add?</string>
+    <string name="quantityInStock">Quantity in Stock:</string>
+    <string name="desiredAmount">Desired Amount:</string>
 </resources>

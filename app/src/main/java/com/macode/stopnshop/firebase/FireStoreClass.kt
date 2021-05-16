@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.macode.stopnshop.R
+import com.macode.stopnshop.model.CartItem
 import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.model.User
 import com.macode.stopnshop.utilities.Constants
@@ -24,6 +25,7 @@ class FireStoreClass {
     private val fireStore = FirebaseFirestore.getInstance()
     private val userReference = fireStore.collection("Users")
     private val productReference = fireStore.collection("Products")
+    private val cartItemReference = fireStore.collection("CartItems")
 
     fun registerUser(activity: RegisterActivity, userInfo: User) {
         userReference.document(getCurrentUserID()).set(userInfo, SetOptions.merge()).addOnSuccessListener {
@@ -181,6 +183,16 @@ class FireStoreClass {
         }.addOnFailureListener { e ->
             fragment.hideProgressDialog()
             Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list", e)
+        }
+    }
+
+    fun addCartItems(activity: ProductDetailActivity, addToCart: CartItem) {
+        cartItemReference.document().set(addToCart, SetOptions.merge()).addOnSuccessListener {
+            activity.addToCartSuccess()
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error while adding product item to cart", e)
+            showErrorSnackBar(activity, "Sorry, we couldn't add product item to cart!", true)
         }
     }
 
