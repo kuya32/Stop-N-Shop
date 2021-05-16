@@ -120,13 +120,13 @@ class FireStoreClass {
     fun uploadProductDetails(activity: Activity, productInfo: Product) {
         productReference.document().set(productInfo, SetOptions.merge()).addOnSuccessListener {
             when (activity) {
-                is AddProductActivity -> {
+                is AddEditProductActivity -> {
                     activity.productUploadSuccessful()
                 }
             }
         }.addOnFailureListener { e ->
             when (activity) {
-                is AddProductActivity -> {
+                is AddEditProductActivity -> {
                     activity.hideProgressDialog()
                 }
             }

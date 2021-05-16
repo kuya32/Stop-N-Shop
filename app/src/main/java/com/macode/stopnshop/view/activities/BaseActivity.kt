@@ -26,6 +26,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
@@ -66,7 +67,8 @@ open class BaseActivity : AppCompatActivity() {
     var selectedImageUri: Uri? = null
     var profileImageURL: String? = ""
     val firebaseAuth = FirebaseAuth.getInstance()
-    val firebaseUser = firebaseAuth.currentUser
+    val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
+    val firebaseUserID = firebaseUser?.uid
     val fireStoreClass: FireStoreClass = FireStoreClass()
     val tokenRef = FirebaseMessaging.getInstance().token
     private val storageRef = FirebaseStorage.getInstance()

@@ -2,10 +2,8 @@ package com.macode.stopnshop.view.fragments
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -14,14 +12,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.FragmentProductsBinding
-import com.macode.stopnshop.firebase.FireStoreClass
 import com.macode.stopnshop.model.Product
-import com.macode.stopnshop.view.activities.AddProductActivity
-import com.macode.stopnshop.view.activities.BaseActivity
+import com.macode.stopnshop.view.activities.AddEditProductActivity
 import com.macode.stopnshop.view.adapters.MyProductsListAdapter
 
 class ProductsFragment : BaseFragment() {
@@ -59,7 +54,7 @@ class ProductsFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_product_action -> {
-                startActivity(Intent(activity, AddProductActivity::class.java))
+                startActivity(Intent(activity, AddEditProductActivity::class.java))
                 return true
             }
         }

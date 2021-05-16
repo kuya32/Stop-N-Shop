@@ -58,7 +58,7 @@
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/singleProductPrice"
-                app:layout_constraintEnd_toStartOf="@+id/cardView"
+                app:layout_constraintEnd_toStartOf="@+id/deleteCardView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/singleProductImageFrame"
                 app:layout_constraintTop_toTopOf="parent"
@@ -77,7 +77,7 @@
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toTopOf="@+id/singleProductQuantity"
-                app:layout_constraintEnd_toStartOf="@+id/cardView"
+                app:layout_constraintEnd_toStartOf="@+id/deleteCardView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/singleProductImageFrame"
                 app:layout_constraintTop_toBottomOf="@+id/singleProductTitle" />
@@ -95,26 +95,28 @@
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/cardView"
+                app:layout_constraintEnd_toStartOf="@+id/deleteCardView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/singleProductImageFrame"
                 app:layout_constraintTop_toBottomOf="@+id/singleProductPrice" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
+                android:id="@+id/deleteCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:backgroundTint="@color/primaryUltraLightColor"
                 app:cardCornerRadius="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/singleProductQuantity"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/singleProductTitle">
 
                 <ImageView
                     android:id="@+id/deleteProductButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/image"
+                    android:padding="@dimen/_2sdp"
                     android:src="@drawable/delete" />
             </androidx.cardview.widget.CardView>
 

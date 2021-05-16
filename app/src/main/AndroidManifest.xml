@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/CustomNoActionBarTheme">
         <activity android:name=".view.activities.ProductDetailActivity"></activity>
-        <activity android:name=".view.activities.AddProductActivity" />
+        <activity android:name=".view.activities.AddEditProductActivity" />
         <activity android:name=".view.activities.EditUserProfileActivity" />
         <activity android:name=".view.activities.SettingsActivity" />
         <activity

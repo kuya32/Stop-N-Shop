@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".view.activities.AddProductActivity">
+    tools:context=".view.activities.AddEditProductActivity">
 
     <include
         android:id="@+id/addProductToolbar"

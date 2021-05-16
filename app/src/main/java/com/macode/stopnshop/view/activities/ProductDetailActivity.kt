@@ -1,9 +1,12 @@
 package com.macode.stopnshop.view.activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityProductDetailBinding
@@ -28,6 +31,26 @@ class ProductDetailActivity : BaseActivity() {
         establishProductDetails(productDetails)
 
         setUpToolbar()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        when (productDetails.userID) {
+            firebaseUserID -> {
+                menuInflater.inflate(R.menu.product_details_menu, menu)
+            }
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.editAction -> {
+                val intent = Intent(this@ProductDetailActivity, AddEditProductActivity::class.java)
+                intent.putExtra(Constants.PRODUCT_DETAILS, productDetails)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun establishProductDetails(productDetails: Product) {
