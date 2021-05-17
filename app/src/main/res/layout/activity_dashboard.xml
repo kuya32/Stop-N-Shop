@@ -38,4 +38,17 @@
         app:layout_constraintTop_toTopOf="@+id/dashboardToolbar"
         app:navGraph="@navigation/mobile_navigation" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/goToCartFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:src="@drawable/cart"
+        android:visibility="gone"
+        android:backgroundTint="@color/primaryColor"
+        app:tint="@color/primaryUltraLightColor"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/cart">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 </androidx.constraintlayout.widget.ConstraintLayout>

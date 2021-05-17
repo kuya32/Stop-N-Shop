@@ -62,6 +62,7 @@ open class BaseActivity : AppCompatActivity() {
 
     var userDetails: User = User()
     var productDetails: Product = Product()
+    var productID: String = ""
     var userHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var productHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var selectedImageUri: Uri? = null

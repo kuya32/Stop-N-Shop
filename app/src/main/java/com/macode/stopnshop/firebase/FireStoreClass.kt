@@ -188,12 +188,27 @@ class FireStoreClass {
 
     fun addCartItems(activity: ProductDetailActivity, addToCart: CartItem) {
         cartItemReference.document().set(addToCart, SetOptions.merge()).addOnSuccessListener {
-            activity.addToCartSuccess()
+            activity.addToCartSuccess(addToCart.cartQuantity, addToCart.title)
         }.addOnFailureListener { e ->
             activity.hideProgressDialog()
             Log.e(activity.javaClass.simpleName, "Error while adding product item to cart", e)
             showErrorSnackBar(activity, "Sorry, we couldn't add product item to cart!", true)
         }
+    }
+
+    fun checkIfItemExistsInCart(activity: DashboardActivity) {
+        cartItemReference
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                Log.i(activity.javaClass.simpleName, document.documents.toString())
+                if (!document.isEmpty) {
+                    activity.itemsFoundInCart()
+                }
+            }.addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error while checking the existing cart list", e)
+                showErrorSnackBar(activity, "Sorry, we ran into an error checking your cart!", true)
+            }
     }
 
     fun logoutUser(activity: Activity) {

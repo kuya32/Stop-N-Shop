@@ -82,4 +82,15 @@
     <string name="productAmountMessage">How many items of the product do you want to add?</string>
     <string name="quantityInStock">Quantity in Stock:</string>
     <string name="desiredAmount">Desired Amount:</string>
+    <string name="cart">Go to Cart</string>
+    <string name="noCartItemsFound">No Cart Items Found</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="checkout">Checkout</string>
+    <string name="subtotalPrice">$100.00</string>
+    <string name="waSalesTax">WA Sales Tax:</string>
+    <string name="waSalesTaxPrice">$10.40</string>
+    <string name="shipping">Shipping:</string>
+    <string name="shippingPrice">$10.00</string>
+    <string name="totalAmount">Total Amount:</string>
+    <string name="totalAmountPrice">$120.40</string>
 </resources>
