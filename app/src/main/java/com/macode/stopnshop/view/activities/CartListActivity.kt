@@ -150,4 +150,8 @@ class CartListActivity : BaseActivity() {
         showErrorSnackBar("$title successfully deleted from your cart!", false)
         getCartListFromFireStore()
     }
+
+    fun cartItemUpdateSuccess() {
+        getCartListFromFireStore()
+    }
 }

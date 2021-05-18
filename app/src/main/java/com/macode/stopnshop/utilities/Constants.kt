@@ -7,5 +7,6 @@ object Constants {
     const val EMAIL_FRAGMENT: String = "EmailFragment"
     const val USER_ID: String = "userID"
     const val PRODUCT_DETAILS: String = "productDetails"
-    const val PRODUCT_ID: String = "productID"
+    const val CART_QUANTITY: String = "cartQuantity"
+
 }

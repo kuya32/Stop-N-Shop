@@ -271,6 +271,23 @@ class FireStoreClass {
         }
     }
 
+    fun updateMyCart(context: Context, id: String, cartItemHashMap: HashMap<String, Any>) {
+        cartItemReference.document(id).update(cartItemHashMap).addOnSuccessListener {
+            when (context) {
+                is CartListActivity -> {
+                    context.cartItemUpdateSuccess()
+                }
+            }
+        }.addOnFailureListener { e ->
+            when (context) {
+                is CartListActivity -> {
+                    context.showErrorSnackBar("Sorry, we couldn't update the cart item!", true)
+                }
+            }
+            Log.e(context.javaClass.simpleName, "Error while updating the cart item.", e)
+        }
+    }
+
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()

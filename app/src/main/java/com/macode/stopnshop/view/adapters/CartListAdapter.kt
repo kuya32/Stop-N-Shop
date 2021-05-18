@@ -19,6 +19,8 @@ import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.SingleCartListItemBinding
 import com.macode.stopnshop.firebase.FireStoreClass
 import com.macode.stopnshop.model.CartItem
+import com.macode.stopnshop.utilities.Constants
+import com.macode.stopnshop.view.activities.CartListActivity
 
 class CartListAdapter(private val context: Context, private val list: ArrayList<CartItem>): RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
 
@@ -57,6 +59,36 @@ class CartListAdapter(private val context: Context, private val list: ArrayList<
 
             binding.singleCartDeleteButton.setOnClickListener {
                 showAlertDialogToDeleteCartItem(cartItem.id, cartItem.title)
+            }
+
+            binding.singleCartMinusButton.setOnClickListener {
+                if (cartItem.cartQuantity == "1") {
+                    if (context is CartListActivity) {
+                        context.showProgressDialog("Deleting Cart Item...")
+                        fireStoreClass.deleteCartItem(context, cartItem.id, cartItem.title)
+                    }
+                } else {
+                    val cartQuantity: Int = cartItem.cartQuantity.toInt()
+                    val cartItemHashMap = HashMap<String, Any>()
+
+                    cartItemHashMap[Constants.CART_QUANTITY] = (cartQuantity - 1).toString()
+
+                    fireStoreClass.updateMyCart(context, cartItem.id, cartItemHashMap)
+                }
+            }
+
+            binding.singleCartPlusButton.setOnClickListener {
+                val cartQuantity: Int = cartItem.cartQuantity.toInt()
+                if (cartQuantity < cartItem.stockQuantity.toInt()) {
+                    val itemHashMap = HashMap<String, Any>()
+                    itemHashMap[Constants.CART_QUANTITY] = (cartQuantity + 1).toString()
+
+                    fireStoreClass.updateMyCart(context, cartItem.id, itemHashMap)
+                } else {
+                    if (context is CartListActivity) {
+                        context.showErrorSnackBar("You hit the max amount of items available for this product!", true)
+                    }
+                }
             }
         }
     }
