@@ -88,7 +88,8 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.addressesButton -> {
-
+                val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
+                startActivity(intent)
             }
             R.id.logoutButton -> {
                 fireStoreClass.logoutUser(this@SettingsActivity)
