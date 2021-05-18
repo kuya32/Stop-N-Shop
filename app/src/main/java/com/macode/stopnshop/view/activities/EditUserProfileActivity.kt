@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -210,6 +209,7 @@ class EditUserProfileActivity : BaseActivity(), View.OnClickListener {
 
     private fun setUpUserDetails(userDetails: User) {
         loadUserImage(this@EditUserProfileActivity, userDetails.image, binding!!.editUserImage)
+        // TODO: Error occurs when editing profile image, selectedImageUri is null.
         binding!!.editUserFirstNameEditInput.setText(userDetails.firstName)
         binding!!.editUserLastNameEditInput.setText(userDetails.lastName)
         binding!!.editUserUsernameEditInput.setText(userDetails.username)

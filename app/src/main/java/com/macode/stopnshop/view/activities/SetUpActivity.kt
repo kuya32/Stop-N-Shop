@@ -245,7 +245,7 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
 
     fun updateUserSuccess() {
         hideProgressDialog()
-        startActivity(Intent(this@SetUpActivity, MainActivity::class.java))
+        startActivity(Intent(this@SetUpActivity, DashboardActivity::class.java))
         finish()
     }
 }

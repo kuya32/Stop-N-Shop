@@ -26,6 +26,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
@@ -40,6 +41,8 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ImageSelectionDialogBinding
 import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.CartItem
+import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.model.User
 import java.io.File
 import java.io.FileOutputStream
@@ -47,6 +50,7 @@ import java.io.IOException
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 open class BaseActivity : AppCompatActivity() {
@@ -59,19 +63,23 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     var userDetails: User = User()
+    var productDetails: Product = Product()
+    var productID: String = ""
+    lateinit var productList: ArrayList<Product>
+    lateinit var cartItemsList: ArrayList<CartItem>
     var userHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var productHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var selectedImageUri: Uri? = null
     var profileImageURL: String? = ""
     val firebaseAuth = FirebaseAuth.getInstance()
-    val firebaseUser = firebaseAuth.currentUser
+    val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
+    val firebaseUserID = firebaseUser?.uid
     val fireStoreClass: FireStoreClass = FireStoreClass()
     val tokenRef = FirebaseMessaging.getInstance().token
     private val storageRef = FirebaseStorage.getInstance()
     val profileImageRef = storageRef.reference.child("ProfileImage${System.currentTimeMillis()}.png")
     val productImageRef = storageRef.reference.child("ProductImage${System.currentTimeMillis()}.png")
     lateinit var fcmToken: String
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var phoneNumberFormattingTextWatcher: PhoneNumberFormattingTextWatcher = PhoneNumberFormattingTextWatcher()
     private var progressDialog: Dialog? = null
     private var doubleBackToExitPressedOnce = false

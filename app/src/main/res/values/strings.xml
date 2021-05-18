@@ -72,4 +72,26 @@
     <string name="quantity">Quantity</string>
     <string name="noProductsAvailable">No Products Available</string>
     <string name="warning">Warning!</string>
+    <string name="productDescription">Product Description</string>
+    <string name="stockQuantity">Stock Quantity</string>
+    <string name="sellersInfo">Seller Info</string>
+    <string name="status">Status</string>
+    <string name="number">1</string>
+    <string name="editProduct">Edit Product</string>
+    <string name="addToCart">Add to Cart</string>
+    <string name="productAmountMessage">How many items of the product do you want to add?</string>
+    <string name="quantityInStock">Quantity in Stock:</string>
+    <string name="desiredAmount">Desired Amount:</string>
+    <string name="cart">Go to Cart</string>
+    <string name="noCartItemsFound">No Cart Items Found</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="checkout">Checkout</string>
+    <string name="subtotalPrice">$100.00</string>
+    <string name="waSalesTax">WA Sales Tax:</string>
+    <string name="waSalesTaxPrice">$10.40</string>
+    <string name="shipping">Shipping:</string>
+    <string name="shippingPrice">$10.00</string>
+    <string name="totalAmount">Total Amount:</string>
+    <string name="totalAmountPrice">$120.40</string>
+    <string name="outOfStock">OUT OF STOCK</string>
 </resources>

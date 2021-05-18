@@ -1,8 +1,10 @@
 package com.macode.stopnshop.view.activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -25,6 +27,10 @@ class DashboardActivity : BaseActivity() {
 
         setupToolbar()
 
+        binding!!.goToCartFab.setOnClickListener {
+            startActivity(Intent(this@DashboardActivity, CartListActivity::class.java))
+        }
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -38,6 +44,11 @@ class DashboardActivity : BaseActivity() {
         navView.setupWithNavController(navController)
     }
 
+    override fun onResume() {
+        super.onResume()
+        fireStoreClass.checkIfItemExistsInCart(this@DashboardActivity)
+    }
+
     private fun setupToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.dashboardToolbar)
         setSupportActionBar(toolbar)
@@ -48,5 +59,13 @@ class DashboardActivity : BaseActivity() {
 
     override fun onBackPressed() {
         doubleBackToExit()
+    }
+
+    fun itemsFoundInCart() {
+        binding!!.goToCartFab.visibility = View.VISIBLE
+    }
+
+    fun hideCartFabButton() {
+        binding!!.goToCartFab.visibility = View.GONE
     }
 }

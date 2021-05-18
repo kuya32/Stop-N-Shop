@@ -8,7 +8,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.widget.Toolbar
@@ -19,28 +18,30 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
 import com.macode.stopnshop.R
-import com.macode.stopnshop.databinding.ActivityAddProductBinding
-import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.databinding.ActivityAddEditProductBinding
 import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.utilities.SNSTextView
 
-class AddProductActivity : BaseActivity() {
+class AddEditProductActivity : BaseActivity() {
 
-    private var binding: ActivityAddProductBinding? = null
+    private var binding: ActivityAddEditProductBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddProductBinding.inflate(layoutInflater)
+        binding = ActivityAddEditProductBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+
+        if (intent.hasExtra(Constants.PRODUCT_DETAILS)) {
+            productDetails = intent.getParcelableExtra(Constants.PRODUCT_DETAILS)!!
+            establishProductInfo(productDetails)
+        }
 
         setUpToolbar()
 
         binding!!.addProductImageButton.setOnClickListener {
-            imageSelectionDialog(this@AddProductActivity)
+            imageSelectionDialog(this@AddEditProductActivity)
         }
 
         binding!!.addProductSubmitButton.setOnClickListener {
@@ -57,13 +58,13 @@ class AddProductActivity : BaseActivity() {
                     data?.extras?.let {
                         val bitmap: Bitmap = data.extras!!.get("data") as Bitmap
                         selectedImageUri = convertToImageFile(bitmap)
-                        loadUserImage(this@AddProductActivity, selectedImageUri!!, binding!!.addProductImage)
+                        loadUserImage(this@AddEditProductActivity, selectedImageUri!!, binding!!.addProductImage)
                     }
                 }
                 GALLERY -> {
                     data?.let {
                         Glide
-                            .with(this@AddProductActivity)
+                            .with(this@AddEditProductActivity)
                             .load(data.data)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -111,13 +112,25 @@ class AddProductActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.back_white)
-        toolbarTitle.text = resources.getString(R.string.addProduct)
+        if (intent.hasExtra(Constants.PRODUCT_DETAILS)) {
+            toolbarTitle.text = resources.getString(R.string.editProduct)
+        } else {
+            toolbarTitle.text = resources.getString(R.string.addProduct)
+        }
         toolbarTitle.setTextColor(resources.getColor(R.color.white, theme))
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"))
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun establishProductInfo(productDetails: Product) {
+        loadUserImage(this@AddEditProductActivity, productDetails.image, binding!!.addProductImage)
+        binding!!.productTitleEditInput.setText(productDetails.title)
+        binding!!.productPriceEditInput.setText(productDetails.price)
+        binding!!.productDescriptionEditInput.setText(productDetails.description)
+        binding!!.productQuantityEditInput.setText(productDetails.stockQuantity)
     }
 
     private fun validateProductInformation() {
@@ -165,7 +178,7 @@ class AddProductActivity : BaseActivity() {
                     quantity,
                     profileImageURL.toString()
                 )
-                fireStoreClass.uploadProductDetails(this@AddProductActivity, product)
+                fireStoreClass.uploadProductDetails(this@AddEditProductActivity, product)
             }
         }.addOnFailureListener { e ->
             showErrorSnackBar("${e.message}", true)
