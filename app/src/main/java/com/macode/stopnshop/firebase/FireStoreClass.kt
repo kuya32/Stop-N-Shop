@@ -202,13 +202,73 @@ class FireStoreClass {
             .get()
             .addOnSuccessListener { document ->
                 Log.i(activity.javaClass.simpleName, document.documents.toString())
-                if (!document.isEmpty) {
+                if (document.size() > 0) {
                     activity.itemsFoundInCart()
+                } else {
+                    activity.hideCartFabButton()
                 }
             }.addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error while checking the existing cart list", e)
                 showErrorSnackBar(activity, "Sorry, we ran into an error checking your cart!", true)
             }
+    }
+
+    fun getCartList(activity: CartListActivity) {
+        cartItemReference
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                Log.i("CartList", document.documents.toString())
+                val cartList: ArrayList<CartItem> = ArrayList()
+                for (i in document.documents) {
+                    val cartItem = i.toObject(CartItem::class.java)
+                    cartItem!!.id = i.id
+
+                    cartList.add(cartItem)
+                }
+                activity.cartListRetrievalSuccess(cartList)
+            }.addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error retrieving the cart list", e)
+                showErrorSnackBar(activity, "Sorry, we couldn't retrieve your cart list!", true)
+            }
+    }
+
+    fun getAllProductsList(activity: CartListActivity) {
+        productReference.get().addOnSuccessListener { document ->
+            Log.i(activity.javaClass.simpleName, document.documents.toString())
+            val productsList: ArrayList<Product> = ArrayList()
+            for (i in document.documents) {
+                val product = i.toObject(Product::class.java)
+                product!!.id = i.id
+
+                productsList.add(product)
+            }
+
+            activity.allProductsListSuccess(productsList)
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e("AllProductsList", "Error while getting all products list!", e)
+        }
+    }
+
+    fun deleteCartItem(context: Context, id: String, title: String) {
+        cartItemReference.document(id).delete().addOnSuccessListener {
+            when (context) {
+                is CartListActivity -> {
+                    context.deleteCartItemSuccess(title)
+                }
+            }
+        }.addOnFailureListener { e ->
+            when (context) {
+                is CartListActivity -> {
+                    context.hideProgressDialog()
+                    Log.e(context.javaClass.simpleName, "Error deleting cart item from Firestore", e)
+                    showErrorSnackBar(context, "Sorry, we couldn't delete the item from your cart!", true)
+                }
+            }
+
+        }
     }
 
     fun logoutUser(activity: Activity) {

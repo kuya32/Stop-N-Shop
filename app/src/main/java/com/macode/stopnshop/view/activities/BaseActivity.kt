@@ -41,6 +41,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ImageSelectionDialogBinding
 import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.CartItem
 import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.model.User
 import java.io.File
@@ -49,6 +50,7 @@ import java.io.IOException
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 open class BaseActivity : AppCompatActivity() {
@@ -63,6 +65,8 @@ open class BaseActivity : AppCompatActivity() {
     var userDetails: User = User()
     var productDetails: Product = Product()
     var productID: String = ""
+    lateinit var productList: ArrayList<Product>
+    lateinit var cartItemsList: ArrayList<CartItem>
     var userHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var productHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var selectedImageUri: Uri? = null

@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/image"
-        android:src="@drawable/minus"
+        android:src="@drawable/subtract"
         android:layout_marginStart="@dimen/_15sdp"
         app:layout_constraintBottom_toBottomOf="@+id/desiredAmount"
         app:layout_constraintStart_toEndOf="@+id/desiredAmount"

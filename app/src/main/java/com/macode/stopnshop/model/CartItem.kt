@@ -9,8 +9,8 @@ data class CartItem (
     val title: String = "",
     val price: String = "",
     val image: String = "",
-    val cartQuantity: String = "",
-    val stockQuantity: String = "",
+    var cartQuantity: String = "",
+    var stockQuantity: String = "",
     var id: String = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(

@@ -7,7 +7,7 @@
     tools:context=".view.activities.CartListActivity">
 
     <include
-        android:id="@+id/cartToolbar"
+        android:id="@+id/cartListToolbar"
         layout="@layout/main_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,11 +17,12 @@
         android:id="@+id/cartListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/_10sdp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/cartListFrameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cartToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/cartListToolbar" />
 
     <com.macode.stopnshop.utilities.SNSTextView
         android:id="@+id/noCartItemsFound"
@@ -36,7 +37,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cartListFrameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cartToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/cartListToolbar" />
 
     <FrameLayout
         android:id="@+id/cartListFrameLayout"

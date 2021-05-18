@@ -55,7 +55,11 @@ class ProductDetailActivity : BaseActivity() {
                 startActivity(intent)
             }
             R.id.addToCart -> {
-                productDeterminationDialog()
+                if (productDetails.stockQuantity.toInt() == 0) {
+                    showErrorSnackBar("This product is currently out of stock!", true)
+                } else {
+                    productDeterminationDialog()
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -131,8 +135,7 @@ class ProductDetailActivity : BaseActivity() {
         }
 
         dialogBinding.addToCartButton.setOnClickListener {
-            val stockLeftOver = (amountAvailable - desiredAmount).toString()
-            addToCart(desiredAmount.toString(), stockLeftOver)
+            addToCart(desiredAmount.toString(), amountAvailable.toString())
             dialog.dismiss()
         }
 
@@ -141,7 +144,7 @@ class ProductDetailActivity : BaseActivity() {
         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
     }
 
-    private fun addToCart(desiredAmount: String, stockLeftOver: String) {
+    private fun addToCart(desiredAmount: String, stockQuantity: String) {
         productID = productDetails.id
         val addToCartItem = CartItem(
             fireStoreClass.getCurrentUserID(),
@@ -150,7 +153,7 @@ class ProductDetailActivity : BaseActivity() {
             productDetails.price,
             productDetails.image,
             desiredAmount,
-            stockLeftOver
+            stockQuantity
         )
 
         showProgressDialog("Adding item to cart...")

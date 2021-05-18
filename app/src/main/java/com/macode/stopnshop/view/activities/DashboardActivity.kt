@@ -64,4 +64,8 @@ class DashboardActivity : BaseActivity() {
     fun itemsFoundInCart() {
         binding!!.goToCartFab.visibility = View.VISIBLE
     }
+
+    fun hideCartFabButton() {
+        binding!!.goToCartFab.visibility = View.GONE
+    }
 }

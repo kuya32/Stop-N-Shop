@@ -93,4 +93,5 @@
     <string name="shippingPrice">$10.00</string>
     <string name="totalAmount">Total Amount:</string>
     <string name="totalAmountPrice">$120.40</string>
+    <string name="outOfStock">OUT OF STOCK</string>
 </resources>

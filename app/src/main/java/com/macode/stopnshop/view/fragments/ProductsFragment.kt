@@ -98,7 +98,7 @@ class ProductsFragment : BaseFragment() {
         val inflater: LayoutInflater = LayoutInflater.from(requireContext())
         val view: View = inflater.inflate(R.layout.alert_dialog_title, null)
         builder.setCustomTitle(view)
-        builder.setMessage("Are you sure you want to delete $title")
+        builder.setMessage("Are you sure you want to delete $title?")
         builder.setPositiveButton("Yes") { dialogInterface, _ ->
             dialogInterface.dismiss()
             fireStoreClass.deleteProduct(this@ProductsFragment, id)
