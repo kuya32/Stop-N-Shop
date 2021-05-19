@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.macode.stopnshop.R
+import com.macode.stopnshop.model.Address
 import com.macode.stopnshop.model.CartItem
 import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.model.User
@@ -26,6 +27,7 @@ class FireStoreClass {
     private val userReference = fireStore.collection("Users")
     private val productReference = fireStore.collection("Products")
     private val cartItemReference = fireStore.collection("CartItems")
+    private val addressReference = fireStore.collection("Addresses")
 
     fun registerUser(activity: RegisterActivity, userInfo: User) {
         userReference.document(getCurrentUserID()).set(userInfo, SetOptions.merge()).addOnSuccessListener {
@@ -285,6 +287,16 @@ class FireStoreClass {
                 }
             }
             Log.e(context.javaClass.simpleName, "Error while updating the cart item.", e)
+        }
+    }
+
+    fun addAddress(activity: AddEditAddressActivity, addressInfo: Address) {
+        addressReference.document().set(addressInfo, SetOptions.merge()).addOnSuccessListener {
+            activity.addEditAddressSuccess(addressInfo.city)
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error while adding the address", e)
+            activity.showErrorSnackBar("Sorry, we couldn't add your address!", true)
         }
     }
 

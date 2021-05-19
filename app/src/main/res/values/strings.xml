@@ -98,13 +98,14 @@
     <string name="noAddressesFound">No Addresses Found</string>
     <string name="addresses">Addresses</string>
     <string name="zipcode">Zipcode</string>
-    <string name="additionalInfo">Additional Info</string>
+    <string name="additionalInfo">Additional Info (Optional)</string>
     <string name="additionalInfoExample">Ex: Apt, suite, unit, building, floor, etc.</string>
     <string name="office">Office</string>
     <string name="other">Other</string>
     <string name="wa">WA</string>
     <string name="nothing"> </string>
     <string name="city">City</string>
+    <string name="otherDetails">Other Details</string>
 
     <string-array name="states">
         <item> </item>

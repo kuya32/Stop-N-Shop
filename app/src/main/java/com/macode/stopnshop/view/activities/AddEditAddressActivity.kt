@@ -18,6 +18,7 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityAddEditAddressBinding
+import com.macode.stopnshop.model.Address
 import java.lang.Exception
 
 class AddEditAddressActivity : BaseActivity() {
@@ -67,9 +68,10 @@ class AddEditAddressActivity : BaseActivity() {
                     val regex = "([^,]+), ([A-Z]{2,})".toRegex()
                     val zipRegex ="\\b\\d{5}\\b".toRegex()
                     val matchResult = regex.find(place.address.toString())?.value.toString()
-                    val zipCodeResult = zipRegex.find(place.address.toString())?.value.toString()
                     val city = matchResult.substring(1, matchResult.indexOf(","))
                     val state = matchResult.substring(matchResult.indexOf(",") + 2)
+                    val zipCodeResult = zipRegex.find(place.address.toString())?.value.toString()
+                    stateSelected = state
                     binding!!.addEditAddressCityEditInput.setText(city)
                     binding!!.addEditStateSpinner.setSelection(resources.getStringArray(R.array.states).indexOf(state))
                     binding!!.addEditAddressZipEditInput.setText(zipCodeResult)
@@ -82,7 +84,89 @@ class AddEditAddressActivity : BaseActivity() {
     }
 
     private fun validateAddressDetails() {
-        TODO("Not yet implemented")
+        val fullName = binding!!.addEditAddressFullNameEditInput.text.toString()
+        val phone = binding!!.addEditAddressPhoneEditInput.text.toString()
+        val address = binding!!.addEditAddressEditInput.text.toString()
+        val city = binding!!.addEditAddressCityEditInput.text.toString()
+        val zipcode = binding!!.addEditAddressZipEditInput.text.toString()
+        val info = binding!!.addEditAddressAdditionalEditInput.text.toString()
+        val type = when {
+            binding!!.addEditAddressHomeRadioButton.isChecked -> {
+                "Home"
+            }
+            binding!!.addEditAddressOfficeRadioButton.isChecked -> {
+                "Office"
+            }
+            binding!!.addEditAddressOtherRadioButton.isChecked -> {
+                "Other"
+            }
+            else -> {
+                ""
+            }
+        }
+        val otherDetails = ""
+        when {
+            fullName.isEmpty() -> {
+                showError(binding!!.addEditAddressFullNameInput, "Please enter your full name!")
+            }
+            phone.isEmpty() || phone.length != 14 -> {
+                hideError(binding!!.addEditAddressFullNameInput)
+                showError(binding!!.addEditAddressPhoneInput, "Please enter your phone number!")
+            }
+            address.isEmpty() -> {
+                hideError(binding!!.addEditAddressPhoneInput)
+                showError(binding!!.addEditAddressInput, "Please enter your street address!")
+            }
+            city.isEmpty() -> {
+                hideError(binding!!.addEditAddressPhoneInput)
+                hideError(binding!!.addEditAddressInput)
+                showError(binding!!.addEditAddressCityInput, "Please enter the city you live in!")
+            }
+            stateSelected.isEmpty() -> {
+                hideError(binding!!.addEditAddressPhoneInput)
+                hideError(binding!!.addEditAddressCityInput)
+                showErrorSnackBar("Please select the state you live in!", true)
+            }
+            zipcode.isEmpty() -> {
+                hideError(binding!!.addEditAddressPhoneInput)
+                showError(binding!!.addEditAddressZipInput, "Please enter the zipcode you live in!")
+            }
+            type.isEmpty() -> {
+                hideError(binding!!.addEditAddressPhoneInput)
+                hideError(binding!!.addEditAddressZipInput)
+                showErrorSnackBar("Please select an address type!", true)
+            }
+            else -> {
+                savingAddressInfoToFirebase(fullName, phone, address, city, stateSelected, zipcode, info, type, otherDetails)
+            }
+        }
+    }
+
+    private fun savingAddressInfoToFirebase(
+        fullName: String,
+        phone: String,
+        address: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        additionalInfo: String,
+        type: String,
+        otherDetails: String
+    ) {
+        showProgressDialog("Saving address...")
+        val addressModel = Address(
+            fireStoreClass.getCurrentUserID(),
+            fullName,
+            phone,
+            address,
+            city,
+            state,
+            zipcode,
+            additionalInfo,
+            type,
+            otherDetails
+        )
+        fireStoreClass.addAddress(this@AddEditAddressActivity, addressModel)
     }
 
     private fun setUpToolbar() {
@@ -116,7 +200,12 @@ class AddEditAddressActivity : BaseActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
-
         }
+    }
+
+    fun addEditAddressSuccess(city: String) {
+        hideProgressDialog()
+        showErrorSnackBar("Your $city address was successfully added!", false)
+        finish()
     }
 }
