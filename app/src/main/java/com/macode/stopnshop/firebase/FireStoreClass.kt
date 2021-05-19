@@ -300,6 +300,23 @@ class FireStoreClass {
         }
     }
 
+    fun getAddressList(activity: AddressListActivity) {
+        addressReference.whereEqualTo(Constants.USER_ID, getCurrentUserID()).get().addOnSuccessListener { document ->
+            Log.i(activity.javaClass.simpleName, document.documents.toString())
+            val addressList: ArrayList<Address> = ArrayList()
+            for (i in document.documents) {
+                val address = i.toObject(Address::class.java)
+                address!!.id = i.id
+                addressList.add(address)
+            }
+            activity.addressListRetrievalSuccess(addressList)
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error loading the address list", e)
+            activity.showErrorSnackBar("Sorry, we couldn't load your address list!", true)
+        }
+    }
+
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()

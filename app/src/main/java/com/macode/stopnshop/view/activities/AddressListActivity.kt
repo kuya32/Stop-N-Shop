@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityAddressListBinding
+import com.macode.stopnshop.model.Address
 
 class AddressListActivity : BaseActivity() {
 
@@ -26,6 +27,11 @@ class AddressListActivity : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        getAddressList()
+    }
+
     private fun setUpToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.addressListToolbar)
         setSupportActionBar(toolbar)
@@ -38,5 +44,14 @@ class AddressListActivity : BaseActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun getAddressList() {
+        showProgressDialog("Retrieving address list...")
+        fireStoreClass.getAddressList(this@AddressListActivity)
+    }
+
+    fun addressListRetrievalSuccess(addressList: ArrayList<Address>) {
+        hideProgressDialog()
     }
 }

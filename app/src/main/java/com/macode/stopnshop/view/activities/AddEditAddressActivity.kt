@@ -56,6 +56,14 @@ class AddEditAddressActivity : BaseActivity() {
         binding!!.addEditAddressSubmitButton.setOnClickListener {
             validateAddressDetails()
         }
+
+        binding!!.addEditAddressTypeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.addEditAddressOtherRadioButton) {
+                binding!!.addEditAddressOtherDetailsInput.visibility = View.VISIBLE
+            } else {
+                binding!!.addEditAddressOtherDetailsInput.visibility = View.GONE
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -104,7 +112,7 @@ class AddEditAddressActivity : BaseActivity() {
                 ""
             }
         }
-        val otherDetails = ""
+        val otherDetails = binding!!.addEditAddressOtherDetailsEditInput.text.toString()
         when {
             fullName.isEmpty() -> {
                 showError(binding!!.addEditAddressFullNameInput, "Please enter your full name!")
@@ -136,7 +144,11 @@ class AddEditAddressActivity : BaseActivity() {
                 hideError(binding!!.addEditAddressZipInput)
                 showErrorSnackBar("Please select an address type!", true)
             }
+            type == "Other" && otherDetails.isEmpty() -> {
+                showError(binding!!.addEditAddressOtherDetailsInput, "Please enter the additional details for type!")
+            }
             else -> {
+                hideError(binding!!.addEditAddressOtherDetailsInput)
                 savingAddressInfoToFirebase(fullName, phone, address, city, stateSelected, zipcode, info, type, otherDetails)
             }
         }
