@@ -1,5 +1,6 @@
 package com.macode.stopnshop.view.activities
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityAddressListBinding
 
-class AddressListActivity : AppCompatActivity() {
+class AddressListActivity : BaseActivity() {
 
     private var binding: ActivityAddressListBinding? = null
 
@@ -18,6 +19,11 @@ class AddressListActivity : AppCompatActivity() {
         setContentView(binding!!.root)
 
         setUpToolbar()
+
+        binding!!.addAddressButton.setOnClickListener {
+            val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setUpToolbar() {

@@ -130,6 +130,9 @@ class EditUserProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 PLACE_AUTOCOMPLETE_REQUEST_CODE -> {
                     val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                    println(place.toString())
+                    println(place.name)
+                    println(place.address)
                     val regex = "([^,]+), ([A-Z]{2,})".toRegex()
                     val matchResult = regex.find(place.address.toString())
                     binding!!.editUserLocationEditInput.setText(matchResult?.value.toString())
