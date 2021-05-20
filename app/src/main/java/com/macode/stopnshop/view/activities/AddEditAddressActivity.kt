@@ -31,6 +31,8 @@ class AddEditAddressActivity : BaseActivity() {
         binding = ActivityAddEditAddressBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
+        if (intent.hasExtra())
+
         setUpToolbar()
 
         if (!Places.isInitialized()) {
@@ -174,8 +176,8 @@ class AddEditAddressActivity : BaseActivity() {
             city,
             state,
             zipcode,
-            additionalInfo,
             type,
+            additionalInfo,
             otherDetails
         )
         fireStoreClass.addAddress(this@AddEditAddressActivity, addressModel)

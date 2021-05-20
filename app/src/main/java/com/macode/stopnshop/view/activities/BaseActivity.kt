@@ -41,6 +41,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ImageSelectionDialogBinding
 import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.Address
 import com.macode.stopnshop.model.CartItem
 import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.model.User
@@ -59,11 +60,13 @@ open class BaseActivity : AppCompatActivity() {
         const val CAMERA = 1
         const val GALLERY = 2
         const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 3
+        const val EDIT_ADDRESS_REQUEST_CODE = 4
         const val IMAGE_DIRECTORY = "StopNShopImages"
     }
 
     var userDetails: User = User()
     var productDetails: Product = Product()
+    var addressDetails: Address = Address()
     var productID: String = ""
     lateinit var productList: ArrayList<Product>
     lateinit var cartItemsList: ArrayList<CartItem>

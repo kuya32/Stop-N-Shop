@@ -106,6 +106,9 @@
     <string name="nothing"> </string>
     <string name="city">City</string>
     <string name="otherDetails">Other Details</string>
+    <string name="streetAddress">Street Address</string>
+    <string name="addressCityStateZip">City, State Zipcode</string>
+    <string name="type">Type</string>
 
     <string-array name="states">
         <item> </item>

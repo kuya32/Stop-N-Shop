@@ -8,5 +8,5 @@ object Constants {
     const val USER_ID: String = "userID"
     const val PRODUCT_DETAILS: String = "productDetails"
     const val CART_QUANTITY: String = "cartQuantity"
-
+    const val ADDRESS_DETAILS: String = "addressDetails"
 }
