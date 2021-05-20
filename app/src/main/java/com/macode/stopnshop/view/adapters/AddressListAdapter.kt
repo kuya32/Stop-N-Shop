@@ -12,7 +12,7 @@ import com.macode.stopnshop.model.Address
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.AddEditAddressActivity
 
-class AddressListAdapter(private val context: Context, private val list: ArrayList<Address>): RecyclerView.Adapter<AddressListAdapter.ViewHolder>() {
+class AddressListAdapter(private val context: Context, private val list: ArrayList<Address>, private val selectAddressBoolean: Boolean): RecyclerView.Adapter<AddressListAdapter.ViewHolder>() {
 
     private val fireStoreClass: FireStoreClass = FireStoreClass()
 
@@ -31,6 +31,12 @@ class AddressListAdapter(private val context: Context, private val list: ArrayLi
             "${address.city}, ${address.state} ${address.zipcode}".also { binding.singleAddressCityStateZip.text = it }
             "Phone: ${address.phone}".also { binding.singleAddressPhone.text = it }
             binding.singleAddressType.text = address.type
+
+            if (selectAddressBoolean) {
+                itemView.setOnClickListener {
+
+                }
+            }
         }
     }
 
@@ -38,16 +44,10 @@ class AddressListAdapter(private val context: Context, private val list: ArrayLi
         return list.size
     }
 
-    fun notifyEditItem(activity: Activity, position: Int) {
+    fun notifyEditItem(activity: Activity, position: Int, requestCode: Int) {
         val intent = Intent(context, AddEditAddressActivity::class.java)
         intent.putExtra(Constants.ADDRESS_DETAILS, list[position])
-        activity.startActivity(intent)
+        activity.startActivityForResult(intent, requestCode)
         notifyItemChanged(position)
     }
-
-    fun removeAt(position: Int) {
-
-    }
-
-
 }

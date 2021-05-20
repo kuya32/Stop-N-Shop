@@ -60,6 +60,7 @@ open class BaseActivity : AppCompatActivity() {
         const val CAMERA = 1
         const val GALLERY = 2
         const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 3
+        const val ADD_EDIT_ADDRESS_REQUEST_CODE = 4
         const val IMAGE_DIRECTORY = "StopNShopImages"
     }
 

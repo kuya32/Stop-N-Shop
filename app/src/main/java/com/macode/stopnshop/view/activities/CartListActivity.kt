@@ -1,5 +1,6 @@
 package com.macode.stopnshop.view.activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityCartListBinding
 import com.macode.stopnshop.model.CartItem
 import com.macode.stopnshop.model.Product
+import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.utilities.SNSEditText
 import com.macode.stopnshop.utilities.SNSTextView
 import com.macode.stopnshop.view.adapters.CartListAdapter
@@ -26,6 +28,12 @@ class CartListActivity : BaseActivity() {
         setContentView(binding!!.root)
 
         setUpToolbar()
+
+        binding!!.checkoutButton.setOnClickListener {
+            val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
+            intent.putExtra(Constants.SELECT_ADDRESS_BOOLEAN, true)
+            startActivity(intent)
+        }
     }
 
     private fun setUpToolbar() {

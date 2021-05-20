@@ -282,6 +282,7 @@ class AddEditAddressActivity : BaseActivity() {
     fun addEditAddressSuccess(city: String) {
         hideProgressDialog()
         showErrorSnackBar("Your $city address was successfully added!", false)
+        setResult(RESULT_OK)
         Handler(Looper.getMainLooper()).postDelayed({
             finish()
         }, 1000)
@@ -290,6 +291,7 @@ class AddEditAddressActivity : BaseActivity() {
     fun updateAddressSuccess() {
         hideProgressDialog()
         showErrorSnackBar("Your address was successfully updated!", false)
+        setResult(RESULT_OK)
         Handler(Looper.getMainLooper()).postDelayed({
             finish()
         }, 1000)

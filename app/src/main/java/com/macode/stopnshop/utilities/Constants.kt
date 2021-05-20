@@ -9,4 +9,5 @@ object Constants {
     const val PRODUCT_DETAILS: String = "productDetails"
     const val CART_QUANTITY: String = "cartQuantity"
     const val ADDRESS_DETAILS: String = "addressDetails"
+    const val SELECT_ADDRESS_BOOLEAN: String = "selectAddressBoolean"
 }

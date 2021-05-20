@@ -1,5 +1,6 @@
 package com.macode.stopnshop.view.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityAddressListBinding
 import com.macode.stopnshop.model.Address
+import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.utilities.SwipeToDeleteCallback
 import com.macode.stopnshop.utilities.SwipeToEditCallback
 import com.macode.stopnshop.view.adapters.AddressListAdapter
@@ -21,23 +23,32 @@ import com.macode.stopnshop.view.adapters.AddressListAdapter
 class AddressListActivity : BaseActivity() {
 
     private var binding: ActivityAddressListBinding? = null
+    private var selectAddressBoolean: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddressListBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
+        getAddressList()
+
+        if (intent.hasExtra(Constants.SELECT_ADDRESS_BOOLEAN)) {
+            selectAddressBoolean = intent.getBooleanExtra(Constants.SELECT_ADDRESS_BOOLEAN, false)
+        }
+
         setUpToolbar()
 
         binding!!.addAddressButton.setOnClickListener {
             val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, ADD_EDIT_ADDRESS_REQUEST_CODE)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        getAddressList()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            getAddressList()
+        }
     }
 
     private fun setUpToolbar() {
@@ -45,7 +56,12 @@ class AddressListActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.back_white)
-        supportActionBar?.title = "My Address List"
+        if (selectAddressBoolean) {
+            supportActionBar?.title = "Select Address"
+        } else {
+            supportActionBar?.title = "My Address List"
+        }
+
         toolbar.setTitleTextColor(Color.WHITE)
         supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this@AddressListActivity, R.drawable.gradient_background))
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"))
@@ -67,33 +83,36 @@ class AddressListActivity : BaseActivity() {
             binding!!.addressListRecyclerView.visibility = View.VISIBLE
             binding!!.addressListRecyclerView.layoutManager = LinearLayoutManager(this@AddressListActivity)
             binding!!.addressListRecyclerView.setHasFixedSize(true)
-            val addressAdapter = AddressListAdapter(this@AddressListActivity, addressList)
+            val addressAdapter = AddressListAdapter(this@AddressListActivity, addressList, selectAddressBoolean)
             binding!!.addressListRecyclerView.adapter = addressAdapter
         } else {
             binding!!.noAddressesFound.visibility = View.VISIBLE
             binding!!.addressListRecyclerView.visibility = View.GONE
         }
 
-        val editSwipeHandler = object: SwipeToEditCallback(this@AddressListActivity) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val addressAdapter = binding!!.addressListRecyclerView.adapter as AddressListAdapter
-                addressAdapter.notifyEditItem(this@AddressListActivity, viewHolder.adapterPosition)
-            }
-        }
-
-        val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
-        editItemTouchHelper.attachToRecyclerView(binding!!.addressListRecyclerView)
-
-        val deleteSwipeHandler = object : SwipeToDeleteCallback(this@AddressListActivity) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                showProgressDialog("Deleting address...")
-                fireStoreClass.deleteAddress(this@AddressListActivity, addressList[viewHolder.adapterPosition].id, addressList[viewHolder.adapterPosition].city)
+        if (!selectAddressBoolean) {
+            val editSwipeHandler = object: SwipeToEditCallback(this@AddressListActivity) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val addressAdapter = binding!!.addressListRecyclerView.adapter as AddressListAdapter
+                    addressAdapter.notifyEditItem(this@AddressListActivity, viewHolder.adapterPosition, ADD_EDIT_ADDRESS_REQUEST_CODE)
+                }
             }
 
-        }
+            val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
+            editItemTouchHelper.attachToRecyclerView(binding!!.addressListRecyclerView)
 
-        val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
-        deleteItemTouchHelper.attachToRecyclerView(binding!!.addressListRecyclerView)
+            // TODO: After adding a new address, if I try to delete, I run into an error where the address item does not delete
+            val deleteSwipeHandler = object : SwipeToDeleteCallback(this@AddressListActivity) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    showProgressDialog("Deleting address...")
+                    fireStoreClass.deleteAddress(this@AddressListActivity, addressList[viewHolder.adapterPosition].id, addressList[viewHolder.adapterPosition].city)
+                }
+
+            }
+
+            val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
+            deleteItemTouchHelper.attachToRecyclerView(binding!!.addressListRecyclerView)
+        }
     }
 
     fun addressDeleteSuccess(city: String) {
