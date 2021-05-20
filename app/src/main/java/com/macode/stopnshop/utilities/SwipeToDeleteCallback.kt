@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.macode.stopnshop.R
 
 abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-    private val editIcon = ContextCompat.getDrawable(context, R.drawable.delete)
-    private val intrinsicWidth = editIcon!!.intrinsicWidth
-    private val intrinsicHeight = editIcon!!.intrinsicHeight
+    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.delete_white)
+    private val intrinsicWidth = deleteIcon!!.intrinsicWidth
+    private val intrinsicHeight = deleteIcon!!.intrinsicHeight
     private val background = ColorDrawable()
     private val backgroundColor = Color.parseColor("#f44336")
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)}
@@ -50,14 +50,14 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
         background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
         background.draw(c)
 
-        val editIconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
-        val editIconMargin = (itemHeight - intrinsicHeight) / 2
-        val editIconLeft = itemView.right - editIconMargin - intrinsicWidth
-        val editIconRight = itemView.right - editIconMargin
-        val editIconBottom = editIconTop + intrinsicHeight
+        val deleteIconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
+        val deleteIconMargin = (itemHeight - intrinsicHeight) / 3
+        val deleteIconLeft = itemView.right - deleteIconMargin - intrinsicWidth
+        val deleteIconRight = itemView.right - deleteIconMargin
+        val deleteIconBottom = deleteIconTop + intrinsicHeight
 
-        editIcon!!.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom)
-        editIcon.draw(c)
+        deleteIcon!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+        deleteIcon.draw(c)
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }

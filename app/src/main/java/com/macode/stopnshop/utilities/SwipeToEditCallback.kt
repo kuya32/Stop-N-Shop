@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.macode.stopnshop.R
 
 abstract class SwipeToEditCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-    private val editIcon = ContextCompat.getDrawable(context, R.drawable.edit)
+    private val editIcon = ContextCompat.getDrawable(context, R.drawable.edit_white)
     private val intrinsicWidth = editIcon!!.intrinsicWidth
     private val intrinsicHeight = editIcon!!.intrinsicHeight
     private val background = ColorDrawable()
@@ -51,7 +51,7 @@ abstract class SwipeToEditCallback(context: Context) : ItemTouchHelper.SimpleCal
         background.draw(c)
 
         val editIconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
-        val editIconMargin = (itemHeight - intrinsicHeight)
+        val editIconMargin = (itemHeight - intrinsicHeight) / 2
         val editIconLeft = itemView.left + editIconMargin - intrinsicWidth
         val editIconRight = itemView.left + editIconMargin
         val editIconBottom = editIconTop + intrinsicHeight

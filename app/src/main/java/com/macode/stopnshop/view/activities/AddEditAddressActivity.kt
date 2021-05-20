@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -19,6 +21,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityAddEditAddressBinding
 import com.macode.stopnshop.model.Address
+import com.macode.stopnshop.utilities.Constants
 import java.lang.Exception
 
 class AddEditAddressActivity : BaseActivity() {
@@ -31,7 +34,12 @@ class AddEditAddressActivity : BaseActivity() {
         binding = ActivityAddEditAddressBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        if (intent.hasExtra())
+        addStateSpinner()
+
+        if (intent.hasExtra(Constants.ADDRESS_DETAILS)) {
+            addressDetails = intent.getParcelableExtra(Constants.ADDRESS_DETAILS)!!
+            establishAddressInfo(addressDetails)
+        }
 
         setUpToolbar()
 
@@ -39,7 +47,7 @@ class AddEditAddressActivity : BaseActivity() {
             Places.initialize(this@AddEditAddressActivity, resources.getString(R.string.google_maps_key))
         }
 
-        addStateSpinner()
+
 
         binding!!.addEditAddressPhoneEditInput.addTextChangedListener(phoneNumberFormattingTextWatcher)
 
@@ -64,6 +72,37 @@ class AddEditAddressActivity : BaseActivity() {
                 binding!!.addEditAddressOtherDetailsInput.visibility = View.VISIBLE
             } else {
                 binding!!.addEditAddressOtherDetailsInput.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun establishAddressInfo(addressDetails: Address) {
+        binding!!.addEditAddressFullNameEditInput.setText(addressDetails.name)
+        binding!!.addEditAddressPhoneEditInput.setText(addressDetails.phone)
+        binding!!.addEditAddressEditInput.setText(addressDetails.address)
+        binding!!.addEditAddressCityEditInput.setText(addressDetails.city)
+        stateSelected = addressDetails.state
+        binding!!.addEditStateSpinner.setSelection(resources.getStringArray(R.array.states).indexOf(addressDetails.state))
+        binding!!.addEditAddressZipEditInput.setText(addressDetails.zipcode)
+        binding!!.addEditAddressAdditionalEditInput.setText(addressDetails.additionalInfo)
+        println("${addressDetails.type} HELLO")
+        when (addressDetails.type) {
+            "Home" -> {
+                binding!!.addEditAddressHomeRadioButton.isChecked = true
+                binding!!.addEditAddressOfficeRadioButton.isChecked = false
+                binding!!.addEditAddressOtherRadioButton.isChecked = false
+            }
+            "Office" -> {
+                binding!!.addEditAddressHomeRadioButton.isChecked = false
+                binding!!.addEditAddressOfficeRadioButton.isChecked = true
+                binding!!.addEditAddressOtherRadioButton.isChecked = false
+            }
+            "Other" -> {
+                binding!!.addEditAddressHomeRadioButton.isChecked = false
+                binding!!.addEditAddressOfficeRadioButton.isChecked = false
+                binding!!.addEditAddressOtherRadioButton.isChecked = true
+                binding!!.addEditAddressOtherDetailsInput.visibility = View.VISIBLE
+                binding!!.addEditAddressOtherDetailsEditInput.setText(addressDetails.otherDetails)
             }
         }
     }
@@ -167,20 +206,38 @@ class AddEditAddressActivity : BaseActivity() {
         type: String,
         otherDetails: String
     ) {
-        showProgressDialog("Saving address...")
-        val addressModel = Address(
-            fireStoreClass.getCurrentUserID(),
-            fullName,
-            phone,
-            address,
-            city,
-            state,
-            zipcode,
-            type,
-            additionalInfo,
-            otherDetails
-        )
-        fireStoreClass.addAddress(this@AddEditAddressActivity, addressModel)
+        if (intent.hasExtra(Constants.ADDRESS_DETAILS)) {
+            showProgressDialog("Updating address...")
+            val addressModel = Address(
+                fireStoreClass.getCurrentUserID(),
+                fullName,
+                phone,
+                address,
+                city,
+                state,
+                zipcode,
+                type,
+                additionalInfo,
+                otherDetails,
+                addressDetails.id
+            )
+            fireStoreClass.updateAddress(this@AddEditAddressActivity, addressModel, addressDetails.id)
+        } else {
+            showProgressDialog("Saving address...")
+            val addressModel = Address(
+                fireStoreClass.getCurrentUserID(),
+                fullName,
+                phone,
+                address,
+                city,
+                state,
+                zipcode,
+                type,
+                additionalInfo,
+                otherDetails
+            )
+            fireStoreClass.addAddress(this@AddEditAddressActivity, addressModel)
+        }
     }
 
     private fun setUpToolbar() {
@@ -188,7 +245,12 @@ class AddEditAddressActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.back_white)
-        supportActionBar?.title = "Add Address"
+        if (intent.hasExtra(Constants.ADDRESS_DETAILS)) {
+            supportActionBar?.title = "Editing ${addressDetails.city} Address"
+        } else {
+            supportActionBar?.title = "Add Address"
+        }
+
         toolbar.setTitleTextColor(Color.WHITE)
         supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this@AddEditAddressActivity, R.drawable.gradient_background))
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"))
@@ -220,6 +282,16 @@ class AddEditAddressActivity : BaseActivity() {
     fun addEditAddressSuccess(city: String) {
         hideProgressDialog()
         showErrorSnackBar("Your $city address was successfully added!", false)
-        finish()
+        Handler(Looper.getMainLooper()).postDelayed({
+            finish()
+        }, 1000)
+    }
+
+    fun updateAddressSuccess() {
+        hideProgressDialog()
+        showErrorSnackBar("Your address was successfully updated!", false)
+        Handler(Looper.getMainLooper()).postDelayed({
+            finish()
+        }, 1000)
     }
 }

@@ -317,6 +317,16 @@ class FireStoreClass {
         }
     }
 
+    fun updateAddress(activity: AddEditAddressActivity, addressInfo: Address, addressID: String) {
+        addressReference.document(addressID).set(addressInfo, SetOptions.merge()).addOnSuccessListener {
+            activity.updateAddressSuccess()
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error updating address", e)
+            activity.showErrorSnackBar("Sorry, we couldn't update your address!", true)
+        }
+    }
+
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()
