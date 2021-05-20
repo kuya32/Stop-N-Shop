@@ -77,7 +77,7 @@ class AddressListActivity : BaseActivity() {
         val editSwipeHandler = object: SwipeToEditCallback(this@AddressListActivity) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val addressAdapter = binding!!.addressListRecyclerView.adapter as AddressListAdapter
-                addressAdapter.notifyEditItem(this@AddressListActivity, viewHolder.adapterPosition, EDIT_ADDRESS_REQUEST_CODE)
+                addressAdapter.notifyEditItem(this@AddressListActivity, viewHolder.adapterPosition)
             }
         }
 
@@ -86,14 +86,20 @@ class AddressListActivity : BaseActivity() {
 
         val deleteSwipeHandler = object : SwipeToDeleteCallback(this@AddressListActivity) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val addressAdapter = binding!!.addressListRecyclerView.adapter as AddressListAdapter
-                addressAdapter.removeAt(viewHolder.adapterPosition)
+                showProgressDialog("Deleting address...")
+                fireStoreClass.deleteAddress(this@AddressListActivity, addressList[viewHolder.adapterPosition].id, addressList[viewHolder.adapterPosition].city)
             }
 
         }
 
         val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
         deleteItemTouchHelper.attachToRecyclerView(binding!!.addressListRecyclerView)
+    }
+
+    fun addressDeleteSuccess(city: String) {
+        hideProgressDialog()
+        showErrorSnackBar("$city address successfully deleted!", false)
+        getAddressList()
     }
 
 

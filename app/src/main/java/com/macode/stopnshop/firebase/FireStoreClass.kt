@@ -327,6 +327,16 @@ class FireStoreClass {
         }
     }
 
+    fun deleteAddress(activity: AddressListActivity, addressID: String, addressCity: String) {
+        addressReference.document(addressID).delete().addOnSuccessListener {
+            activity.addressDeleteSuccess(addressCity)
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error deleting address", e)
+            activity.showErrorSnackBar("Sorry, we couldn't delete your address!", true)
+        }
+    }
+
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()

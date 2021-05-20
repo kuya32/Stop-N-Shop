@@ -38,10 +38,10 @@ class AddressListAdapter(private val context: Context, private val list: ArrayLi
         return list.size
     }
 
-    fun notifyEditItem(activity: Activity, position: Int, requestCode: Int) {
+    fun notifyEditItem(activity: Activity, position: Int) {
         val intent = Intent(context, AddEditAddressActivity::class.java)
         intent.putExtra(Constants.ADDRESS_DETAILS, list[position])
-        activity.startActivityForResult(intent, requestCode)
+        activity.startActivity(intent)
         notifyItemChanged(position)
     }
 
