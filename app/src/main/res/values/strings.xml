@@ -109,6 +109,9 @@
     <string name="streetAddress">Street Address</string>
     <string name="addressCityStateZip">City, State Zipcode</string>
     <string name="type">Type</string>
+    <string name="paymentsMethods">Payment Methods</string>
+    <string name="addNewPayment">Add New Payment Method</string>
+    <string name="noPaymentsFound">No payment methods found</string>
 
     <string-array name="states">
         <item> </item>

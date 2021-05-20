@@ -5,34 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryUltraLightColor"
-    tools:context=".view.activities.AddressListActivity">
+    tools:context=".view.activities.PaymentListActivity">
 
     <include
-        android:id="@+id/addressListToolbar"
+        android:id="@+id/paymentListToolbar"
         layout="@layout/main_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.macode.stopnshop.utilities.SNSButton
-        android:id="@+id/addAddressButton"
+        android:id="@+id/addPaymentButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_30sdp"
         android:background="@drawable/primary_color_border_background"
-        android:text="@string/addNewAddress"
+        android:text="@string/addNewPayment"
         android:textColor="@color/primaryColor"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressListToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/paymentListToolbar" />
 
     <com.macode.stopnshop.utilities.SNSTextView
-        android:id="@+id/noAddressesFound"
+        android:id="@+id/noPaymentsFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/noAddressesFound"
+        android:text="@string/noPaymentsFound"
         android:textColor="@color/primaryDarkColor"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
@@ -40,10 +40,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAddressButton" />
+        app:layout_constraintTop_toBottomOf="@+id/addPaymentButton" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/addressListRecyclerView"
+        android:id="@+id/paymentListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/_10sdp"
@@ -52,6 +52,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAddressButton" />
+        app:layout_constraintTop_toBottomOf="@+id/addPaymentButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -303,7 +303,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/item_grey_border_background"
+                android:background="@drawable/profile_image_background"
                 android:foreground="?attr/selectableItemBackground"
                 android:orientation="horizontal"
                 android:padding="@dimen/_10sdp"
@@ -329,6 +329,37 @@
                     android:src="@drawable/arrow_right" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/linearPayment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/profile_image_background"
+                android:foreground="?attr/selectableItemBackground"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="@+id/linearAddress"
+                app:layout_constraintStart_toStartOf="@+id/linearAddress"
+                app:layout_constraintTop_toBottomOf="@+id/linearAddress">
+
+                <com.macode.stopnshop.utilities.SNSTextView
+                    android:id="@+id/paymentsTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:text="@string/paymentsMethods"
+                    android:textSize="@dimen/_16sdp" />
+
+                <ImageView
+                    android:id="@+id/paymentsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_6sdp"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/arrow_right" />
+            </LinearLayout>
+
             <com.macode.stopnshop.utilities.SNSButton
                 android:id="@+id/logoutButton"
                 android:layout_width="0dp"
@@ -343,9 +374,9 @@
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/linearAddress"
-                app:layout_constraintStart_toStartOf="@+id/linearAddress"
-                app:layout_constraintTop_toBottomOf="@+id/linearAddress" />
+                app:layout_constraintEnd_toEndOf="@+id/linearPayment"
+                app:layout_constraintStart_toStartOf="@+id/linearPayment"
+                app:layout_constraintTop_toBottomOf="@+id/linearPayment" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
