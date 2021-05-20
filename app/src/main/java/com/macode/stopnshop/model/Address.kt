@@ -14,9 +14,11 @@ data class Address (
     val type: String = "",
     val additionalInfo: String = "",
     val otherDetails: String = "",
+    val default: String = "",
     var id: String = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -46,6 +48,7 @@ data class Address (
         parcel.writeString(type)
         parcel.writeString(additionalInfo)
         parcel.writeString(otherDetails)
+        parcel.writeString(default)
         parcel.writeString(id)
     }
 

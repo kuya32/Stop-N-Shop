@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.macode.stopnshop.databinding.SingleAddressListItemBinding
@@ -31,6 +32,12 @@ class AddressListAdapter(private val context: Context, private val list: ArrayLi
             "${address.city}, ${address.state} ${address.zipcode}".also { binding.singleAddressCityStateZip.text = it }
             "Phone: ${address.phone}".also { binding.singleAddressPhone.text = it }
             binding.singleAddressType.text = address.type
+
+            if (address.default == "true") {
+                binding.singleAddressDefault.visibility = View.VISIBLE
+            } else {
+                binding.singleAddressDefault.visibility = View.GONE
+            }
 
             if (selectAddressBoolean) {
                 itemView.setOnClickListener {

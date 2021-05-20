@@ -1,5 +1,6 @@
 package com.macode.stopnshop.view.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.macode.stopnshop.databinding.ActivityPaymentListBinding
@@ -13,5 +14,9 @@ class PaymentListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentListBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+
+        binding!!.addPaymentButton.setOnClickListener {
+            startActivity(Intent(this@PaymentListActivity, AddEditPaymentActivity::class.java))
+        }
     }
 }

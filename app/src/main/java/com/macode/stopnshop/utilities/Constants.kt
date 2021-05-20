@@ -10,4 +10,6 @@ object Constants {
     const val CART_QUANTITY: String = "cartQuantity"
     const val ADDRESS_DETAILS: String = "addressDetails"
     const val SELECT_ADDRESS_BOOLEAN: String = "selectAddressBoolean"
+    const val PAYMENT_DETAILS: String = "paymentDetails"
+    const val SELECT_PAYMENT_BOOLEAN: String = "selectPaymentBoolean"
 }

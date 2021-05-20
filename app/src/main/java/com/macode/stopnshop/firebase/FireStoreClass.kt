@@ -327,6 +327,43 @@ class FireStoreClass {
         }
     }
 
+    fun checkAddressListItemsForDefault(
+        activity: AddEditAddressActivity,
+        fullName: String,
+        phone: String,
+        address: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        info: String,
+        type: String,
+        otherDetails: String,
+        default: Boolean
+    ) {
+        addressReference
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo("default", "true")
+            .get()
+            .addOnSuccessListener { document ->
+            Log.i(activity.javaClass.simpleName, document.documents.toString())
+            val defaultList: ArrayList<Address> = ArrayList()
+            for (i in document.documents) {
+                val addressItem = i.toObject(Address::class.java)
+                addressItem!!.id = i.id
+                defaultList.add(addressItem)
+            }
+            addressReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
+                activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+            }.addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error changing the default address item", e)
+                activity.showErrorSnackBar("Sorry, we couldn't change your default address item!", true)
+            }
+        }.addOnFailureListener { e ->
+            Log.e(activity.javaClass.simpleName, "Error loading the default list", e)
+            activity.showErrorSnackBar("Sorry, we couldn't load your default list!", true)
+        }
+    }
+
     fun deleteAddress(activity: AddressListActivity, addressID: String, addressCity: String) {
         addressReference.document(addressID).delete().addOnSuccessListener {
             activity.addressDeleteSuccess(addressCity)

@@ -47,8 +47,6 @@ class AddEditAddressActivity : BaseActivity() {
             Places.initialize(this@AddEditAddressActivity, resources.getString(R.string.google_maps_key))
         }
 
-
-
         binding!!.addEditAddressPhoneEditInput.addTextChangedListener(phoneNumberFormattingTextWatcher)
 
         binding!!.addEditAddressEditInput.setOnClickListener {
@@ -85,7 +83,6 @@ class AddEditAddressActivity : BaseActivity() {
         binding!!.addEditStateSpinner.setSelection(resources.getStringArray(R.array.states).indexOf(addressDetails.state))
         binding!!.addEditAddressZipEditInput.setText(addressDetails.zipcode)
         binding!!.addEditAddressAdditionalEditInput.setText(addressDetails.additionalInfo)
-        println("${addressDetails.type} HELLO")
         when (addressDetails.type) {
             "Home" -> {
                 binding!!.addEditAddressHomeRadioButton.isChecked = true
@@ -103,6 +100,14 @@ class AddEditAddressActivity : BaseActivity() {
                 binding!!.addEditAddressOtherRadioButton.isChecked = true
                 binding!!.addEditAddressOtherDetailsInput.visibility = View.VISIBLE
                 binding!!.addEditAddressOtherDetailsEditInput.setText(addressDetails.otherDetails)
+            }
+        }
+        when (addressDetails.default) {
+            "true" -> {
+                binding!!.addEditDefaultCheckBox.isChecked = true
+            }
+            else -> {
+                binding!!.addEditDefaultCheckBox.isChecked = false
             }
         }
     }
@@ -154,6 +159,14 @@ class AddEditAddressActivity : BaseActivity() {
             }
         }
         val otherDetails = binding!!.addEditAddressOtherDetailsEditInput.text.toString()
+        val default = when {
+            binding!!.addEditDefaultCheckBox.isChecked -> {
+                true
+            }
+            else -> {
+                false
+            }
+        }
         when {
             fullName.isEmpty() -> {
                 showError(binding!!.addEditAddressFullNameInput, "Please enter your full name!")
@@ -190,8 +203,27 @@ class AddEditAddressActivity : BaseActivity() {
             }
             else -> {
                 hideError(binding!!.addEditAddressOtherDetailsInput)
-                savingAddressInfoToFirebase(fullName, phone, address, city, stateSelected, zipcode, info, type, otherDetails)
+                checkingForDefaultAddress(fullName, phone, address, city, stateSelected, zipcode, info, type, otherDetails, default)
             }
+        }
+    }
+
+    private fun checkingForDefaultAddress(
+        fullName: String,
+        phone: String,
+        address: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        info: String,
+        type: String,
+        otherDetails: String,
+        default: Boolean
+    ) {
+        if (default) {
+            fireStoreClass.checkAddressListItemsForDefault(this@AddEditAddressActivity, fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+        } else {
+            savingAddressInfoToFirebase(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
         }
     }
 
@@ -204,10 +236,12 @@ class AddEditAddressActivity : BaseActivity() {
         zipcode: String,
         additionalInfo: String,
         type: String,
-        otherDetails: String
+        otherDetails: String,
+        default: Boolean
     ) {
         if (intent.hasExtra(Constants.ADDRESS_DETAILS)) {
             showProgressDialog("Updating address...")
+
             val addressModel = Address(
                 fireStoreClass.getCurrentUserID(),
                 fullName,
@@ -219,6 +253,7 @@ class AddEditAddressActivity : BaseActivity() {
                 type,
                 additionalInfo,
                 otherDetails,
+                default.toString(),
                 addressDetails.id
             )
             fireStoreClass.updateAddress(this@AddEditAddressActivity, addressModel, addressDetails.id)
@@ -234,7 +269,8 @@ class AddEditAddressActivity : BaseActivity() {
                 zipcode,
                 type,
                 additionalInfo,
-                otherDetails
+                otherDetails,
+                default.toString()
             )
             fireStoreClass.addAddress(this@AddEditAddressActivity, addressModel)
         }
@@ -295,5 +331,19 @@ class AddEditAddressActivity : BaseActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             finish()
         }, 1000)
+    }
+
+    fun defaultChangeSuccess(
+        fullName: String,
+        phone: String,
+        address: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        info: String,
+        type: String,
+        otherDetails: String,
+        default: Boolean) {
+        savingAddressInfoToFirebase(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
     }
 }

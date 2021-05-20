@@ -27,7 +27,7 @@
                 android:hint="@string/fullName"
                 android:textColor="@color/primaryDarkColor"
                 android:textColorHint="@color/primaryDarkColor"
-                android:textSize="@dimen/_20sdp"
+                android:textSize="@dimen/_18sdp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/singleAddressType"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
                 android:hint="@string/streetAddress"
                 android:textColor="@color/primaryDarkColor"
                 android:textColorHint="@color/primaryDarkColor"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintEnd_toEndOf="@+id/singleAddressType"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/singleAddressFullName" />
@@ -54,8 +54,8 @@
                 android:hint="@string/addressCityStateZip"
                 android:textColor="@color/primaryDarkColor"
                 android:textColorHint="@color/primaryDarkColor"
-                android:textSize="@dimen/_16sdp"
-                app:layout_constraintEnd_toEndOf="@+id/singleAddressStreet"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toStartOf="@+id/singleAddressDefault"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/singleAddressStreet" />
 
@@ -67,9 +67,9 @@
                 android:hint="@string/phone"
                 android:textColor="@color/primaryDarkColor"
                 android:textColorHint="@color/primaryDarkColor"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/singleAddressCityStateZip"
+                app:layout_constraintEnd_toStartOf="@+id/singleAddressDefault"
                 app:layout_constraintStart_toStartOf="@+id/singleAddressCityStateZip"
                 app:layout_constraintTop_toBottomOf="@+id/singleAddressCityStateZip" />
 
@@ -83,9 +83,23 @@
                 android:padding="@dimen/_5sdp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/singleAddressDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/button_background"
+                android:visibility="gone"
+                android:text="@string/defaultText"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 

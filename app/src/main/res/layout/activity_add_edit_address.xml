@@ -274,6 +274,31 @@
             android:textSize="@dimen/_16sdp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:id="@+id/addEditAddressDefault"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/addEditAddressSubmitButton"
+        app:layout_constraintEnd_toEndOf="@+id/addEditAddressSubmitButton"
+        app:layout_constraintStart_toStartOf="@+id/addEditAddressSubmitButton">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/addEditDefaultCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/primaryDarkColor"
+            android:checked="false" />
+
+        <com.macode.stopnshop.utilities.SNSTextView
+            android:id="@+id/addEditDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setAsDefault"
+            android:textSize="@dimen/_12sdp" />
+    </LinearLayout>
+
     <com.macode.stopnshop.utilities.SNSButton
         android:id="@+id/addEditAddressSubmitButton"
         android:layout_width="0dp"

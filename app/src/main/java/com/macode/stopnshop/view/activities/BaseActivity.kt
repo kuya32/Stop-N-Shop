@@ -41,10 +41,8 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ImageSelectionDialogBinding
 import com.macode.stopnshop.firebase.FireStoreClass
-import com.macode.stopnshop.model.Address
-import com.macode.stopnshop.model.CartItem
-import com.macode.stopnshop.model.Product
-import com.macode.stopnshop.model.User
+import com.macode.stopnshop.model.*
+import com.macode.stopnshop.utilities.CreditCardNumberFormattingTextWatcher
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -67,6 +65,7 @@ open class BaseActivity : AppCompatActivity() {
     var userDetails: User = User()
     var productDetails: Product = Product()
     var addressDetails: Address = Address()
+    var paymentDetails: Payment = Payment()
     var productID: String = ""
     lateinit var productList: ArrayList<Product>
     lateinit var cartItemsList: ArrayList<CartItem>
@@ -84,6 +83,7 @@ open class BaseActivity : AppCompatActivity() {
     val productImageRef = storageRef.reference.child("ProductImage${System.currentTimeMillis()}.png")
     lateinit var fcmToken: String
     var phoneNumberFormattingTextWatcher: PhoneNumberFormattingTextWatcher = PhoneNumberFormattingTextWatcher()
+    var creditCardNumberFormattingTextWatcher: CreditCardNumberFormattingTextWatcher = CreditCardNumberFormattingTextWatcher()
     private var progressDialog: Dialog? = null
     private var doubleBackToExitPressedOnce = false
 

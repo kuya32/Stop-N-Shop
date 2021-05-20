@@ -30,6 +30,11 @@ class AddressListActivity : BaseActivity() {
         binding = ActivityAddressListBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
+        binding!!.addAddressButton.setOnClickListener {
+            val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
+            startActivityForResult(intent, ADD_EDIT_ADDRESS_REQUEST_CODE)
+        }
+
         getAddressList()
 
         if (intent.hasExtra(Constants.SELECT_ADDRESS_BOOLEAN)) {
@@ -37,11 +42,6 @@ class AddressListActivity : BaseActivity() {
         }
 
         setUpToolbar()
-
-        binding!!.addAddressButton.setOnClickListener {
-            val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
-            startActivityForResult(intent, ADD_EDIT_ADDRESS_REQUEST_CODE)
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -120,6 +120,4 @@ class AddressListActivity : BaseActivity() {
         showErrorSnackBar("$city address successfully deleted!", false)
         getAddressList()
     }
-
-
 }
