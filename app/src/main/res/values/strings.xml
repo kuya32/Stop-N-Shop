@@ -119,6 +119,8 @@
     <string name="expirationDate">Expiration Date</string>
     <string name="cvv">CVV</string>
     <string name="setAsDefaultPayment">Set as default payment method</string>
+    <string name="paymentUpdatedSuccess">Payment method successfully updated!</string>
+    <string name="paymentAddedSuccess">Payment method successfully added!</string>
 
     <string-array name="states">
         <item> </item>

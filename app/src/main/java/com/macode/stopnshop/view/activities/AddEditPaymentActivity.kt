@@ -3,6 +3,8 @@ package com.macode.stopnshop.view.activities
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -211,6 +213,20 @@ class AddEditPaymentActivity : BaseActivity() {
 
             }
         }
+    }
+
+    fun addEditPaymentSuccess() {
+        hideProgressDialog()
+        val message: String = if (intent.hasExtra(Constants.PAYMENT_DETAILS)) {
+            resources.getString(R.string.paymentUpdatedSuccess)
+        } else {
+            resources.getString(R.string.paymentAddedSuccess)
+        }
+        showErrorSnackBar(message, false)
+        setResult(RESULT_OK)
+        Handler(Looper.getMainLooper()).postDelayed({
+            finish()
+        }, 1000)
     }
 
 }

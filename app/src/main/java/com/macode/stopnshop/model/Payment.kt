@@ -11,7 +11,7 @@ data class Payment (
     val expirationYear: String = "",
     val verificationValue: String = "",
     val default: String = "",
-    val id: String = ""
+    var id: String = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,

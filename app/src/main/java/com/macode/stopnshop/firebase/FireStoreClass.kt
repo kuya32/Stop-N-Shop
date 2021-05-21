@@ -12,10 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.macode.stopnshop.R
-import com.macode.stopnshop.model.Address
-import com.macode.stopnshop.model.CartItem
-import com.macode.stopnshop.model.Product
-import com.macode.stopnshop.model.User
+import com.macode.stopnshop.model.*
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.*
 import com.macode.stopnshop.view.fragments.DashboardFragment
@@ -28,6 +25,7 @@ class FireStoreClass {
     private val productReference = fireStore.collection("Products")
     private val cartItemReference = fireStore.collection("CartItems")
     private val addressReference = fireStore.collection("Addresses")
+    private val paymentReference = fireStore.collection("Payments")
 
     fun registerUser(activity: RegisterActivity, userInfo: User) {
         userReference.document(getCurrentUserID()).set(userInfo, SetOptions.merge()).addOnSuccessListener {
@@ -371,6 +369,83 @@ class FireStoreClass {
             activity.hideProgressDialog()
             Log.e(activity.javaClass.simpleName, "Error deleting address", e)
             activity.showErrorSnackBar("Sorry, we couldn't delete your address!", true)
+        }
+    }
+
+    fun addPaymentMethod(activity: AddEditPaymentActivity, paymentInfo: Payment) {
+        addressReference.document().set(paymentInfo, SetOptions.merge()).addOnSuccessListener {
+            activity.addEditPaymentSuccess()
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error while adding the payment method", e)
+            activity.showErrorSnackBar("Sorry, we couldn't add your payment method!", true)
+        }
+    }
+
+    fun getPaymentList(activity:PaymentListActivity) {
+        paymentReference.whereEqualTo(Constants.USER_ID, getCurrentUserID()).get().addOnSuccessListener { document ->
+            Log.i(activity.javaClass.simpleName, document.documents.toString())
+            val paymentList: ArrayList<Payment> = ArrayList()
+            for (i in document.documents) {
+                val payment = i.toObject(Payment::class.java)
+                payment!!.id = i.id
+                paymentList.add(payment)
+            }
+            activity.paymentListRetrievalSuccess(paymentList)
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error loading the payment method list", e)
+            activity.showErrorSnackBar("Sorry, we couldn't load your payment method list!", true)
+        }
+    }
+
+    fun updatePaymentMethod(activity: AddEditPaymentActivity, paymentInfo: Payment, paymentID: String) {
+        paymentReference.document(paymentID).set(paymentInfo, SetOptions.merge()).addOnSuccessListener {
+            activity.addEditPaymentSuccess()
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error updating payment method", e)
+            activity.showErrorSnackBar("Sorry, we couldn't update your payment method!", true)
+        }
+    }
+
+    fun checkPaymentListItemsForDefault(
+        activity: AddEditPaymentActivity,
+        cardName: String,
+        cardNumber: String,
+        month: String,
+        year: String,
+        verificationValue: String,
+        default: Boolean
+    ) {
+        paymentReference
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo("default", "true")
+            .get()
+            .addOnSuccessListener { document ->
+                Log.i(activity.javaClass.simpleName, document.documents.toString())
+                val defaultList: ArrayList<Payment> = ArrayList()
+                for (i in document.documents) {
+                    val payment = i.toObject(Payment::class.java)
+                    payment!!.id = i.id
+                    defaultList.add(payment)
+                }
+                paymentReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
+                    activity.defaultChangeSuccess(cardName, cardNumber, month, year, verificationValue, default)
+                }.addOnFailureListener { e ->
+                    Log.e(activity.javaClass.simpleName, "Error changing the default payment method item")
+                    activity.showErrorSnackBar("Sorry we couldn't change your default payment method item!", true)
+                }
+            }
+    }
+
+    fun deletePaymentMethod(activity: PaymentListActivity, paymentID: String, paymentName: String) {
+        paymentReference.document(paymentID).delete().addOnSuccessListener {
+            activity.paymentSuccessfullyDeleted(paymentName)
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error deleting payment method", e)
+            activity.showErrorSnackBar("Sorry, we couldn't delete your payment method!", true)
         }
     }
 
