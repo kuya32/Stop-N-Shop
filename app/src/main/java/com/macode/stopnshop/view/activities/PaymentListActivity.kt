@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityPaymentListBinding
 import com.macode.stopnshop.model.Payment
 import com.macode.stopnshop.utilities.Constants
+import com.macode.stopnshop.utilities.SwipeToDeleteCallback
 import com.macode.stopnshop.utilities.SwipeToEditCallback
 import com.macode.stopnshop.view.adapters.PaymentListAdapter
 
@@ -87,8 +90,32 @@ class PaymentListActivity : BaseActivity() {
             binding!!.paymentListRecyclerView.visibility = View.GONE
         }
 
-//        if (!selectedPaymentBoolean) {
-//            val editSwipeHandler = object: SwipeToEditCallback(this@PaymentListActivity)
-//        }
+        if (!selectedPaymentBoolean) {
+            val editSwipeHandler = object: SwipeToEditCallback(this@PaymentListActivity) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val paymentAdapter = binding!!.paymentListRecyclerView.adapter as PaymentListAdapter
+                    paymentAdapter.notifyEditItem(this@PaymentListActivity, viewHolder.adapterPosition, ADD_EDIT_PAYMENT_REQUEST_CODE)
+                }
+            }
+
+            val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
+            editItemTouchHelper.attachToRecyclerView(binding!!.paymentListRecyclerView)
+
+            val deleteSwipeHandler = object : SwipeToDeleteCallback(this@PaymentListActivity) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    showProgressDialog("Deleting payment method...")
+                    fireStoreClass.deletePaymentMethod(this@PaymentListActivity, paymentItemList[viewHolder.adapterPosition].id, paymentItemList[viewHolder.adapterPosition].cardNumber)
+                }
+            }
+
+            val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
+            deleteItemTouchHelper.attachToRecyclerView(binding!!.paymentListRecyclerView)
+        }
+    }
+
+    fun paymentMethodSuccessfullyDeleted(endingNumber: String) {
+        hideProgressDialog()
+        showErrorSnackBar("Credit Card ending in ****$endingNumber successfully deleted", false)
+        getPaymentList()
     }
 }

@@ -446,15 +446,16 @@ class FireStoreClass {
             }
     }
 
-//    fun deletePaymentMethod(activity: PaymentListActivity, paymentID: String, paymentName: String) {
-//        paymentReference.document(paymentID).delete().addOnSuccessListener {
-//            activity.paymentSuccessfullyDeleted(paymentName)
-//        }.addOnFailureListener { e ->
-//            activity.hideProgressDialog()
-//            Log.e(activity.javaClass.simpleName, "Error deleting payment method", e)
-//            activity.showErrorSnackBar("Sorry, we couldn't delete your payment method!", true)
-//        }
-//    }
+    fun deletePaymentMethod(activity: PaymentListActivity, paymentID: String, paymentNumber: String) {
+        paymentReference.document(paymentID).delete().addOnSuccessListener {
+            val cardNumberEnding = paymentNumber.substring(paymentNumber.length - 4)
+            activity.paymentMethodSuccessfullyDeleted(cardNumberEnding)
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error deleting payment method", e)
+            activity.showErrorSnackBar("Sorry, we couldn't delete your payment method!", true)
+        }
+    }
 
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {

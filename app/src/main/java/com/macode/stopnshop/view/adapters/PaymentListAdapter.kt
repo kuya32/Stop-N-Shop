@@ -29,7 +29,7 @@ class PaymentListAdapter(private val context: Context, private val list: ArrayLi
             val cardNumberEnding = number.substring(number.length - 4)
             "Credit Card ending in ****$cardNumberEnding".also { binding.singlePaymentEndingNumber.text = it }
             binding.singlePaymentCardName.text = payment.cardName
-            "${payment.expirationMonth}/${payment.expirationYear}".also { binding.singlePaymentExpirationDate.text = it }
+            "Exp: ${payment.expirationMonth}/${payment.expirationYear}".also { binding.singlePaymentExpirationDate.text = it }
 
             if (payment.default == "true") {
                 binding.singlePaymentDefault.visibility = View.VISIBLE
