@@ -121,6 +121,8 @@
     <string name="setAsDefaultPayment">Set as default payment method</string>
     <string name="paymentUpdatedSuccess">Payment method successfully updated!</string>
     <string name="paymentAddedSuccess">Payment method successfully added!</string>
+    <string name="endingNumber">Credit card ending with ****1234</string>
+    <string name="cardName">Card Name</string>
 
     <string-array name="states">
         <item> </item>

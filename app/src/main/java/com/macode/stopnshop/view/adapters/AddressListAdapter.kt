@@ -12,10 +12,9 @@ import com.macode.stopnshop.firebase.FireStoreClass
 import com.macode.stopnshop.model.Address
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.AddEditAddressActivity
+import com.macode.stopnshop.view.activities.AddressListActivity
 
 class AddressListAdapter(private val context: Context, private val list: ArrayList<Address>, private val selectAddressBoolean: Boolean): RecyclerView.Adapter<AddressListAdapter.ViewHolder>() {
-
-    private val fireStoreClass: FireStoreClass = FireStoreClass()
 
     inner class ViewHolder(val binding: SingleAddressListItemBinding): RecyclerView.ViewHolder(binding.root)
 

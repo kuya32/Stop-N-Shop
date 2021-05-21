@@ -30,18 +30,17 @@ class AddressListActivity : BaseActivity() {
         binding = ActivityAddressListBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        binding!!.addAddressButton.setOnClickListener {
-            val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
-            startActivityForResult(intent, ADD_EDIT_ADDRESS_REQUEST_CODE)
-        }
-
-        getAddressList()
-
         if (intent.hasExtra(Constants.SELECT_ADDRESS_BOOLEAN)) {
             selectAddressBoolean = intent.getBooleanExtra(Constants.SELECT_ADDRESS_BOOLEAN, false)
         }
 
         setUpToolbar()
+        getAddressList()
+
+        binding!!.addAddressButton.setOnClickListener {
+            val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
+            startActivityForResult(intent, ADD_EDIT_ADDRESS_REQUEST_CODE)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -78,7 +77,9 @@ class AddressListActivity : BaseActivity() {
     fun addressListRetrievalSuccess(addressList: ArrayList<Address>) {
         hideProgressDialog()
 
-        if (addressList.size > 0) {
+        addressItemList = addressList
+
+        if (addressItemList.size > 0) {
             binding!!.noAddressesFound.visibility = View.GONE
             binding!!.addressListRecyclerView.visibility = View.VISIBLE
             binding!!.addressListRecyclerView.layoutManager = LinearLayoutManager(this@AddressListActivity)
@@ -101,11 +102,10 @@ class AddressListActivity : BaseActivity() {
             val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
             editItemTouchHelper.attachToRecyclerView(binding!!.addressListRecyclerView)
 
-            // TODO: After adding a new address, if I try to delete, I run into an error where the address item does not delete
             val deleteSwipeHandler = object : SwipeToDeleteCallback(this@AddressListActivity) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     showProgressDialog("Deleting address...")
-                    fireStoreClass.deleteAddress(this@AddressListActivity, addressList[viewHolder.adapterPosition].id, addressList[viewHolder.adapterPosition].city)
+                    fireStoreClass.deleteAddress(this@AddressListActivity, addressItemList[viewHolder.adapterPosition].id, addressItemList[viewHolder.adapterPosition].city)
                 }
 
             }

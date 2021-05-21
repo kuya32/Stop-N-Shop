@@ -59,6 +59,7 @@ open class BaseActivity : AppCompatActivity() {
         const val GALLERY = 2
         const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 3
         const val ADD_EDIT_ADDRESS_REQUEST_CODE = 4
+        const val ADD_EDIT_PAYMENT_REQUEST_CODE = 5
         const val IMAGE_DIRECTORY = "StopNShopImages"
     }
 
@@ -69,6 +70,8 @@ open class BaseActivity : AppCompatActivity() {
     var productID: String = ""
     lateinit var productList: ArrayList<Product>
     lateinit var cartItemsList: ArrayList<CartItem>
+    lateinit var addressItemList: ArrayList<Address>
+    lateinit var paymentItemList: ArrayList<Payment>
     var userHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var productHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var selectedImageUri: Uri? = null

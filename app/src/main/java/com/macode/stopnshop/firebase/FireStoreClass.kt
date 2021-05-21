@@ -343,23 +343,23 @@ class FireStoreClass {
             .whereEqualTo("default", "true")
             .get()
             .addOnSuccessListener { document ->
-            Log.i(activity.javaClass.simpleName, document.documents.toString())
-            val defaultList: ArrayList<Address> = ArrayList()
-            for (i in document.documents) {
-                val addressItem = i.toObject(Address::class.java)
-                addressItem!!.id = i.id
-                defaultList.add(addressItem)
-            }
-            addressReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
-                activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+                Log.i(activity.javaClass.simpleName, document.documents.toString())
+                val defaultList: ArrayList<Address> = ArrayList()
+                for (i in document.documents) {
+                    val addressItem = i.toObject(Address::class.java)
+                    addressItem!!.id = i.id
+                    defaultList.add(addressItem)
+                }
+                addressReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
+                    activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+                }.addOnFailureListener { e ->
+                    Log.e(activity.javaClass.simpleName, "Error changing the default address item", e)
+                    activity.showErrorSnackBar("Sorry, we couldn't change your default address item!", true)
+                }
             }.addOnFailureListener { e ->
-                Log.e(activity.javaClass.simpleName, "Error changing the default address item", e)
-                activity.showErrorSnackBar("Sorry, we couldn't change your default address item!", true)
+                Log.e(activity.javaClass.simpleName, "Error loading the default list", e)
+                activity.showErrorSnackBar("Sorry, we couldn't load your default list!", true)
             }
-        }.addOnFailureListener { e ->
-            Log.e(activity.javaClass.simpleName, "Error loading the default list", e)
-            activity.showErrorSnackBar("Sorry, we couldn't load your default list!", true)
-        }
     }
 
     fun deleteAddress(activity: AddressListActivity, addressID: String, addressCity: String) {
@@ -373,7 +373,7 @@ class FireStoreClass {
     }
 
     fun addPaymentMethod(activity: AddEditPaymentActivity, paymentInfo: Payment) {
-        addressReference.document().set(paymentInfo, SetOptions.merge()).addOnSuccessListener {
+        paymentReference.document().set(paymentInfo, SetOptions.merge()).addOnSuccessListener {
             activity.addEditPaymentSuccess()
         }.addOnFailureListener { e ->
             activity.hideProgressDialog()
@@ -430,24 +430,31 @@ class FireStoreClass {
                     payment!!.id = i.id
                     defaultList.add(payment)
                 }
-                paymentReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
+                if (defaultList.size == 0) {
                     activity.defaultChangeSuccess(cardName, cardNumber, month, year, verificationValue, default)
-                }.addOnFailureListener { e ->
-                    Log.e(activity.javaClass.simpleName, "Error changing the default payment method item")
-                    activity.showErrorSnackBar("Sorry we couldn't change your default payment method item!", true)
+                } else {
+                    paymentReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
+                        activity.defaultChangeSuccess(cardName, cardNumber, month, year, verificationValue, default)
+                    }.addOnFailureListener { e ->
+                        Log.e(activity.javaClass.simpleName, "Error changing the default payment method item", e)
+                        activity.showErrorSnackBar("Sorry we couldn't change your default payment method item!", true)
+                    }
                 }
+            }.addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error loading the default list", e)
+                activity.showErrorSnackBar("Sorry, we couldn't load your default list!", true)
             }
     }
 
-    fun deletePaymentMethod(activity: PaymentListActivity, paymentID: String, paymentName: String) {
-        paymentReference.document(paymentID).delete().addOnSuccessListener {
-            activity.paymentSuccessfullyDeleted(paymentName)
-        }.addOnFailureListener { e ->
-            activity.hideProgressDialog()
-            Log.e(activity.javaClass.simpleName, "Error deleting payment method", e)
-            activity.showErrorSnackBar("Sorry, we couldn't delete your payment method!", true)
-        }
-    }
+//    fun deletePaymentMethod(activity: PaymentListActivity, paymentID: String, paymentName: String) {
+//        paymentReference.document(paymentID).delete().addOnSuccessListener {
+//            activity.paymentSuccessfullyDeleted(paymentName)
+//        }.addOnFailureListener { e ->
+//            activity.hideProgressDialog()
+//            Log.e(activity.javaClass.simpleName, "Error deleting payment method", e)
+//            activity.showErrorSnackBar("Sorry, we couldn't delete your payment method!", true)
+//        }
+//    }
 
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {

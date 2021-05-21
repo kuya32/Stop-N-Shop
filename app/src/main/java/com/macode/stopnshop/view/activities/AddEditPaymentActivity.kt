@@ -79,7 +79,7 @@ class AddEditPaymentActivity : BaseActivity() {
             cardName.isEmpty() -> {
                 showError(binding!!.addEditPaymentNameInput, "Please enter the full name on the card!")
             }
-            cardNumber.isEmpty() || cardNumber.length != 20 -> {
+            cardNumber.isEmpty() || cardNumber.length != 19 -> {
                 hideError(binding!!.addEditPaymentNameInput)
                 showError(binding!!.addEditPaymentCardNumberInput, "Please enter a valid card number!")
             }
@@ -227,6 +227,17 @@ class AddEditPaymentActivity : BaseActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             finish()
         }, 1000)
+    }
+
+    fun defaultChangeSuccess(
+        cardName: String,
+        cardNumber: String,
+        month: String,
+        year: String,
+        verificationValue: String,
+        default: Boolean
+    ) {
+        savingPaymentInfoToFirebase(cardName, cardNumber, month, year, verificationValue, default)
     }
 
 }
