@@ -113,37 +113,15 @@
                         app:layout_constraintEnd_toEndOf="@+id/subtotalNumber"
                         app:layout_constraintTop_toBottomOf="@+id/subtotalNumber" />
 
-                    <com.macode.stopnshop.utilities.SNSTextView
-                        android:id="@+id/shippingText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/shipping"
-                        android:textColor="@color/primaryDarkColor"
-                        android:textSize="@dimen/_16sdp"
-                        android:textStyle="italic"
-                        app:layout_constraintStart_toStartOf="@+id/waSalesTaxText"
-                        app:layout_constraintTop_toBottomOf="@+id/waSalesTaxText" />
-
-                    <com.macode.stopnshop.utilities.SNSTextView
-                        android:id="@+id/shippingNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/shippingPrice"
-                        android:textColor="@color/primaryDarkColor"
-                        android:textSize="@dimen/_16sdp"
-                        android:textStyle="italic"
-                        app:layout_constraintEnd_toEndOf="@+id/waSalesTaxNumber"
-                        app:layout_constraintTop_toBottomOf="@+id/waSalesTaxNumber" />
-
                     <View
                         android:id="@+id/calculationsDivider"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:background="@color/grey"
                         android:layout_marginTop="@dimen/_5sdp"
-                        app:layout_constraintTop_toBottomOf="@+id/shippingText"
-                        app:layout_constraintEnd_toEndOf="@+id/shippingNumber"
-                        app:layout_constraintStart_toStartOf="@+id/shippingText" />
+                        app:layout_constraintTop_toBottomOf="@+id/waSalesTaxText"
+                        app:layout_constraintEnd_toEndOf="@+id/waSalesTaxNumber"
+                        app:layout_constraintStart_toStartOf="@+id/waSalesTaxText" />
 
                     <com.macode.stopnshop.utilities.SNSTextView
                         android:id="@+id/totalAmountText"
@@ -156,7 +134,7 @@
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="italic"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/shippingText"
+                        app:layout_constraintStart_toStartOf="@+id/waSalesTaxText"
                         app:layout_constraintTop_toBottomOf="@+id/calculationsDivider" />
 
                     <com.macode.stopnshop.utilities.SNSTextView
@@ -170,7 +148,7 @@
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="italic"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/shippingNumber"
+                        app:layout_constraintEnd_toEndOf="@+id/waSalesTaxNumber"
                         app:layout_constraintTop_toBottomOf="@+id/calculationsDivider" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,9 +159,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_20sdp"
-                android:background="@drawable/button_background"
+                android:background="@drawable/button_background_2"
                 android:text="@string/checkout"
-                android:textColor="@color/white"
+                android:textColor="@color/primaryUltraLightColor"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

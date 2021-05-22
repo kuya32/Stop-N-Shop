@@ -30,8 +30,7 @@ class CartListActivity : BaseActivity() {
         setUpToolbar()
 
         binding!!.checkoutButton.setOnClickListener {
-            val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
-            intent.putExtra(Constants.SELECT_ADDRESS_BOOLEAN, true)
+            val intent = Intent(this@CartListActivity, CheckoutActivity::class.java)
             startActivity(intent)
         }
     }
@@ -123,11 +122,7 @@ class CartListActivity : BaseActivity() {
         val taxTotal: Double = String.format("%.2f", taxTotalNumber).toDouble()
         checkCentsDecimalPlacement(taxTotal, binding!!.waSalesTaxNumber)
 
-        // TODO: Figure out a way to calculate shipping price depending on the user's address
-        val shippingTotal: Double = String.format("%.2f", 0.00).toDouble()
-        checkCentsDecimalPlacement(shippingTotal, binding!!.shippingNumber)
-
-        val totalAmountNumber: Double = subtotal + taxTotal + shippingTotal
+        val totalAmountNumber: Double = subtotal + taxTotal
         val totalAmount: Double = String.format("%.2f", totalAmountNumber).toDouble()
         checkCentsDecimalPlacement(totalAmount, binding!!.totalAmountNumber)
     }

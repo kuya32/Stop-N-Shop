@@ -89,7 +89,7 @@
     <string name="subtotalPrice">$100.00</string>
     <string name="waSalesTax">WA Sales Tax:</string>
     <string name="waSalesTaxPrice">$10.40</string>
-    <string name="shipping">Shipping:</string>
+    <string name="shipping">Shipping &amp; Handling:</string>
     <string name="shippingPrice">$10.00</string>
     <string name="totalAmount">Total Amount:</string>
     <string name="totalAmountPrice">$120.40</string>
@@ -123,6 +123,14 @@
     <string name="paymentAddedSuccess">Payment method successfully added!</string>
     <string name="endingNumber">Credit card ending with ****1234</string>
     <string name="cardName">Card Name</string>
+    <string name="items">Items:</string>
+    <string name="orderTotalText">Order Total:</string>
+    <string name="placeYourOrder">Place Your Order</string>
+    <string name="shippingTo">Shipping to:</string>
+    <string name="somewhere">Somewhere</string>
+    <string name="productItems">Product Items</string>
+    <string name="shippingAddress">Shipping Address</string>
+    <string name="paymentsMethod">Payment Method</string>
 
     <string-array name="states">
         <item> </item>

@@ -350,11 +350,15 @@ class FireStoreClass {
                     addressItem!!.id = i.id
                     defaultList.add(addressItem)
                 }
-                addressReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
+                if (defaultList.size == 0) {
+                    activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+                } else {
+                    addressReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
                     activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
                 }.addOnFailureListener { e ->
                     Log.e(activity.javaClass.simpleName, "Error changing the default address item", e)
                     activity.showErrorSnackBar("Sorry, we couldn't change your default address item!", true)
+                }
                 }
             }.addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error loading the default list", e)
@@ -455,6 +459,33 @@ class FireStoreClass {
             Log.e(activity.javaClass.simpleName, "Error deleting payment method", e)
             activity.showErrorSnackBar("Sorry, we couldn't delete your payment method!", true)
         }
+    }
+
+    fun retrieveDefaultAddress(activity: CheckoutActivity) {
+        val defaultAddressList: ArrayList<Address> = ArrayList()
+        addressReference
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo("default", "true")
+            .get()
+            .addOnSuccessListener { document ->
+                Log.i(activity.javaClass.simpleName, document.documents.toString())
+                for (i in document.documents) {
+                    val addressItem = i.toObject(Address::class.java)
+                    addressItem!!.id = i.id
+                    defaultAddressList.add(addressItem)
+                }
+                if (defaultAddressList.size == 0) {
+                    activity.chooseAddressForCheckout()
+                } else {
+                    activity.establishAddressForCheckout(defaultAddressList[0])
+                }
+            }.addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error loading the default address list", e)
+                activity.showErrorSnackBar(
+                    "Sorry, we couldn't load your default address list!",
+                    true
+                )
+            }
     }
 
     fun logoutUser(activity: Activity) {
