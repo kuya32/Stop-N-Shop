@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityPaymentListBinding
+import com.macode.stopnshop.model.Address
 import com.macode.stopnshop.model.Payment
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.utilities.SwipeToDeleteCallback
@@ -117,5 +118,13 @@ class PaymentListActivity : BaseActivity() {
         hideProgressDialog()
         showErrorSnackBar("Credit Card ending in ****$endingNumber successfully deleted", false)
         getPaymentList()
+    }
+
+    fun defaultPaymentSuccess(paymentItem: Payment, isDefaultSet: Boolean) {
+        val intent = Intent()
+        intent.putExtra(Constants.PAYMENT_DETAILS, paymentItem)
+        intent.putExtra(Constants.SELECT_PAYMENT_BOOLEAN, isDefaultSet)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }

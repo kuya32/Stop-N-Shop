@@ -60,6 +60,8 @@ open class BaseActivity : AppCompatActivity() {
         const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 3
         const val ADD_EDIT_ADDRESS_REQUEST_CODE = 4
         const val ADD_EDIT_PAYMENT_REQUEST_CODE = 5
+        const val DEFAULT_ADDRESS = 6
+        const val DEFAULT_PAYMENT = 7
         const val IMAGE_DIRECTORY = "StopNShopImages"
     }
 

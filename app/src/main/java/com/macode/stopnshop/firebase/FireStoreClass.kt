@@ -488,6 +488,51 @@ class FireStoreClass {
             }
     }
 
+    fun retrieveDefaultPayment(activity: CheckoutActivity) {
+        val defaultPaymentList: ArrayList<Payment> = ArrayList()
+        paymentReference
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo("default", "true")
+            .get()
+            .addOnSuccessListener { document ->
+                Log.i(activity.javaClass.simpleName, document.documents.toString())
+                for (i in document.documents) {
+                    val paymentItem = i.toObject(Payment::class.java)
+                    paymentItem!!.id = i.id
+                    defaultPaymentList.add(paymentItem)
+                }
+                if (defaultPaymentList.size == 0) {
+                    activity.choosePaymentForCheckout()
+                } else {
+                    activity.establishPaymentForCheckout(defaultPaymentList[0])
+                }
+            }.addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error loading the default payment list", e)
+                activity.showErrorSnackBar(
+                    "Sorry, we couldn't load your default payment list!",
+                    true
+                )
+            }
+    }
+
+    fun setDefaultAddress(activity: AddressListActivity, address: Address) {
+        addressReference.document(address.id).update("default", "true").addOnSuccessListener {
+            activity.defaultAddressSuccess(address, true)
+        }.addOnFailureListener { e ->
+            Log.e(activity.javaClass.simpleName, "Error setting default address", e)
+            Toast.makeText(activity, "Sorry, we couldn't set address as default!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun setDefaultPayment(activity: PaymentListActivity, payment: Payment) {
+        paymentReference.document(payment.id).update("default", true).addOnSuccessListener {
+            activity.defaultPaymentSuccess(payment, true)
+        }.addOnFailureListener { e ->
+            Log.e(activity.javaClass.simpleName, "Error setting default payment method", e)
+            Toast.makeText(activity, "Sorry, we couldn't set payment method as default!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()

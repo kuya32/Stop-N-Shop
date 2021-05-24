@@ -24,6 +24,7 @@ class AddressListActivity : BaseActivity() {
 
     private var binding: ActivityAddressListBinding? = null
     private var selectAddressBoolean: Boolean = false
+    private var defaultAddressBoolean: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +85,7 @@ class AddressListActivity : BaseActivity() {
             binding!!.addressListRecyclerView.visibility = View.VISIBLE
             binding!!.addressListRecyclerView.layoutManager = LinearLayoutManager(this@AddressListActivity)
             binding!!.addressListRecyclerView.setHasFixedSize(true)
-            val addressAdapter = AddressListAdapter(this@AddressListActivity, addressList, selectAddressBoolean)
+            val addressAdapter = AddressListAdapter(this@AddressListActivity, addressList, selectAddressBoolean, defaultAddressBoolean)
             binding!!.addressListRecyclerView.adapter = addressAdapter
         } else {
             binding!!.noAddressesFound.visibility = View.VISIBLE
@@ -119,5 +120,13 @@ class AddressListActivity : BaseActivity() {
         hideProgressDialog()
         showErrorSnackBar("$city address successfully deleted!", false)
         getAddressList()
+    }
+
+    fun defaultAddressSuccess(addressItem: Address, isDefaultSet: Boolean) {
+        val intent = Intent()
+        intent.putExtra(Constants.ADDRESS_DETAILS, addressItem)
+        intent.putExtra(Constants.SELECT_ADDRESS_BOOLEAN, isDefaultSet)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }
