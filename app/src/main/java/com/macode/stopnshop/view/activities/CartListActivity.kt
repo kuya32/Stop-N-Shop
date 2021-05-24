@@ -81,7 +81,7 @@ class CartListActivity : BaseActivity() {
 
             binding!!.cartListRecyclerView.layoutManager = LinearLayoutManager(this@CartListActivity)
             binding!!.cartListRecyclerView.setHasFixedSize(true)
-            val cartAdapter = CartListAdapter(this@CartListActivity, cartList)
+            val cartAdapter = CartListAdapter(this@CartListActivity, cartItemsList, true)
             binding!!.cartListRecyclerView.adapter = cartAdapter
 
             getCartPriceCalculations()

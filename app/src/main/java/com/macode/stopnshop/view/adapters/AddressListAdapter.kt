@@ -53,6 +53,11 @@ class AddressListAdapter(private val context: Context, private val list: ArrayLi
                 itemView.setOnClickListener {
                     showAlertDialogToAssignDefaultAddress(address)
                 }
+            } else if (selectAddressBoolean && defaultAddressBoolean) {
+                itemView.setOnClickListener {
+                    val activity = context as AddressListActivity
+                    activity.defaultAddressSuccess(address, true)
+                }
             }
         }
     }

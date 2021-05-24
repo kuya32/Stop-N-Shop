@@ -14,4 +14,6 @@ object Constants {
     const val SELECT_PAYMENT_BOOLEAN: String = "selectPaymentBoolean"
     const val SELECTED_ADDRESS_DETAILS: String = "selectedAddressDetails"
     const val SELECTED_PAYMENT_DETAILS: String = "selectedPaymentDetails"
+    const val DEFAULT_ADDRESS_BOOLEAN: String = "defaultAddressBoolean"
+    const val DEFAULT_PAYMENT_BOOLEAN: String = "defaultPaymentBoolean"
 }

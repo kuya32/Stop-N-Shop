@@ -8,18 +8,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityCheckoutBinding
 import com.macode.stopnshop.model.Address
+import com.macode.stopnshop.model.CartItem
 import com.macode.stopnshop.model.Payment
+import com.macode.stopnshop.model.Product
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.adapters.AddressListAdapter
+import com.macode.stopnshop.view.adapters.CartListAdapter
 
-class CheckoutActivity : BaseActivity() {
+class CheckoutActivity : BaseActivity(), View.OnClickListener {
 
     private var binding: ActivityCheckoutBinding? = null
-    private var isDefaultAddressSet: Boolean = false
-    private var isDefaultPaymentSet: Boolean = false
+    private var isDefaultAddressSet: Boolean = true
+    private var isDefaultPaymentSet: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,26 +32,48 @@ class CheckoutActivity : BaseActivity() {
         setContentView(binding!!.root)
 
         setUpToolbar()
+
+        getProductList()
+
+        binding!!.shippingAddressArrow.setOnClickListener(this@CheckoutActivity)
+        binding!!.paymentMethodArrow.setOnClickListener(this@CheckoutActivity)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             DEFAULT_ADDRESS -> {
-                isDefaultAddressSet = data?.getBooleanExtra(Constants.SELECT_ADDRESS_BOOLEAN, false)!!
+                isDefaultAddressSet = data?.getBooleanExtra(Constants.DEFAULT_ADDRESS_BOOLEAN, false)!!
                 if (resultCode == Activity.RESULT_OK && isDefaultAddressSet) {
-                    establishAddressForCheckout(data.getParcelableExtra(Constants.ADDRESS_DETAILS)!!)
+                    establishAddressForCheckout(data.getParcelableExtra(Constants.SELECTED_ADDRESS_DETAILS)!!)
                 } else if (resultCode == Activity.RESULT_OK && !isDefaultAddressSet) {
-                    establishAddressForCheckout(data.getParcelableExtra(Constants.ADDRESS_DETAILS)!!)
+                    establishAddressForCheckout(data.getParcelableExtra(Constants.SELECTED_ADDRESS_DETAILS)!!)
                 }
             }
             DEFAULT_PAYMENT -> {
-                isDefaultPaymentSet = data?.getBooleanExtra(Constants.SELECT_PAYMENT_BOOLEAN, false)!!
+                isDefaultPaymentSet = data?.getBooleanExtra(Constants.DEFAULT_PAYMENT_BOOLEAN, false)!!
                 if (resultCode == Activity.RESULT_OK && isDefaultPaymentSet) {
-                    establishPaymentForCheckout(data.getParcelableExtra(Constants.PAYMENT_DETAILS)!!)
+                    establishPaymentForCheckout(data.getParcelableExtra(Constants.SELECTED_PAYMENT_DETAILS)!!)
                 } else if (resultCode == Activity.RESULT_OK && !isDefaultPaymentSet) {
-                    establishPaymentForCheckout(data.getParcelableExtra(Constants.PAYMENT_DETAILS)!!)
+                    establishPaymentForCheckout(data.getParcelableExtra(Constants.SELECTED_PAYMENT_DETAILS)!!)
                 }
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.shippingAddressArrow -> {
+                val intent = Intent(this@CheckoutActivity, AddressListActivity::class.java)
+                intent.putExtra(Constants.SELECT_ADDRESS_BOOLEAN, true)
+                intent.putExtra(Constants.DEFAULT_ADDRESS_BOOLEAN, isDefaultAddressSet)
+                startActivityForResult(intent, DEFAULT_ADDRESS)
+            }
+            R.id.paymentMethodArrow -> {
+                val intent = Intent(this@CheckoutActivity, PaymentListActivity::class.java)
+                intent.putExtra(Constants.SELECT_PAYMENT_BOOLEAN, true)
+                intent.putExtra(Constants.DEFAULT_PAYMENT_BOOLEAN, isDefaultAddressSet)
+                startActivityForResult(intent, DEFAULT_PAYMENT)
             }
         }
     }
@@ -66,6 +92,15 @@ class CheckoutActivity : BaseActivity() {
         }
     }
 
+    private fun getProductList() {
+        showProgressDialog("Retrieving product list...")
+        fireStoreClass.getAllProductsList(this@CheckoutActivity)
+    }
+
+    private fun getCartItemList() {
+        fireStoreClass.getCartList(this@CheckoutActivity)
+    }
+
     fun chooseAddressForCheckout() {
         val intent = Intent(this@CheckoutActivity, AddressListActivity::class.java)
         intent.putExtra(Constants.SELECT_ADDRESS_BOOLEAN, true)
@@ -81,11 +116,23 @@ class CheckoutActivity : BaseActivity() {
         if (addressDetails.additionalInfo.isNotEmpty()) {
             binding!!.shippingAddressAdditionalInfo.visibility = View.VISIBLE
             binding!!.shippingAddressAdditionalInfo.text = addressDetails.additionalInfo
+        } else {
+            binding!!.shippingAddressAdditionalInfo.visibility = View.GONE
         }
         if (addressDetails.otherDetails.isNotEmpty()) {
             binding!!.shippingAddressOtherDetails.visibility = View.VISIBLE
             binding!!.shippingAddressOtherDetails.text = addressDetails.otherDetails
+        } else {
+            binding!!.shippingAddressOtherDetails.visibility = View.GONE
         }
+        val fullAddress = "${addressDetails.address} ${addressDetails.city}, ${addressDetails.state}, ${addressDetails.zipcode}"
+        if (fullAddress.length > 23) {
+            val cutFullAddress = fullAddress.substring(0, 23)
+            "$cutFullAddress...".also { binding!!.shippingToValue.text = it }
+        } else {
+            binding!!.shippingToValue.text = fullAddress
+        }
+
         fireStoreClass.retrieveDefaultPayment(this@CheckoutActivity)
     }
 
@@ -101,6 +148,29 @@ class CheckoutActivity : BaseActivity() {
         val number = paymentDetails.cardNumber
         val cardNumberEnding = number.substring(number.length - 4)
         "Credit card ending in ****${cardNumberEnding}".also { binding!!.paymentMethodEndingNumber.text = it }
+    }
+
+    fun allProductListSuccess(productsList: ArrayList<Product>) {
+        productList = productsList
+        getCartItemList()
+    }
+
+    fun cartListRetrievalSuccess(cartList: ArrayList<CartItem>) {
+        hideProgressDialog()
+
+        cartItemsList = cartList
+        for (product in productList) {
+            for (cartItem in cartItemsList) {
+                if (product.id == cartItem.id) {
+                    cartItem.stockQuantity = product.stockQuantity
+                }
+            }
+        }
+
+        binding!!.productItemsRV.layoutManager = LinearLayoutManager(this@CheckoutActivity)
+        binding!!.productItemsRV.setHasFixedSize(true)
+        val checkoutAdapter = CartListAdapter(this@CheckoutActivity, cartItemsList, false)
+        binding!!.productItemsRV.adapter = checkoutAdapter
     }
 
 //    // TODO: Figure out a way to calculate shipping price depending on the user's address

@@ -56,6 +56,11 @@ class PaymentListAdapter(private val context: Context, private val list: ArrayLi
                 itemView.setOnClickListener {
                     showAlertDialogToAssignDefaultPayment(payment)
                 }
+            } else if (selectPaymentBoolean && defaultPaymentBoolean) {
+                itemView.setOnClickListener {
+                    val activity = context as PaymentListActivity
+                    activity.defaultPaymentSuccess(payment, true)
+                }
             }
         }
     }

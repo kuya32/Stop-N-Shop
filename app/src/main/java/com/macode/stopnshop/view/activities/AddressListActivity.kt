@@ -35,6 +35,10 @@ class AddressListActivity : BaseActivity() {
             selectAddressBoolean = intent.getBooleanExtra(Constants.SELECT_ADDRESS_BOOLEAN, false)
         }
 
+        if (intent.hasExtra(Constants.DEFAULT_ADDRESS_BOOLEAN)) {
+            defaultAddressBoolean = intent.getBooleanExtra(Constants.DEFAULT_ADDRESS_BOOLEAN, true)
+        }
+
         setUpToolbar()
         getAddressList()
 
@@ -124,8 +128,8 @@ class AddressListActivity : BaseActivity() {
 
     fun defaultAddressSuccess(addressItem: Address, isDefaultSet: Boolean) {
         val intent = Intent()
-        intent.putExtra(Constants.ADDRESS_DETAILS, addressItem)
-        intent.putExtra(Constants.SELECT_ADDRESS_BOOLEAN, isDefaultSet)
+        intent.putExtra(Constants.SELECTED_ADDRESS_DETAILS, addressItem)
+        intent.putExtra(Constants.DEFAULT_ADDRESS_BOOLEAN, isDefaultSet)
         setResult(RESULT_OK, intent)
         finish()
     }

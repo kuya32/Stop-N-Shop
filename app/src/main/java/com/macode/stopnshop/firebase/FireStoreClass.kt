@@ -213,7 +213,7 @@ class FireStoreClass {
             }
     }
 
-    fun getCartList(activity: CartListActivity) {
+    fun getCartList(activity: Activity) {
         cartItemReference
             .whereEqualTo(Constants.USER_ID, getCurrentUserID())
             .get()
@@ -226,15 +226,30 @@ class FireStoreClass {
 
                     cartList.add(cartItem)
                 }
-                activity.cartListRetrievalSuccess(cartList)
+                when (activity) {
+                    is CartListActivity -> {
+                        activity.cartListRetrievalSuccess(cartList)
+                    }
+                    is CheckoutActivity -> {
+                        activity.cartListRetrievalSuccess(cartList)
+                    }
+                }
+
             }.addOnFailureListener { e ->
-                activity.hideProgressDialog()
+                when (activity) {
+                    is CartListActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is CheckoutActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
                 Log.e(activity.javaClass.simpleName, "Error retrieving the cart list", e)
                 showErrorSnackBar(activity, "Sorry, we couldn't retrieve your cart list!", true)
             }
     }
 
-    fun getAllProductsList(activity: CartListActivity) {
+    fun getAllProductsList(activity: Activity) {
         productReference.get().addOnSuccessListener { document ->
             Log.i(activity.javaClass.simpleName, document.documents.toString())
             val productsList: ArrayList<Product> = ArrayList()
@@ -244,10 +259,25 @@ class FireStoreClass {
 
                 productsList.add(product)
             }
+            when (activity) {
+                is CartListActivity -> {
+                    activity.allProductsListSuccess(productsList)
+                }
+                is CheckoutActivity -> {
+                    activity.allProductListSuccess(productsList)
+                }
+            }
 
-            activity.allProductsListSuccess(productsList)
+
         }.addOnFailureListener { e ->
-            activity.hideProgressDialog()
+            when (activity) {
+                is CartListActivity -> {
+                    activity.hideProgressDialog()
+                }
+                is CheckoutActivity -> {
+                    activity.hideProgressDialog()
+                }
+            }
             Log.e("AllProductsList", "Error while getting all products list!", e)
         }
     }

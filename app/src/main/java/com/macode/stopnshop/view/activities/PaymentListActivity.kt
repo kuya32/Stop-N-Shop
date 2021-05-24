@@ -35,6 +35,10 @@ class PaymentListActivity : BaseActivity() {
             selectedPaymentBoolean = intent.getBooleanExtra(Constants.SELECT_PAYMENT_BOOLEAN, false)
         }
 
+        if (intent.hasExtra(Constants.DEFAULT_PAYMENT_BOOLEAN)) {
+            defaultPaymentBoolean = intent.getBooleanExtra(Constants.DEFAULT_PAYMENT_BOOLEAN, true)
+        }
+
         setUpToolbar()
         getPaymentList()
 
@@ -123,8 +127,8 @@ class PaymentListActivity : BaseActivity() {
 
     fun defaultPaymentSuccess(paymentItem: Payment, isDefaultSet: Boolean) {
         val intent = Intent()
-        intent.putExtra(Constants.PAYMENT_DETAILS, paymentItem)
-        intent.putExtra(Constants.SELECT_PAYMENT_BOOLEAN, isDefaultSet)
+        intent.putExtra(Constants.SELECTED_PAYMENT_DETAILS, paymentItem)
+        intent.putExtra(Constants.DEFAULT_PAYMENT_BOOLEAN, isDefaultSet)
         setResult(RESULT_OK, intent)
         finish()
     }
