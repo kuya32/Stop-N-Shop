@@ -24,6 +24,7 @@ class PaymentListActivity : BaseActivity() {
 
     private var binding: ActivityPaymentListBinding? = null
     private var selectedPaymentBoolean: Boolean = false
+    private var defaultPaymentBoolean: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +85,7 @@ class PaymentListActivity : BaseActivity() {
             binding!!.paymentListRecyclerView.visibility = View.VISIBLE
             binding!!.paymentListRecyclerView.layoutManager = LinearLayoutManager(this@PaymentListActivity)
             binding!!.paymentListRecyclerView.setHasFixedSize(true)
-            val paymentAdapter = PaymentListAdapter(this@PaymentListActivity, paymentItemList, selectedPaymentBoolean)
+            val paymentAdapter = PaymentListAdapter(this@PaymentListActivity, paymentItemList, selectedPaymentBoolean, defaultPaymentBoolean)
             binding!!.paymentListRecyclerView.adapter = paymentAdapter
         } else {
             binding!!.noPaymentsFound.visibility = View.VISIBLE

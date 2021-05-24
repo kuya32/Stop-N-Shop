@@ -525,7 +525,7 @@ class FireStoreClass {
     }
 
     fun setDefaultPayment(activity: PaymentListActivity, payment: Payment) {
-        paymentReference.document(payment.id).update("default", true).addOnSuccessListener {
+        paymentReference.document(payment.id).update("default", "true").addOnSuccessListener {
             activity.defaultPaymentSuccess(payment, true)
         }.addOnFailureListener { e ->
             Log.e(activity.javaClass.simpleName, "Error setting default payment method", e)

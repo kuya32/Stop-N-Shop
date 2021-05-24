@@ -19,6 +19,7 @@ class CheckoutActivity : BaseActivity() {
 
     private var binding: ActivityCheckoutBinding? = null
     private var isDefaultAddressSet: Boolean = false
+    private var isDefaultPaymentSet: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +32,21 @@ class CheckoutActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        isDefaultAddressSet = data?.getBooleanExtra(Constants.SELECT_ADDRESS_BOOLEAN, false)!!
         when (requestCode) {
             DEFAULT_ADDRESS -> {
+                isDefaultAddressSet = data?.getBooleanExtra(Constants.SELECT_ADDRESS_BOOLEAN, false)!!
                 if (resultCode == Activity.RESULT_OK && isDefaultAddressSet) {
                     establishAddressForCheckout(data.getParcelableExtra(Constants.ADDRESS_DETAILS)!!)
                 } else if (resultCode == Activity.RESULT_OK && !isDefaultAddressSet) {
                     establishAddressForCheckout(data.getParcelableExtra(Constants.ADDRESS_DETAILS)!!)
+                }
+            }
+            DEFAULT_PAYMENT -> {
+                isDefaultPaymentSet = data?.getBooleanExtra(Constants.SELECT_PAYMENT_BOOLEAN, false)!!
+                if (resultCode == Activity.RESULT_OK && isDefaultPaymentSet) {
+                    establishPaymentForCheckout(data.getParcelableExtra(Constants.PAYMENT_DETAILS)!!)
+                } else if (resultCode == Activity.RESULT_OK && !isDefaultPaymentSet) {
+                    establishPaymentForCheckout(data.getParcelableExtra(Constants.PAYMENT_DETAILS)!!)
                 }
             }
         }
@@ -83,11 +92,15 @@ class CheckoutActivity : BaseActivity() {
     fun choosePaymentForCheckout() {
         val intent = Intent(this@CheckoutActivity, PaymentListActivity::class.java)
         intent.putExtra(Constants.SELECT_PAYMENT_BOOLEAN, true)
-        startActivity(intent)
+        startActivityForResult(intent, DEFAULT_PAYMENT)
     }
 
     fun establishPaymentForCheckout(paymentItem: Payment) {
-
+        paymentDetails = paymentItem
+        binding!!.paymentMethodName.text = paymentDetails.cardName
+        val number = paymentDetails.cardNumber
+        val cardNumberEnding = number.substring(number.length - 4)
+        "Credit card ending in ****${cardNumberEnding}".also { binding!!.paymentMethodEndingNumber.text = it }
     }
 
 //    // TODO: Figure out a way to calculate shipping price depending on the user's address

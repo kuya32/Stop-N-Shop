@@ -36,6 +36,7 @@ class PaymentListAdapter(private val context: Context, private val list: ArrayLi
         return ViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val payment = list[position]
         with(holder) {
@@ -53,7 +54,7 @@ class PaymentListAdapter(private val context: Context, private val list: ArrayLi
 
             if (selectPaymentBoolean && !defaultPaymentBoolean) {
                 itemView.setOnClickListener {
-
+                    showAlertDialogToAssignDefaultPayment(payment)
                 }
             }
         }
@@ -83,7 +84,7 @@ class PaymentListAdapter(private val context: Context, private val list: ArrayLi
         }
         builder.setNegativeButton("No") { dialogInterface, _ ->
             dialogInterface.dismiss()
-            val activity = context as AddressListActivity
+            val activity = context as PaymentListActivity
             activity.defaultPaymentSuccess(paymentItem, false)
         }
         val alertDialog: AlertDialog = builder.create()
