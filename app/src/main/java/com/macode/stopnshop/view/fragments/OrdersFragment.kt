@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.FragmentDashboardBinding
 import com.macode.stopnshop.databinding.FragmentOrdersBinding
+import com.macode.stopnshop.model.Order
 import com.macode.stopnshop.view.activities.BaseActivity
 import com.macode.stopnshop.viewmodel.ui.notifications.NotificationsViewModel
 
@@ -32,9 +33,12 @@ class OrdersFragment : BaseFragment() {
 
         setUpToolbar(view)
 
-        binding!!.textNotifications.text = "This is the orders fragment"
-
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getMyOrdersList()
     }
 
     private fun setUpToolbar(view: View) {
@@ -44,5 +48,15 @@ class OrdersFragment : BaseFragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
             ContextCompat.getDrawable(requireActivity(), R.drawable.gradient_background))
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"))
+    }
+
+    private fun getMyOrdersList() {
+        showProgressDialog("Retrieving user order list...")
+        fireStoreClass.getMyOrdersList(this@OrdersFragment)
+    }
+
+    fun populateOrdersListInUI(orderList: ArrayList<Order>) {
+        hideProgressDialog()
+
     }
 }

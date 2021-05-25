@@ -288,6 +288,10 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun orderPlacedSuccess() {
+        fireStoreClass.updateProductAndCartDetails(this@CheckoutActivity, cartItemsList)
+    }
+
+    fun productAndCartDetailsUpdatedSuccessfully() {
         hideProgressDialog()
         showErrorSnackBar("Your order was placed!", false)
         Handler(Looper.getMainLooper()).postDelayed({

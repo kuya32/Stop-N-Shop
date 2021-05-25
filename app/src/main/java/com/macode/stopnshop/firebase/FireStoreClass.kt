@@ -17,6 +17,7 @@ import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.*
 import com.macode.stopnshop.view.fragments.DashboardFragment
 import com.macode.stopnshop.view.fragments.EditEmailFragment
+import com.macode.stopnshop.view.fragments.OrdersFragment
 import com.macode.stopnshop.view.fragments.ProductsFragment
 
 class FireStoreClass {
@@ -573,6 +574,47 @@ class FireStoreClass {
             activity.hideProgressDialog()
             Log.e(activity.javaClass.simpleName, "Error while placing order", e)
             activity.showErrorSnackBar("Sorry, we couldn't place your order!", true)
+        }
+    }
+
+    fun updateProductAndCartDetails(activity: CheckoutActivity, cartList: ArrayList<CartItem>) {
+        val writeBatch = fireStore.batch()
+
+        for (cartItem in cartList) {
+            val productHashmap = HashMap<String, Any>()
+            productHashmap["stockQuantity"] = (cartItem.stockQuantity.toInt() - cartItem.cartQuantity.toInt()).toString()
+            val productDocumentReference = productReference.document(cartItem.productID)
+            writeBatch.update(productDocumentReference, productHashmap)
+        }
+
+        for (cartItem in cartList) {
+            val cartItemDocumentReference = cartItemReference.document(cartItem.id)
+            writeBatch.delete(cartItemDocumentReference)
+        }
+
+        writeBatch.commit().addOnSuccessListener {
+            activity.productAndCartDetailsUpdatedSuccessfully()
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error updating product stock and deleting cart", e)
+            activity.showErrorSnackBar("We couldn't update the product stock and delete your cart items!", true)
+        }
+    }
+
+    fun getMyOrdersList(fragment: OrdersFragment) {
+        orderReference.whereEqualTo(Constants.USER_ID, getCurrentUserID()).get().addOnSuccessListener { document ->
+            Log.i(fragment.javaClass.simpleName, document.documents.toString())
+            val orderList: ArrayList<Order> = ArrayList()
+            for (i in document.documents) {
+                val orderItem = i.toObject(Order::class.java)!!
+                orderItem.id = i.id
+                orderList.add(orderItem)
+            }
+            fragment.populateOrdersListInUI(orderList)
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error retrieving user order list", e)
+            fragment.showErrorSnackBar("Sorry, we couldn't retrieve your order list!", true)
         }
     }
 

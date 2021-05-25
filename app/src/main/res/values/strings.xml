@@ -131,6 +131,7 @@
     <string name="productItems">Product Items</string>
     <string name="shippingAddress">Shipping Address</string>
     <string name="paymentsMethod">Payment Method</string>
+    <string name="noOrdersFound">No Orders Found</string>
 
     <string-array name="states">
         <item> </item>
