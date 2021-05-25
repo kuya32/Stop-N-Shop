@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomNoActionBarTheme">
-        <activity android:name=".view.activities.AddEditPaymentActivity"></activity>
+        <activity android:name=".view.activities.OrderDetailActivity"></activity>
+        <activity android:name=".view.activities.AddEditPaymentActivity" />
         <activity android:name=".view.activities.PaymentListActivity" />
         <activity android:name=".view.activities.CheckoutActivity" />
         <activity android:name=".view.activities.AddEditAddressActivity" />

@@ -1,6 +1,7 @@
 package com.macode.stopnshop.view.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.SingleOrderListItemBinding
 import com.macode.stopnshop.model.Order
 import com.macode.stopnshop.utilities.Constants
+import com.macode.stopnshop.view.activities.OrderDetailActivity
 import com.macode.stopnshop.view.fragments.OrdersFragment
 
 class OrderListAdapter(private val context: Context, private val list: ArrayList<Order>, private val fragment: OrdersFragment): RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
@@ -34,16 +36,16 @@ class OrderListAdapter(private val context: Context, private val list: ArrayList
                 .into(binding.singleOrderImage)
 
             binding.orderNumber.text = order.title
-            binding.orderPrice.text = order.totalAmount
+            "$${order.totalAmount}".also { binding.orderPrice.text = it }
 
             binding.deleteOrderButton.setOnClickListener {
                 fragment.showAlertDialogToDeleteOrder(order.id, order.title)
             }
 
             itemView.setOnClickListener {
-//                val intent = Intent(context, )
-//                intent.putExtra(Constants.ORDER_DETAILS, order)
-//                context.startActivity(intent)
+                val intent = Intent(context, OrderDetailActivity::class.java)
+                intent.putExtra(Constants.ORDER_DETAILS, order)
+                context.startActivity(intent)
             }
         }
     }

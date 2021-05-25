@@ -69,6 +69,7 @@ open class BaseActivity : AppCompatActivity() {
     var productDetails: Product = Product()
     var addressDetails: Address = Address()
     var paymentDetails: Payment = Payment()
+    var orderDetails: Order = Order()
     var productID: String = ""
     lateinit var productList: ArrayList<Product>
     lateinit var cartItemsList: ArrayList<CartItem>

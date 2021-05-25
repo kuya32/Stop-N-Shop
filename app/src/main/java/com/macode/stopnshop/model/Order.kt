@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Order(
+    val dateOrderPlaced: String = "",
     val userID: String = "",
     val items: ArrayList<CartItem> = ArrayList(),
     val address: Address = Address(),
@@ -17,6 +18,7 @@ data class Order(
     var id: String = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         arrayListOf<CartItem>().apply {
             parcel.readList(this, CartItem::class.java.classLoader)
@@ -34,6 +36,7 @@ data class Order(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(dateOrderPlaced)
         parcel.writeString(userID)
         parcel.writeList(items)
         parcel.writeParcelable(address, flags)

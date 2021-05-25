@@ -198,16 +198,17 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
     private fun placeTheOrder() {
         showProgressDialog("Placing your order...")
         val order = Order(
+            getDate(),
             fireStoreClass.getCurrentUserID(),
             cartItemsList,
             addressDetails,
             paymentDetails,
             "Order#: ${System.currentTimeMillis()}",
             cartItemsList[0].image,
-            subtotal.toString(),
-            waTaxTotal.toString(),
-            shippingTotal.toString(),
-            totalAmount.toString()
+            binding!!.totalAmountNumber.text.toString().replace("$", ""),
+            binding!!.waSalesTaxNumber.text.toString().replace("$", ""),
+            binding!!.shippingNumber.text.toString().replace("$", ""),
+            binding!!.totalAmountNumber.text.toString().replace("$", "")
         )
 
         fireStoreClass.placeOrder(this@CheckoutActivity, order)

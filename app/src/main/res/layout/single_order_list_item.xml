@@ -55,7 +55,7 @@
                 android:hint="@string/orderNumber"
                 android:textColor="@color/primaryUltraLightColor"
                 android:textColorHint="@color/primaryUltraLightColor"
-                android:textSize="@dimen/_18sdp"
+                android:textSize="@dimen/_16sdp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/orderPrice"
                 app:layout_constraintEnd_toStartOf="@+id/deleteOrderCardView"
