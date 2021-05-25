@@ -5,6 +5,7 @@ import android.os.Parcelable
 
 data class CartItem (
     val userID: String = "",
+    val productOwnerID: String = "",
     val productID: String = "",
     val title: String = "",
     val price: String = "",
@@ -21,12 +22,14 @@ data class CartItem (
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString()!!
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(userID)
+        parcel.writeString(productOwnerID)
         parcel.writeString(productID)
         parcel.writeString(title)
         parcel.writeString(price)

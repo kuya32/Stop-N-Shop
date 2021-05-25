@@ -28,6 +28,7 @@ class FireStoreClass {
     private val addressReference = fireStore.collection("Addresses")
     private val paymentReference = fireStore.collection("Payments")
     private val orderReference = fireStore.collection("Orders")
+    private val soldProductReference = fireStore.collection("SoldProducts")
 
     fun registerUser(activity: RegisterActivity, userInfo: User) {
         userReference.document(getCurrentUserID()).set(userInfo, SetOptions.merge()).addOnSuccessListener {
@@ -577,14 +578,30 @@ class FireStoreClass {
         }
     }
 
-    fun updateProductAndCartDetails(activity: CheckoutActivity, cartList: ArrayList<CartItem>) {
+    fun updateProductAndCartDetails(activity: CheckoutActivity, cartList: ArrayList<CartItem>, order: Order) {
         val writeBatch = fireStore.batch()
 
         for (cartItem in cartList) {
-            val productHashmap = HashMap<String, Any>()
-            productHashmap["stockQuantity"] = (cartItem.stockQuantity.toInt() - cartItem.cartQuantity.toInt()).toString()
-            val productDocumentReference = productReference.document(cartItem.productID)
-            writeBatch.update(productDocumentReference, productHashmap)
+//            val productHashmap = HashMap<String, Any>()
+//            productHashmap["stockQuantity"] = (cartItem.stockQuantity.toInt() - cartItem.cartQuantity.toInt()).toString()
+            val soldProduct = SoldProduct(
+                cartItem.productOwnerID,
+                getCurrentUserID(),
+                cartItem.title,
+                cartItem.price,
+                cartItem.cartQuantity,
+                cartItem.image,
+                order.title,
+                order.dateOrderPlaced,
+                order.subTotalAmount,
+                order.waTaxAmount,
+                order.shippingAmount,
+                order.totalAmount,
+                order.address,
+                order.payment
+            )
+            val productDocumentReference = soldProductReference.document(cartItem.productID)
+            writeBatch.set(productDocumentReference, soldProduct)
         }
 
         for (cartItem in cartList) {

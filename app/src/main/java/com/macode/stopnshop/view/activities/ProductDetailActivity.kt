@@ -67,6 +67,7 @@ class ProductDetailActivity : BaseActivity() {
 
     private fun establishProductDetails(productDetails: Product) {
         showProgressDialog("Loading product details...")
+        productOwnerID = productDetails.userID
         loadUserImage(this@ProductDetailActivity, productDetails.image, binding!!.productDetailsImage)
         binding!!.productDetailsTitle.text = productDetails.title
         "$${productDetails.price}".also { binding!!.productDetailsPrice.text = it }
@@ -148,6 +149,7 @@ class ProductDetailActivity : BaseActivity() {
         productID = productDetails.id
         val addToCartItem = CartItem(
             fireStoreClass.getCurrentUserID(),
+            productOwnerID,
             productID,
             productDetails.title,
             productDetails.price,

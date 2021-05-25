@@ -197,7 +197,7 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
 
     private fun placeTheOrder() {
         showProgressDialog("Placing your order...")
-        val order = Order(
+        orderDetails = Order(
             getDate(),
             fireStoreClass.getCurrentUserID(),
             cartItemsList,
@@ -211,7 +211,7 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
             binding!!.totalAmountNumber.text.toString().replace("$", "")
         )
 
-        fireStoreClass.placeOrder(this@CheckoutActivity, order)
+        fireStoreClass.placeOrder(this@CheckoutActivity, orderDetails)
     }
 
     fun chooseAddressForCheckout() {
@@ -289,7 +289,7 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun orderPlacedSuccess() {
-        fireStoreClass.updateProductAndCartDetails(this@CheckoutActivity, cartItemsList)
+        fireStoreClass.updateProductAndCartDetails(this@CheckoutActivity, cartItemsList, orderDetails)
     }
 
     fun productAndCartDetailsUpdatedSuccessfully() {
