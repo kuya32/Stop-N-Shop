@@ -132,6 +132,8 @@
     <string name="shippingAddress">Shipping Address</string>
     <string name="paymentsMethod">Payment Method</string>
     <string name="noOrdersFound">No Orders Found</string>
+    <string name="orderNumber">Order Number</string>
+    <string name="orderPrice">Order Price</string>
 
     <string-array name="states">
         <item> </item>

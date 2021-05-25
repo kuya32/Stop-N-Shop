@@ -202,7 +202,7 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
             cartItemsList,
             addressDetails,
             paymentDetails,
-            "My order ${System.currentTimeMillis()}",
+            "Order#: ${System.currentTimeMillis()}",
             cartItemsList[0].image,
             subtotal.toString(),
             waTaxTotal.toString(),
