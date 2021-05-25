@@ -618,6 +618,16 @@ class FireStoreClass {
         }
     }
 
+    fun deleteOrder(fragment: OrdersFragment, orderID: String) {
+        orderReference.document(orderID).delete().addOnSuccessListener {
+            fragment.deleteOrderSuccess()
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error deleting orderItem from Firestore", e)
+            showErrorSnackBar(fragment.requireActivity(), "Sorry, we couldn't delete the order item from the database!", true)
+        }
+    }
+
     fun logoutUser(activity: Activity) {
         userReference.document(getCurrentUserID()).update("status", "Offline").addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()

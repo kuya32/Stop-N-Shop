@@ -15,6 +15,7 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.macode.stopnshop.R
 import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.Order
 
 open class BaseFragment : Fragment() {
 
@@ -23,6 +24,7 @@ open class BaseFragment : Fragment() {
     lateinit var authCredential: AuthCredential
     val fireStoreClass: FireStoreClass = FireStoreClass()
     private var progressDialog: Dialog? = null
+    lateinit var orderItemList: ArrayList<Order>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
