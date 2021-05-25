@@ -38,8 +38,6 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
 
         setUpToolbar()
 
-        getProductList()
-
         binding!!.shippingAddressArrow.setOnClickListener(this@CheckoutActivity)
         binding!!.paymentMethodArrow.setOnClickListener(this@CheckoutActivity)
         binding!!.placeYourOrderButton.setOnClickListener(this@CheckoutActivity)
@@ -247,6 +245,7 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
         }
 
         fireStoreClass.retrieveDefaultPayment(this@CheckoutActivity)
+        getProductList()
     }
 
     fun choosePaymentForCheckout() {

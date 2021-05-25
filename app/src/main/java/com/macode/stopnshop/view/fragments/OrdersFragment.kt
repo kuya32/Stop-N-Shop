@@ -34,7 +34,7 @@ class OrdersFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOrdersBinding.inflate(inflater, container, false)
         val view = binding!!.root
 

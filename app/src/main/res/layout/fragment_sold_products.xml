@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryUltraLightColor"
+    tools:context=".view.fragments.SoldProductsFragment">
+
+    <include
+        android:id="@+id/soldProductsToolbar"
+        layout="@layout/main_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/soldProductsRV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_10sdp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/soldProductsToolbar" />
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/noProductSold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/noProductsSold"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/soldProductsToolbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -143,6 +143,10 @@
     <string name="creditCard">Credit Card</string>
     <string name="inProgress">In Progress</string>
     <string name="delivered">Delivered</string>
+    <string name="soldProducts">Sold Products</string>
+    <string name="noProductsSold">No Products Sold</string>
+    <string name="soldProduct">Sold Product</string>
+    <string name="soldProductPrice">Sold Product Price</string>
 
     <string-array name="states">
         <item> </item>
