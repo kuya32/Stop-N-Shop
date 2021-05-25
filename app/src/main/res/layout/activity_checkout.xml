@@ -333,13 +333,14 @@
 
                     <com.macode.stopnshop.utilities.SNSTextView
                         android:id="@+id/itemsText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:text="@string/items"
                         android:textColor="@color/primaryDarkColor"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/itemsNumber"
                         app:layout_constraintStart_toStartOf="@+id/shippingToText"
                         app:layout_constraintTop_toBottomOf="@+id/shippingToDivider" />
 
@@ -347,22 +348,25 @@
                         android:id="@+id/itemsNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:gravity="end"
                         android:hint="@string/subtotalPrice"
                         android:textColor="@color/primaryDarkColor"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="italic"
-                        android:layout_margin="@dimen/_10sdp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/shippingToText" />
+                        app:layout_constraintTop_toTopOf="@+id/itemsText"
+                        app:layout_constraintBottom_toBottomOf="@+id/itemsText"/>
 
                     <com.macode.stopnshop.utilities.SNSTextView
                         android:id="@+id/waSalesTaxText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/waSalesTax"
                         android:textColor="@color/primaryDarkColor"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/waSalesTaxNumber"
                         app:layout_constraintStart_toStartOf="@+id/itemsText"
                         app:layout_constraintTop_toBottomOf="@+id/itemsText" />
 
@@ -374,17 +378,20 @@
                         android:textColor="@color/primaryDarkColor"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="italic"
+                        android:gravity="end"
                         app:layout_constraintEnd_toEndOf="@+id/itemsNumber"
-                        app:layout_constraintTop_toBottomOf="@+id/itemsNumber" />
+                        app:layout_constraintTop_toTopOf="@+id/waSalesTaxText"
+                        app:layout_constraintBottom_toBottomOf="@+id/waSalesTaxText"/>
 
                     <com.macode.stopnshop.utilities.SNSTextView
                         android:id="@+id/shippingText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/shipping"
                         android:textColor="@color/primaryDarkColor"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/shippingNumber"
                         app:layout_constraintStart_toStartOf="@+id/waSalesTaxText"
                         app:layout_constraintTop_toBottomOf="@+id/waSalesTaxText" />
 
@@ -392,12 +399,14 @@
                         android:id="@+id/shippingNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="end"
                         android:hint="@string/shippingPrice"
                         android:textColor="@color/primaryDarkColor"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="@+id/shippingText"
                         app:layout_constraintEnd_toEndOf="@+id/waSalesTaxNumber"
-                        app:layout_constraintTop_toBottomOf="@+id/waSalesTaxNumber" />
+                        app:layout_constraintTop_toTopOf="@+id/shippingText" />
 
                     <View
                         android:id="@+id/calculationsDivider"

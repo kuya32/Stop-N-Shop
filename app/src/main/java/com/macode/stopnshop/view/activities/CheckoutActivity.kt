@@ -3,27 +3,32 @@ package com.macode.stopnshop.view.activities
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityCheckoutBinding
-import com.macode.stopnshop.model.Address
-import com.macode.stopnshop.model.CartItem
-import com.macode.stopnshop.model.Payment
-import com.macode.stopnshop.model.Product
+import com.macode.stopnshop.model.*
 import com.macode.stopnshop.utilities.Constants
-import com.macode.stopnshop.view.adapters.AddressListAdapter
+import com.macode.stopnshop.utilities.SNSTextView
 import com.macode.stopnshop.view.adapters.CartListAdapter
+import kotlin.math.acos
+import kotlin.math.cos
+import kotlin.math.sin
 
 class CheckoutActivity : BaseActivity(), View.OnClickListener {
 
     private var binding: ActivityCheckoutBinding? = null
     private var isDefaultAddressSet: Boolean = true
     private var isDefaultPaymentSet: Boolean = true
+    private var subtotal: Double = 0.0
+    private var waTaxTotal: Double = 0.0
+    private var shippingTotal: Double = 0.0
+    private var totalAmount: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,7 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
 
         binding!!.shippingAddressArrow.setOnClickListener(this@CheckoutActivity)
         binding!!.paymentMethodArrow.setOnClickListener(this@CheckoutActivity)
+        binding!!.placeYourOrderButton.setOnClickListener(this@CheckoutActivity)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -75,6 +81,9 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
                 intent.putExtra(Constants.DEFAULT_PAYMENT_BOOLEAN, isDefaultAddressSet)
                 startActivityForResult(intent, DEFAULT_PAYMENT)
             }
+            R.id.placeYourOrderButton -> {
+                placeTheOrder()
+            }
         }
     }
 
@@ -99,6 +108,109 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
 
     private fun getCartItemList() {
         fireStoreClass.getCartList(this@CheckoutActivity)
+    }
+
+    private fun getCartPriceCalculations() {
+        subtotal = String.format("%.2f", 0.00).toDouble()
+        for (item in cartItemsList) {
+            val availableQuantity = item.stockQuantity.toInt()
+            if (availableQuantity > 0) {
+                val price = item.price.toDouble()
+                val quantity = item.cartQuantity.toInt()
+                subtotal += (price * quantity)
+            }
+        }
+        checkCentsDecimalPlacement(subtotal, binding!!.itemsNumber)
+
+        val taxTotalNumber: Double = subtotal * (.104)
+        waTaxTotal = String.format("%.2f", taxTotalNumber).toDouble()
+        checkCentsDecimalPlacement(waTaxTotal, binding!!.waSalesTaxNumber)
+
+        val shippingTotalNumber: Double = calculateShippingTotal(addressDetails.latitude.toDouble(), addressDetails.longitude.toDouble())
+        shippingTotal = String.format("%.2f", shippingTotalNumber).toDouble()
+        when (shippingTotalNumber) {
+            in 0.0..2.0 -> {
+                shippingTotal = 0.00
+            }
+            in 2.0..4.0 -> {
+                shippingTotal = 5.00
+            }
+            in 4.0..6.0 -> {
+                shippingTotal = 10.00
+            }
+            in 6.0..8.0 -> {
+                shippingTotal = 15.00
+            }
+            in 8.0..10.0 -> {
+                shippingTotal = 20.00
+            }
+            else -> {
+                shippingTotal = 25.00
+            }
+        }
+
+        checkCentsDecimalPlacement(shippingTotal, binding!!.shippingNumber)
+
+        val totalAmountNumber: Double = subtotal + waTaxTotal + shippingTotal
+        totalAmount = String.format("%.2f", totalAmountNumber).toDouble()
+        checkCentsDecimalPlacement(totalAmount, binding!!.totalAmountNumber)
+    }
+
+    private fun checkCentsDecimalPlacement(price: Double, textView: SNSTextView) {
+        val numberString: String
+        when (price) {
+            0.0 -> {
+                numberString = "FREE"
+            }
+            else -> {
+                val cents = price.toString().substringAfter(".")
+                numberString = when (cents.length) {
+                    1 -> {
+                        "${price}0"
+                    }
+                    else -> {
+                        price.toString()
+                    }
+                }
+            }
+        }
+        "$$numberString".also { textView.text = it }
+    }
+
+    private fun calculateShippingTotal(lat: Double, long: Double): Double {
+        val longDiff = Constants.LONGITUDE_HOME_SHIPPING - long
+        var distance = (sin(deg2Rad(Constants.LATITUDE_HOME_SHIPPING)) * sin(deg2Rad(lat))) + (cos(
+            deg2Rad(Constants.LATITUDE_HOME_SHIPPING)
+        ) * cos(deg2Rad(lat)) * cos(deg2Rad(longDiff)))
+        distance = acos(distance)
+        distance = rad2Deg(distance)
+        return distance * 60 * 1.515
+    }
+
+    private fun rad2Deg(distance: Double): Double {
+        return ((distance * 180.0) / Math.PI)
+    }
+
+    private fun deg2Rad(lat: Double): Double {
+        return ((lat * Math.PI) / 180.0)
+    }
+
+    private fun placeTheOrder() {
+        showProgressDialog("Placing your order...")
+        val order = Order(
+            fireStoreClass.getCurrentUserID(),
+            cartItemsList,
+            addressDetails,
+            paymentDetails,
+            "My order ${System.currentTimeMillis()}",
+            cartItemsList[0].image,
+            subtotal.toString(),
+            waTaxTotal.toString(),
+            shippingTotal.toString(),
+            totalAmount.toString()
+        )
+
+        fireStoreClass.placeOrder(this@CheckoutActivity, order)
     }
 
     fun chooseAddressForCheckout() {
@@ -171,9 +283,18 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
         binding!!.productItemsRV.setHasFixedSize(true)
         val checkoutAdapter = CartListAdapter(this@CheckoutActivity, cartItemsList, false)
         binding!!.productItemsRV.adapter = checkoutAdapter
+
+        getCartPriceCalculations()
     }
 
-//    // TODO: Figure out a way to calculate shipping price depending on the user's address
-//    val shippingTotal: Double = String.format("%.2f", 0.00).toDouble()
-//    checkCentsDecimalPlacement(shippingTotal, binding!!.shippingNumber)
+    fun orderPlacedSuccess() {
+        hideProgressDialog()
+        showErrorSnackBar("Your order was placed!", false)
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }, 1000)
+    }
 }

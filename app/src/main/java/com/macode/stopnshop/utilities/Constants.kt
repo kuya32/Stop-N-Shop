@@ -16,4 +16,6 @@ object Constants {
     const val SELECTED_PAYMENT_DETAILS: String = "selectedPaymentDetails"
     const val DEFAULT_ADDRESS_BOOLEAN: String = "defaultAddressBoolean"
     const val DEFAULT_PAYMENT_BOOLEAN: String = "defaultPaymentBoolean"
+    const val LATITUDE_HOME_SHIPPING: Double = 47.6504603
+    const val LONGITUDE_HOME_SHIPPING: Double = -122.3865295
 }

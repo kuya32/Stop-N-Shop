@@ -28,6 +28,8 @@ class AddEditAddressActivity : BaseActivity() {
 
     private var binding: ActivityAddEditAddressBinding? = null
     private var stateSelected: String = ""
+    private var lat: String = ""
+    private var long: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +120,13 @@ class AddEditAddressActivity : BaseActivity() {
             when (requestCode) {
                 PLACE_AUTOCOMPLETE_REQUEST_CODE -> {
                     val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                    var latLng = place.latLng.toString()
+                    latLng = latLng.replace("lat/lng: ", "")
+                    latLng = latLng.replace("(", "")
+                    latLng = latLng.replace(")", "")
+                    val split = latLng.split(",")
+                    lat = split[0]
+                    long = split[1]
                     binding!!.addEditAddressEditInput.setText(place.name.toString())
                     val regex = "([^,]+), ([A-Z]{2,})".toRegex()
                     val zipRegex ="\\b\\d{5}\\b".toRegex()
@@ -203,7 +212,7 @@ class AddEditAddressActivity : BaseActivity() {
             }
             else -> {
                 hideError(binding!!.addEditAddressOtherDetailsInput)
-                checkingForDefaultAddress(fullName, phone, address, city, stateSelected, zipcode, info, type, otherDetails, default)
+                checkingForDefaultAddress(fullName, phone, address, city, stateSelected, zipcode, lat, long, info, type, otherDetails, default)
             }
         }
     }
@@ -215,15 +224,17 @@ class AddEditAddressActivity : BaseActivity() {
         city: String,
         state: String,
         zipcode: String,
+        lat: String,
+        long: String,
         info: String,
         type: String,
         otherDetails: String,
         default: Boolean
     ) {
         if (default) {
-            fireStoreClass.checkAddressListItemsForDefault(this@AddEditAddressActivity, fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+            fireStoreClass.checkAddressListItemsForDefault(this@AddEditAddressActivity, fullName, phone, address, city, state, zipcode, lat, long, info, type, otherDetails, default)
         } else {
-            savingAddressInfoToFirebase(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+            savingAddressInfoToFirebase(fullName, phone, address, city, state, zipcode, lat, long, info, type, otherDetails, default)
         }
     }
 
@@ -234,6 +245,8 @@ class AddEditAddressActivity : BaseActivity() {
         city: String,
         state: String,
         zipcode: String,
+        lat: String,
+        long: String,
         additionalInfo: String,
         type: String,
         otherDetails: String,
@@ -250,6 +263,8 @@ class AddEditAddressActivity : BaseActivity() {
                 city,
                 state,
                 zipcode,
+                lat,
+                long,
                 type,
                 additionalInfo,
                 otherDetails,
@@ -267,6 +282,8 @@ class AddEditAddressActivity : BaseActivity() {
                 city,
                 state,
                 zipcode,
+                lat,
+                long,
                 type,
                 additionalInfo,
                 otherDetails,
@@ -340,10 +357,12 @@ class AddEditAddressActivity : BaseActivity() {
         city: String,
         state: String,
         zipcode: String,
+        lat: String,
+        long: String,
         info: String,
         type: String,
         otherDetails: String,
         default: Boolean) {
-        savingAddressInfoToFirebase(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+        savingAddressInfoToFirebase(fullName, phone, address, city, state, zipcode, lat, long, info, type, otherDetails, default)
     }
 }

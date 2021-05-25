@@ -26,6 +26,7 @@ class FireStoreClass {
     private val cartItemReference = fireStore.collection("CartItems")
     private val addressReference = fireStore.collection("Addresses")
     private val paymentReference = fireStore.collection("Payments")
+    private val orderReference = fireStore.collection("Orders")
 
     fun registerUser(activity: RegisterActivity, userInfo: User) {
         userReference.document(getCurrentUserID()).set(userInfo, SetOptions.merge()).addOnSuccessListener {
@@ -363,6 +364,8 @@ class FireStoreClass {
         city: String,
         state: String,
         zipcode: String,
+        lat: String,
+        long: String,
         info: String,
         type: String,
         otherDetails: String,
@@ -381,10 +384,10 @@ class FireStoreClass {
                     defaultList.add(addressItem)
                 }
                 if (defaultList.size == 0) {
-                    activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+                    activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, lat, long, info, type, otherDetails, default)
                 } else {
                     addressReference.document(defaultList[0].id).update("default", "false").addOnSuccessListener {
-                    activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, info, type, otherDetails, default)
+                    activity.defaultChangeSuccess(fullName, phone, address, city, state, zipcode, lat, long, info, type, otherDetails, default)
                 }.addOnFailureListener { e ->
                     Log.e(activity.javaClass.simpleName, "Error changing the default address item", e)
                     activity.showErrorSnackBar("Sorry, we couldn't change your default address item!", true)
@@ -560,6 +563,16 @@ class FireStoreClass {
         }.addOnFailureListener { e ->
             Log.e(activity.javaClass.simpleName, "Error setting default payment method", e)
             Toast.makeText(activity, "Sorry, we couldn't set payment method as default!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun placeOrder(activity: CheckoutActivity, order: Order) {
+        orderReference.document().set(order, SetOptions.merge()).addOnSuccessListener {
+            activity.orderPlacedSuccess()
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error while placing order", e)
+            activity.showErrorSnackBar("Sorry, we couldn't place your order!", true)
         }
     }
 
