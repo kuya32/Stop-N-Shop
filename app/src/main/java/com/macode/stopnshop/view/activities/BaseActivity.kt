@@ -41,9 +41,8 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ImageSelectionDialogBinding
 import com.macode.stopnshop.firebase.FireStoreClass
-import com.macode.stopnshop.model.CartItem
-import com.macode.stopnshop.model.Product
-import com.macode.stopnshop.model.User
+import com.macode.stopnshop.model.*
+import com.macode.stopnshop.utilities.CreditCardNumberFormattingTextWatcher
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -59,14 +58,22 @@ open class BaseActivity : AppCompatActivity() {
         const val CAMERA = 1
         const val GALLERY = 2
         const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 3
+        const val ADD_EDIT_ADDRESS_REQUEST_CODE = 4
+        const val ADD_EDIT_PAYMENT_REQUEST_CODE = 5
+        const val DEFAULT_ADDRESS = 6
+        const val DEFAULT_PAYMENT = 7
         const val IMAGE_DIRECTORY = "StopNShopImages"
     }
 
     var userDetails: User = User()
     var productDetails: Product = Product()
+    var addressDetails: Address = Address()
+    var paymentDetails: Payment = Payment()
     var productID: String = ""
     lateinit var productList: ArrayList<Product>
     lateinit var cartItemsList: ArrayList<CartItem>
+    lateinit var addressItemList: ArrayList<Address>
+    lateinit var paymentItemList: ArrayList<Payment>
     var userHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var productHashMap: HashMap<String, Any> = HashMap<String, Any>()
     var selectedImageUri: Uri? = null
@@ -81,6 +88,7 @@ open class BaseActivity : AppCompatActivity() {
     val productImageRef = storageRef.reference.child("ProductImage${System.currentTimeMillis()}.png")
     lateinit var fcmToken: String
     var phoneNumberFormattingTextWatcher: PhoneNumberFormattingTextWatcher = PhoneNumberFormattingTextWatcher()
+    var creditCardNumberFormattingTextWatcher: CreditCardNumberFormattingTextWatcher = CreditCardNumberFormattingTextWatcher()
     private var progressDialog: Dialog? = null
     private var doubleBackToExitPressedOnce = false
 

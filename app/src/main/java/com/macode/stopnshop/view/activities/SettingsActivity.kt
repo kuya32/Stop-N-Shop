@@ -36,7 +36,8 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
 
         binding!!.settingsSensitiveEditButton.setOnClickListener(this@SettingsActivity)
         binding!!.settingsEditButton.setOnClickListener(this@SettingsActivity)
-        binding!!.addressesButton.setOnClickListener(this@SettingsActivity)
+        binding!!.linearAddress.setOnClickListener(this@SettingsActivity)
+        binding!!.linearPayment.setOnClickListener(this@SettingsActivity)
         binding!!.logoutButton.setOnClickListener(this@SettingsActivity)
     }
 
@@ -87,8 +88,13 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                 intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
                 startActivity(intent)
             }
-            R.id.addressesButton -> {
-
+            R.id.linearAddress -> {
+                val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.linearPayment -> {
+                val intent = Intent(this@SettingsActivity, PaymentListActivity::class.java)
+                startActivity(intent)
             }
             R.id.logoutButton -> {
                 fireStoreClass.logoutUser(this@SettingsActivity)

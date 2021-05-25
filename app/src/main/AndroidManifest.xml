@@ -21,7 +21,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomNoActionBarTheme">
-        <activity android:name=".view.activities.CartListActivity"></activity>
+        <activity android:name=".view.activities.AddEditPaymentActivity"></activity>
+        <activity android:name=".view.activities.PaymentListActivity" />
+        <activity android:name=".view.activities.CheckoutActivity" />
+        <activity android:name=".view.activities.AddEditAddressActivity" />
+        <activity android:name=".view.activities.AddressListActivity" />
+        <activity android:name=".view.activities.CartListActivity" />
         <activity android:name=".view.activities.ProductDetailActivity" />
         <activity android:name=".view.activities.AddEditProductActivity" />
         <activity android:name=".view.activities.EditUserProfileActivity" />

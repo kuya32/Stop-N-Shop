@@ -52,7 +52,7 @@
     <string name="edit">Edit</string>
     <string name="fullName">Full Name</string>
     <string name="gender">Gender</string>
-    <string name="address">Addresses</string>
+    <string name="address">Address</string>
     <string name="logout">Logout</string>
     <string name="sensitiveAccountInfo">Sensitive Account Info</string>
     <string name="accountInfo">Account Info</string>
@@ -89,9 +89,140 @@
     <string name="subtotalPrice">$100.00</string>
     <string name="waSalesTax">WA Sales Tax:</string>
     <string name="waSalesTaxPrice">$10.40</string>
-    <string name="shipping">Shipping:</string>
+    <string name="shipping">Shipping &amp; Handling:</string>
     <string name="shippingPrice">$10.00</string>
     <string name="totalAmount">Total Amount:</string>
     <string name="totalAmountPrice">$120.40</string>
     <string name="outOfStock">OUT OF STOCK</string>
+    <string name="addNewAddress">Add New Address</string>
+    <string name="noAddressesFound">No Addresses Found</string>
+    <string name="addresses">Addresses</string>
+    <string name="zipcode">Zipcode</string>
+    <string name="additionalInfo">Additional Info (Optional)</string>
+    <string name="additionalInfoExample">Ex: Apt, suite, unit, building, floor, etc.</string>
+    <string name="office">Office</string>
+    <string name="other">Other</string>
+    <string name="wa">WA</string>
+    <string name="nothing"> </string>
+    <string name="city">City</string>
+    <string name="otherDetails">Other Details</string>
+    <string name="streetAddress">Street Address</string>
+    <string name="addressCityStateZip">City, State Zipcode</string>
+    <string name="type">Type</string>
+    <string name="paymentsMethods">Payment Methods</string>
+    <string name="addNewPayment">Add New Payment Method</string>
+    <string name="noPaymentsFound">No payment methods found</string>
+    <string name="defaultText">Default</string>
+    <string name="setAsDefault">Set as default shipping address.</string>
+    <string name="nameOnCard">Name On Card</string>
+    <string name="cardNumber">Card Number</string>
+    <string name="expirationDate">Expiration Date</string>
+    <string name="cvv">CVV</string>
+    <string name="setAsDefaultPayment">Set as default payment method</string>
+    <string name="paymentUpdatedSuccess">Payment method successfully updated!</string>
+    <string name="paymentAddedSuccess">Payment method successfully added!</string>
+    <string name="endingNumber">Credit card ending with ****1234</string>
+    <string name="cardName">Card Name</string>
+    <string name="items">Items:</string>
+    <string name="orderTotalText">Order Total:</string>
+    <string name="placeYourOrder">Place Your Order</string>
+    <string name="shippingTo">Shipping to:</string>
+    <string name="somewhere">Somewhere</string>
+    <string name="productItems">Product Items</string>
+    <string name="shippingAddress">Shipping Address</string>
+    <string name="paymentsMethod">Payment Method</string>
+
+    <string-array name="states">
+        <item> </item>
+        <item>AL</item>
+        <item>AK</item>
+        <item>AR</item>
+        <item>AZ</item>
+        <item>CA</item>
+        <item>CO</item>
+        <item>CT</item>
+        <item>DE</item>
+        <item>DC</item>
+        <item>FL</item>
+        <item>GA</item>
+        <item>HI</item>
+        <item>ID</item>
+        <item>IL</item>
+        <item>IN</item>
+        <item>IA</item>
+        <item>KS</item>
+        <item>KY</item>
+        <item>LA</item>
+        <item>ME</item>
+        <item>MD</item>
+        <item>MA</item>
+        <item>MI</item>
+        <item>MN</item>
+        <item>MS</item>
+        <item>MO</item>
+        <item>MT</item>
+        <item>NE</item>
+        <item>NV</item>
+        <item>NH</item>
+        <item>NJ</item>
+        <item>NM</item>
+        <item>NY</item>
+        <item>NC</item>
+        <item>ND</item>
+        <item>OH</item>
+        <item>OK</item>
+        <item>OR</item>
+        <item>PA</item>
+        <item>RI</item>
+        <item>SC</item>
+        <item>SD</item>
+        <item>TN</item>
+        <item>TX</item>
+        <item>UT</item>
+        <item>VT</item>
+        <item>VA</item>
+        <item>WA</item>
+        <item>WV</item>
+        <item>WI</item>
+        <item>WY</item>
+    </string-array>
+
+    <string-array name="numberedMonths">
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="next20Years">
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+        <item>2028</item>
+        <item>2029</item>
+        <item>2030</item>
+        <item>2031</item>
+        <item>2032</item>
+        <item>2033</item>
+        <item>2034</item>
+        <item>2035</item>
+        <item>2036</item>
+        <item>2037</item>
+        <item>2028</item>
+        <item>2039</item>
+        <item>2040</item>
+        <item>2041</item>
+    </string-array>
 </resources>

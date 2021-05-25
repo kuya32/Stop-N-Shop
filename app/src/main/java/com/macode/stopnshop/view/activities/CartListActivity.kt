@@ -1,5 +1,6 @@
 package com.macode.stopnshop.view.activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityCartListBinding
 import com.macode.stopnshop.model.CartItem
 import com.macode.stopnshop.model.Product
+import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.utilities.SNSEditText
 import com.macode.stopnshop.utilities.SNSTextView
 import com.macode.stopnshop.view.adapters.CartListAdapter
@@ -26,6 +28,11 @@ class CartListActivity : BaseActivity() {
         setContentView(binding!!.root)
 
         setUpToolbar()
+
+        binding!!.checkoutButton.setOnClickListener {
+            val intent = Intent(this@CartListActivity, CheckoutActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setUpToolbar() {
@@ -74,7 +81,7 @@ class CartListActivity : BaseActivity() {
 
             binding!!.cartListRecyclerView.layoutManager = LinearLayoutManager(this@CartListActivity)
             binding!!.cartListRecyclerView.setHasFixedSize(true)
-            val cartAdapter = CartListAdapter(this@CartListActivity, cartList)
+            val cartAdapter = CartListAdapter(this@CartListActivity, cartItemsList, true)
             binding!!.cartListRecyclerView.adapter = cartAdapter
 
             getCartPriceCalculations()
@@ -115,11 +122,7 @@ class CartListActivity : BaseActivity() {
         val taxTotal: Double = String.format("%.2f", taxTotalNumber).toDouble()
         checkCentsDecimalPlacement(taxTotal, binding!!.waSalesTaxNumber)
 
-        // TODO: Figure out a way to calculate shipping price depending on the user's address
-        val shippingTotal: Double = String.format("%.2f", 0.00).toDouble()
-        checkCentsDecimalPlacement(shippingTotal, binding!!.shippingNumber)
-
-        val totalAmountNumber: Double = subtotal + taxTotal + shippingTotal
+        val totalAmountNumber: Double = subtotal + taxTotal
         val totalAmount: Double = String.format("%.2f", totalAmountNumber).toDouble()
         checkCentsDecimalPlacement(totalAmount, binding!!.totalAmountNumber)
     }

@@ -22,7 +22,7 @@ import com.macode.stopnshop.model.CartItem
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.CartListActivity
 
-class CartListAdapter(private val context: Context, private val list: ArrayList<CartItem>): RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
+class CartListAdapter(private val context: Context, private val list: ArrayList<CartItem>, private val updateCartItems: Boolean): RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: SingleCartListItemBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -49,12 +49,25 @@ class CartListAdapter(private val context: Context, private val list: ArrayList<
                 binding.singleCartMinusButton.visibility = View.GONE
                 binding.singleCartPlusButton.visibility = View.GONE
 
+                if (updateCartItems) {
+                    binding.singleCartDeleteButton.visibility = View.VISIBLE
+                } else {
+                    binding.singleCartDeleteButton.visibility = View.GONE
+                }
+
                 binding.singleCartDesiredAmount.text = context.resources.getString(R.string.outOfStock)
                 binding.singleCartDesiredAmount.textSize = context.resources.getDimension(R.dimen._4sdp)
                 binding.singleCartDesiredAmount.setTextColor(ContextCompat.getColor(context, R.color.red))
             } else {
-                binding.singleCartMinusButton.visibility = View.VISIBLE
-                binding.singleCartPlusButton.visibility = View.VISIBLE
+                if (updateCartItems) {
+                    binding.singleCartMinusButton.visibility = View.VISIBLE
+                    binding.singleCartPlusButton.visibility = View.VISIBLE
+                    binding.singleCartDeleteButton.visibility = View.VISIBLE
+                } else {
+                    binding.singleCartMinusButton.visibility = View.GONE
+                    binding.singleCartPlusButton.visibility = View.GONE
+                    binding.singleCartDeleteButton.visibility = View.GONE
+                }
             }
 
             binding.singleCartDeleteButton.setOnClickListener {

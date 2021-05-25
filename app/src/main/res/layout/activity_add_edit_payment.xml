@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryUltraLightColor"
+    tools:context=".view.activities.AddEditPaymentActivity">
+
+    <include
+        android:id="@+id/addEditPaymentToolbar"
+        layout="@layout/main_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addEditPaymentNameInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:hint="@string/nameOnCard"
+        app:boxStrokeColor="@color/primaryColor"
+        app:hintTextAppearance="@style/TextLabel"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addEditPaymentToolbar">
+
+        <com.macode.stopnshop.utilities.SNSEditText
+            android:id="@+id/addEditPaymentNameEditInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/_20sdp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addEditPaymentCardNumberInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:hint="@string/cardNumber"
+        app:boxStrokeColor="@color/primaryColor"
+        app:hintTextAppearance="@style/TextLabel"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/addEditPaymentNameInput"
+        app:layout_constraintStart_toStartOf="@+id/addEditPaymentNameInput"
+        app:layout_constraintTop_toBottomOf="@+id/addEditPaymentNameInput">
+
+        <com.macode.stopnshop.utilities.SNSEditText
+            android:id="@+id/addEditPaymentCardNumberEditInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="20"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/_20sdp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.macode.stopnshop.utilities.SNSTextView
+        android:id="@+id/expirationDateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/expirationDate"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/addEditPaymentCardNumberInput"
+        app:layout_constraintTop_toBottomOf="@+id/addEditPaymentCardNumberInput" />
+
+    <Spinner
+        android:id="@+id/addEditMonthSpinner"
+        style="@style/spinner_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintEnd_toStartOf="@+id/addEditYearSpinner"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/addEditPaymentCardNumberInput"
+        app:layout_constraintTop_toBottomOf="@+id/expirationDateTitle" />
+
+    <Spinner
+        android:id="@+id/addEditYearSpinner"
+        style="@style/spinner_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="@+id/addEditPaymentCardNumberInput"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/addEditMonthSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/expirationDateTitle" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addEditPaymentVerificationInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_100sdp"
+        android:layout_marginEnd="@dimen/_100sdp"
+        android:hint="@string/cvv"
+        app:boxStrokeColor="@color/primaryColor"
+        app:hintTextAppearance="@style/TextLabel"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/addEditYearSpinner"
+        app:layout_constraintStart_toStartOf="@+id/addEditMonthSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/addEditMonthSpinner">
+
+        <com.macode.stopnshop.utilities.SNSEditText
+            android:id="@+id/addEditPaymentVerificationEditInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:maxLength="3"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/_20sdp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/addEditPaymentDefault"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="@+id/addEditYearSpinner"
+        app:layout_constraintStart_toStartOf="@+id/addEditMonthSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/addEditPaymentVerificationInput">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/addEditDefaultCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/primaryDarkColor"
+            android:checked="false" />
+
+        <com.macode.stopnshop.utilities.SNSTextView
+            android:id="@+id/addEditDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setAsDefaultPayment"
+            android:textSize="@dimen/_12sdp" />
+    </LinearLayout>
+
+    <com.macode.stopnshop.utilities.SNSButton
+        android:id="@+id/addEditPaymentSubmitButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/addEditPaymentDefault"
+        app:layout_constraintStart_toStartOf="@+id/addEditPaymentDefault"
+        app:layout_constraintTop_toBottomOf="@+id/addEditPaymentDefault" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
