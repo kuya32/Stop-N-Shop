@@ -13,20 +13,19 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.macode.stopnshop.R
 import com.macode.stopnshop.firebase.FireStoreClass
+import com.macode.stopnshop.model.Order
 
 open class BaseFragment : Fragment() {
 
     private var firebaseAuth = FirebaseAuth.getInstance()
-    var firebaseUser = firebaseAuth.currentUser
+    var firebaseUser: FirebaseUser? = firebaseAuth.currentUser
     lateinit var authCredential: AuthCredential
     val fireStoreClass: FireStoreClass = FireStoreClass()
     private var progressDialog: Dialog? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var orderItemList: ArrayList<Order>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

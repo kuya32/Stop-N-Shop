@@ -15,9 +15,7 @@ import com.macode.stopnshop.R
 import com.macode.stopnshop.model.*
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.*
-import com.macode.stopnshop.view.fragments.DashboardFragment
-import com.macode.stopnshop.view.fragments.EditEmailFragment
-import com.macode.stopnshop.view.fragments.ProductsFragment
+import com.macode.stopnshop.view.fragments.*
 
 class FireStoreClass {
     private val fireStore = FirebaseFirestore.getInstance()
@@ -27,6 +25,7 @@ class FireStoreClass {
     private val addressReference = fireStore.collection("Addresses")
     private val paymentReference = fireStore.collection("Payments")
     private val orderReference = fireStore.collection("Orders")
+    private val soldProductReference = fireStore.collection("SoldProducts")
 
     fun registerUser(activity: RegisterActivity, userInfo: User) {
         userReference.document(getCurrentUserID()).set(userInfo, SetOptions.merge()).addOnSuccessListener {
@@ -573,6 +572,94 @@ class FireStoreClass {
             activity.hideProgressDialog()
             Log.e(activity.javaClass.simpleName, "Error while placing order", e)
             activity.showErrorSnackBar("Sorry, we couldn't place your order!", true)
+        }
+    }
+
+    fun updateProductAndCartDetails(activity: CheckoutActivity, cartList: ArrayList<CartItem>, order: Order) {
+        val writeBatch = fireStore.batch()
+
+        for (cartItem in cartList) {
+            val productHashmap = HashMap<String, Any>()
+            productHashmap["stockQuantity"] = (cartItem.stockQuantity.toInt() - cartItem.cartQuantity.toInt()).toString()
+
+            val productDocumentReference = productReference.document(cartItem.productID)
+            writeBatch.update(productDocumentReference, productHashmap)
+
+            val soldProduct = SoldProduct(
+                cartItem.productOwnerID,
+                getCurrentUserID(),
+                cartItem.title,
+                cartItem.price,
+                cartItem.cartQuantity,
+                cartItem.image,
+                order.title,
+                order.dateOrderPlaced,
+                order.subTotalAmount,
+                order.waTaxAmount,
+                order.shippingAmount,
+                order.totalAmount,
+                order.address,
+                order.payment
+            )
+            val soldProductDocumentReference = soldProductReference.document(cartItem.productID)
+            writeBatch.set(soldProductDocumentReference, soldProduct)
+        }
+
+        for (cartItem in cartList) {
+            val cartItemDocumentReference = cartItemReference.document(cartItem.id)
+            writeBatch.delete(cartItemDocumentReference)
+        }
+
+        writeBatch.commit().addOnSuccessListener {
+            activity.productAndCartDetailsUpdatedSuccessfully()
+        }.addOnFailureListener { e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error updating product stock and deleting cart", e)
+            activity.showErrorSnackBar("We couldn't update the product stock and delete your cart items!", true)
+        }
+    }
+
+    fun getMyOrdersList(fragment: OrdersFragment) {
+        orderReference.whereEqualTo(Constants.USER_ID, getCurrentUserID()).get().addOnSuccessListener { document ->
+            Log.i(fragment.javaClass.simpleName, document.documents.toString())
+            val orderList: ArrayList<Order> = ArrayList()
+            for (i in document.documents) {
+                val orderItem = i.toObject(Order::class.java)!!
+                orderItem.id = i.id
+                orderList.add(orderItem)
+            }
+            fragment.populateOrdersListInUI(orderList)
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error retrieving user order list", e)
+            fragment.showErrorSnackBar("Sorry, we couldn't retrieve your order list!", true)
+        }
+    }
+
+    fun deleteOrder(fragment: OrdersFragment, orderID: String) {
+        orderReference.document(orderID).delete().addOnSuccessListener {
+            fragment.deleteOrderSuccess()
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error deleting orderItem from Firestore", e)
+            showErrorSnackBar(fragment.requireActivity(), "Sorry, we couldn't delete the order item from the database!", true)
+        }
+    }
+
+    fun getSoldProductsList(fragment: SoldProductsFragment) {
+        soldProductReference.whereEqualTo("ownerID", getCurrentUserID()).get().addOnSuccessListener { document ->
+            Log.i(fragment.javaClass.simpleName, document.documents.toString())
+            val soldProductList: ArrayList<SoldProduct> = ArrayList()
+            for (i in document.documents) {
+                val soldProduct = i.toObject(SoldProduct::class.java)!!
+                soldProduct.id = i.id
+                soldProductList.add(soldProduct)
+            }
+            fragment.soldProductListRetrievalSuccess(soldProductList)
+        }.addOnFailureListener { e ->
+            fragment.hideProgressDialog()
+            Log.e(fragment.javaClass.simpleName, "Error getting sold products list", e)
+            fragment.showErrorSnackBar("Sorry, we couldn't get your sold product list", true)
         }
     }
 

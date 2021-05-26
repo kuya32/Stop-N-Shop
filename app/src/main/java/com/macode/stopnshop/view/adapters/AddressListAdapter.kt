@@ -1,7 +1,6 @@
 package com.macode.stopnshop.view.adapters
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -12,9 +11,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.EmailAuthProvider
 import com.macode.stopnshop.R
-import com.macode.stopnshop.databinding.SensitiveInfoDialogBinding
 import com.macode.stopnshop.databinding.SingleAddressListItemBinding
 import com.macode.stopnshop.firebase.FireStoreClass
 import com.macode.stopnshop.model.Address

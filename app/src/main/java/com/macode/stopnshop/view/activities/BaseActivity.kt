@@ -42,7 +42,9 @@ import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ImageSelectionDialogBinding
 import com.macode.stopnshop.firebase.FireStoreClass
 import com.macode.stopnshop.model.*
+import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.utilities.CreditCardNumberFormattingTextWatcher
+import com.macode.stopnshop.utilities.SNSTextView
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -51,6 +53,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.acos
+import kotlin.math.cos
+import kotlin.math.sin
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -69,7 +74,14 @@ open class BaseActivity : AppCompatActivity() {
     var productDetails: Product = Product()
     var addressDetails: Address = Address()
     var paymentDetails: Payment = Payment()
+    var orderDetails: Order = Order()
+    var soldProductDetails: SoldProduct = SoldProduct()
     var productID: String = ""
+    var productOwnerID: String = ""
+    var subtotal: Double = 0.0
+    var waTaxTotal: Double = 0.0
+    var shippingTotal: Double = 0.0
+    var totalAmount: Double = 0.0
     lateinit var productList: ArrayList<Product>
     lateinit var cartItemsList: ArrayList<CartItem>
     lateinit var addressItemList: ArrayList<Address>
@@ -208,6 +220,45 @@ open class BaseActivity : AppCompatActivity() {
     fun getDate(): String {
         val sdf = SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.US)
         return sdf.format(Date())
+    }
+
+    fun checkCentsDecimalPlacement(price: Double, textView: SNSTextView) {
+        val numberString: String
+        when (price) {
+            0.0 -> {
+                numberString = "FREE"
+            }
+            else -> {
+                val cents = price.toString().substringAfter(".")
+                numberString = when (cents.length) {
+                    1 -> {
+                        "${price}0"
+                    }
+                    else -> {
+                        price.toString()
+                    }
+                }
+            }
+        }
+        "$$numberString".also { textView.text = it }
+    }
+
+    fun calculateShippingTotal(lat: Double, long: Double): Double {
+        val longDiff = Constants.LONGITUDE_HOME_SHIPPING - long
+        var distance = (sin(deg2Rad(Constants.LATITUDE_HOME_SHIPPING)) * sin(deg2Rad(lat))) + (cos(
+            deg2Rad(Constants.LATITUDE_HOME_SHIPPING)
+        ) * cos(deg2Rad(lat)) * cos(deg2Rad(longDiff)))
+        distance = acos(distance)
+        distance = rad2Deg(distance)
+        return distance * 60 * 1.515
+    }
+
+    private fun rad2Deg(distance: Double): Double {
+        return ((distance * 180.0) / Math.PI)
+    }
+
+    fun deg2Rad(lat: Double): Double {
+        return ((lat * Math.PI) / 180.0)
     }
 
     fun showProgressDialog(text: String) {

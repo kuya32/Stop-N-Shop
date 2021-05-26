@@ -1,12 +1,9 @@
 package com.macode.stopnshop.view.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
-import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.ActivityOnBoardingBinding
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.adapters.ViewPagerAdapter

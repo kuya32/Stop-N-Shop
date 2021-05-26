@@ -131,6 +131,22 @@
     <string name="productItems">Product Items</string>
     <string name="shippingAddress">Shipping Address</string>
     <string name="paymentsMethod">Payment Method</string>
+    <string name="noOrdersFound">No Orders Found</string>
+    <string name="orderNumber">Order Number</string>
+    <string name="orderPrice">Order Price</string>
+    <string name="orderDetails">Order Details</string>
+    <string name="orderDate">Order Date</string>
+    <string name="orderDateNumber">01/11/2021</string>
+    <string name="orderStatus">Order Status</string>
+    <string name="pending">Pending</string>
+    <string name="paymentMethod">Payment Method:</string>
+    <string name="creditCard">Credit Card</string>
+    <string name="inProgress">In Progress</string>
+    <string name="delivered">Delivered</string>
+    <string name="soldProducts">Sold Products</string>
+    <string name="noProductsSold">No Products Sold</string>
+    <string name="soldProduct">Sold Product</string>
+    <string name="soldProductPrice">Sold Product Price</string>
 
     <string-array name="states">
         <item> </item>

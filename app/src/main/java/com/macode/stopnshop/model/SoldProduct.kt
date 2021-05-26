@@ -3,49 +3,56 @@ package com.macode.stopnshop.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Order(
-    val dateOrderPlaced: String = "",
-    val userID: String = "",
-    val items: ArrayList<CartItem> = ArrayList(),
-    val address: Address = Address(),
-    val payment: Payment = Payment(),
+data class SoldProduct(
+    val ownerID: String = "",
+    val buyerID: String = "",
     val title: String = "",
+    val price: String = "",
+    val soldQuantity: String = "",
     val image: String = "",
+    val orderID: String = "",
+    val orderDate: String = "",
     val subTotalAmount: String = "",
     val waTaxAmount: String = "",
     val shippingAmount: String = "",
     val totalAmount: String = "",
+    val address: Address = Address(),
+    val payment: Payment = Payment(),
     var id: String = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
-        arrayListOf<CartItem>().apply {
-            parcel.readList(this, CartItem::class.java.classLoader)
-        },
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readParcelable(Address::class.java.classLoader)!!,
         parcel.readParcelable(Payment::class.java.classLoader)!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
         parcel.readString()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(dateOrderPlaced)
-        parcel.writeString(userID)
-        parcel.writeList(items)
-        parcel.writeParcelable(address, flags)
-        parcel.writeParcelable(payment, flags)
+        parcel.writeString(ownerID)
+        parcel.writeString(buyerID)
         parcel.writeString(title)
+        parcel.writeString(price)
+        parcel.writeString(soldQuantity)
         parcel.writeString(image)
+        parcel.writeString(orderID)
+        parcel.writeString(orderDate)
         parcel.writeString(subTotalAmount)
         parcel.writeString(waTaxAmount)
         parcel.writeString(shippingAmount)
         parcel.writeString(totalAmount)
+        parcel.writeParcelable(address, flags)
+        parcel.writeParcelable(payment, flags)
         parcel.writeString(id)
     }
 
@@ -53,12 +60,12 @@ data class Order(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Order> {
-        override fun createFromParcel(parcel: Parcel): Order {
-            return Order(parcel)
+    companion object CREATOR : Parcelable.Creator<SoldProduct> {
+        override fun createFromParcel(parcel: Parcel): SoldProduct {
+            return SoldProduct(parcel)
         }
 
-        override fun newArray(size: Int): Array<Order?> {
+        override fun newArray(size: Int): Array<SoldProduct?> {
             return arrayOfNulls(size)
         }
     }

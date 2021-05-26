@@ -10,10 +10,8 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.view.size
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -313,7 +311,7 @@ class AddEditAddressActivity : BaseActivity() {
     }
 
     private fun addStateSpinner() {
-        val stateAdapter = ArrayAdapter<String>(this@AddEditAddressActivity, R.layout.state_dropdown_item, resources.getStringArray(R.array.states))
+        val stateAdapter = ArrayAdapter(this@AddEditAddressActivity, R.layout.state_dropdown_item, resources.getStringArray(R.array.states))
         binding!!.addEditStateSpinner.adapter = stateAdapter
 
         binding!!.addEditStateSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {

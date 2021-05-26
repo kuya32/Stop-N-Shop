@@ -17,12 +17,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.SinglePaymentListItemBinding
 import com.macode.stopnshop.firebase.FireStoreClass
-import com.macode.stopnshop.model.Address
 import com.macode.stopnshop.model.Payment
 import com.macode.stopnshop.utilities.Constants
-import com.macode.stopnshop.view.activities.AddEditAddressActivity
 import com.macode.stopnshop.view.activities.AddEditPaymentActivity
-import com.macode.stopnshop.view.activities.AddressListActivity
 import com.macode.stopnshop.view.activities.PaymentListActivity
 
 class PaymentListAdapter(private val context: Context, private val list: ArrayList<Payment>, private val selectPaymentBoolean: Boolean, private val defaultPaymentBoolean: Boolean): RecyclerView.Adapter<PaymentListAdapter.ViewHolder>(){

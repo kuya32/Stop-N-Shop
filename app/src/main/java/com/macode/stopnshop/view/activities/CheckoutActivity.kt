@@ -25,10 +25,6 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
     private var binding: ActivityCheckoutBinding? = null
     private var isDefaultAddressSet: Boolean = true
     private var isDefaultPaymentSet: Boolean = true
-    private var subtotal: Double = 0.0
-    private var waTaxTotal: Double = 0.0
-    private var shippingTotal: Double = 0.0
-    private var totalAmount: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +33,6 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
         setContentView(binding!!.root)
 
         setUpToolbar()
-
-        getProductList()
 
         binding!!.shippingAddressArrow.setOnClickListener(this@CheckoutActivity)
         binding!!.paymentMethodArrow.setOnClickListener(this@CheckoutActivity)
@@ -156,61 +150,23 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
         checkCentsDecimalPlacement(totalAmount, binding!!.totalAmountNumber)
     }
 
-    private fun checkCentsDecimalPlacement(price: Double, textView: SNSTextView) {
-        val numberString: String
-        when (price) {
-            0.0 -> {
-                numberString = "FREE"
-            }
-            else -> {
-                val cents = price.toString().substringAfter(".")
-                numberString = when (cents.length) {
-                    1 -> {
-                        "${price}0"
-                    }
-                    else -> {
-                        price.toString()
-                    }
-                }
-            }
-        }
-        "$$numberString".also { textView.text = it }
-    }
-
-    private fun calculateShippingTotal(lat: Double, long: Double): Double {
-        val longDiff = Constants.LONGITUDE_HOME_SHIPPING - long
-        var distance = (sin(deg2Rad(Constants.LATITUDE_HOME_SHIPPING)) * sin(deg2Rad(lat))) + (cos(
-            deg2Rad(Constants.LATITUDE_HOME_SHIPPING)
-        ) * cos(deg2Rad(lat)) * cos(deg2Rad(longDiff)))
-        distance = acos(distance)
-        distance = rad2Deg(distance)
-        return distance * 60 * 1.515
-    }
-
-    private fun rad2Deg(distance: Double): Double {
-        return ((distance * 180.0) / Math.PI)
-    }
-
-    private fun deg2Rad(lat: Double): Double {
-        return ((lat * Math.PI) / 180.0)
-    }
-
     private fun placeTheOrder() {
         showProgressDialog("Placing your order...")
-        val order = Order(
+        orderDetails = Order(
+            getDate(),
             fireStoreClass.getCurrentUserID(),
             cartItemsList,
             addressDetails,
             paymentDetails,
-            "My order ${System.currentTimeMillis()}",
+            "Order#: ${System.currentTimeMillis()}",
             cartItemsList[0].image,
-            subtotal.toString(),
-            waTaxTotal.toString(),
-            shippingTotal.toString(),
-            totalAmount.toString()
+            binding!!.totalAmountNumber.text.toString().replace("$", ""),
+            binding!!.waSalesTaxNumber.text.toString().replace("$", ""),
+            binding!!.shippingNumber.text.toString().replace("$", ""),
+            binding!!.totalAmountNumber.text.toString().replace("$", "")
         )
 
-        fireStoreClass.placeOrder(this@CheckoutActivity, order)
+        fireStoreClass.placeOrder(this@CheckoutActivity, orderDetails)
     }
 
     fun chooseAddressForCheckout() {
@@ -246,6 +202,7 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
         }
 
         fireStoreClass.retrieveDefaultPayment(this@CheckoutActivity)
+        getProductList()
     }
 
     fun choosePaymentForCheckout() {
@@ -288,6 +245,10 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun orderPlacedSuccess() {
+        fireStoreClass.updateProductAndCartDetails(this@CheckoutActivity, cartItemsList, orderDetails)
+    }
+
+    fun productAndCartDetailsUpdatedSuccessfully() {
         hideProgressDialog()
         showErrorSnackBar("Your order was placed!", false)
         Handler(Looper.getMainLooper()).postDelayed({
