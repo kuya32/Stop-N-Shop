@@ -13,9 +13,8 @@ import com.macode.stopnshop.databinding.SingleSoldProductListItemBinding
 import com.macode.stopnshop.model.SoldProduct
 import com.macode.stopnshop.utilities.Constants
 import com.macode.stopnshop.view.activities.SoldProductDetailActivity
-import com.macode.stopnshop.view.fragments.SoldProductsFragment
 
-class SoldProductListAdapter(private val context: Context, private val list: ArrayList<SoldProduct>, private val fragment: SoldProductsFragment): RecyclerView.Adapter<SoldProductListAdapter.ViewHolder>() {
+class SoldProductListAdapter(private val context: Context, private val list: ArrayList<SoldProduct>): RecyclerView.Adapter<SoldProductListAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: SingleSoldProductListItemBinding): RecyclerView.ViewHolder(binding.root)
 

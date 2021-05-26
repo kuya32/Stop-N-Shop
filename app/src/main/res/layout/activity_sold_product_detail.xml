@@ -6,4 +6,608 @@
     android:layout_height="match_parent"
     tools:context=".view.activities.SoldProductDetailActivity">
 
+    <include
+        android:id="@+id/soldProductDetailToolbar"
+        layout="@layout/main_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/soldProductDetailsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/soldProductDetailsFL"
+        app:layout_constraintTop_toBottomOf="@+id/soldProductDetailToolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/soldProductDetailsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/orderDetails"
+                android:textColor="@color/primaryDarkColor"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/soldProductDetailsCV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:backgroundTint="@color/primaryUltraLightColor"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/soldProductDetailsTitle"
+                app:layout_constraintTop_toBottomOf="@+id/soldProductDetailsTitle">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/orderNumberText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="@string/orderNumber"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/orderNumber"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/orderNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:hint="@string/number"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="@+id/orderNumberText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/orderNumberText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/orderDateText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/orderDate"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/orderDateNumber"
+                        app:layout_constraintStart_toStartOf="@+id/orderNumberText"
+                        app:layout_constraintTop_toBottomOf="@+id/orderNumberText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/orderDateNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/orderDateNumber"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="@+id/orderDateText"
+                        app:layout_constraintEnd_toEndOf="@+id/orderNumber"
+                        app:layout_constraintTop_toTopOf="@+id/orderDateText" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/productItemsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/productItems"
+                android:textColor="@color/primaryDarkColor"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/soldProductDetailsCV"
+                app:layout_constraintTop_toBottomOf="@id/soldProductDetailsCV" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/productItemsCV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primaryColor"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/productItemsTitle">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
+                        android:id="@+id/singleSoldImageFrame"
+                        android:layout_width="@dimen/_75sdp"
+                        android:layout_height="@dimen/_75sdp"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:background="@drawable/button_background"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/singleSoldImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:contentDescription="@string/image"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/orders" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/profile_image_background" />
+                    </FrameLayout>
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/soldProduct"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:hint="@string/soldProduct"
+                        android:textColor="@color/primaryUltraLightColor"
+                        android:textColorHint="@color/primaryUltraLightColor"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/soldProductPrice"
+                        app:layout_constraintEnd_toStartOf="@+id/soldProductDesiredAmount"
+                        app:layout_constraintStart_toEndOf="@+id/singleSoldImageFrame"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/soldProductPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:hint="@string/soldProductPrice"
+                        android:textColor="@color/primaryUltraLightColor"
+                        android:textColorHint="@color/primaryUltraLightColor"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/soldProductDesiredAmount"
+                        app:layout_constraintStart_toEndOf="@+id/singleSoldImageFrame"
+                        app:layout_constraintTop_toBottomOf="@+id/soldProduct" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/soldProductDesiredAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/item_grey_border_background"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="@string/number"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/shippingAddressTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/shippingAddress"
+                android:textColor="@color/primaryDarkColor"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="@+id/productItemsTitle"
+                app:layout_constraintTop_toBottomOf="@+id/productItemsCV" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/shippingAddressCV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:backgroundTint="@color/primaryUltraLightColor"
+                android:paddingBottom="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/shippingAddressTitle"
+                app:layout_constraintTop_toBottomOf="@+id/shippingAddressTitle">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingAddressType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:hint="@string/type"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textColorHint="@color/primaryDarkColor"
+                        android:textSize="@dimen/_16sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingAddressFullName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:hint="@string/fullName"
+                        android:textColor="@color/primaryColor"
+                        android:textColorHint="@color/primaryColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/shippingAddressType"
+                        app:layout_constraintTop_toBottomOf="@+id/shippingAddressType" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:hint="@string/address"
+                        android:textColor="@color/primaryLightColor"
+                        android:textColorHint="@color/primaryLightColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/shippingAddressFullName"
+                        app:layout_constraintTop_toBottomOf="@+id/shippingAddressFullName" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingAddressPhone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone"
+                        android:textColor="@color/primaryLightColor"
+                        android:textColorHint="@color/primaryLightColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintEnd_toEndOf="@+id/shippingAddress"
+                        app:layout_constraintStart_toStartOf="@+id/shippingAddress"
+                        app:layout_constraintTop_toBottomOf="@+id/shippingAddress" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingAddressAdditionalInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/additionalInfo"
+                        android:textColor="@color/primaryLightColor"
+                        android:textColorHint="@color/primaryLightColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/shippingAddressPhone"
+                        app:layout_constraintStart_toStartOf="@+id/shippingAddressPhone"
+                        app:layout_constraintTop_toBottomOf="@+id/shippingAddressPhone" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingAddressOtherDetails"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/otherDetails"
+                        android:textColor="@color/primaryLightColor"
+                        android:textColorHint="@color/primaryLightColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/shippingAddressAdditionalInfo"
+                        app:layout_constraintStart_toStartOf="@+id/shippingAddressAdditionalInfo"
+                        app:layout_constraintTop_toBottomOf="@+id/shippingAddressAdditionalInfo" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.macode.stopnshop.utilities.SNSTextView
+                android:id="@+id/soldProductDetailsPaymentMethodTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/paymentsMethod"
+                android:textColor="@color/primaryDarkColor"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/shippingAddressCV"
+                app:layout_constraintTop_toBottomOf="@+id/shippingAddressCV" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/paymentMethodCV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:backgroundTint="@color/primaryUltraLightColor"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/shippingAddressCV"
+                app:layout_constraintStart_toStartOf="@+id/soldProductDetailsPaymentMethodTitle"
+                app:layout_constraintTop_toBottomOf="@+id/soldProductDetailsPaymentMethodTitle">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/paymentMethodName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:hint="@string/nameOnCard"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textColorHint="@color/primaryDarkColor"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/paymentMethodEndingNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:hint="@string/endingNumber"
+                        android:textColor="@color/primaryLightColor"
+                        android:textColorHint="@color/primaryLightColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/paymentMethodName"
+                        app:layout_constraintTop_toBottomOf="@+id/paymentMethodName"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/soldProductDetailsFL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/soldProductDetailsCalculationsCV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:backgroundTint="@color/primaryUltraLightColor"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingToText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:text="@string/shippingTo"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingToValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:hint="@string/somewhere"
+                        android:textColor="@color/primaryColor"
+                        android:textColorHint="@color/primaryColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="@+id/shippingToText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/shippingToText"
+                        app:layout_constraintTop_toTopOf="@+id/shippingToText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/paymentMethodText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/paymentMethod"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/shippingToText"
+                        app:layout_constraintTop_toBottomOf="@+id/shippingToText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/paymentMethodValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:text="@string/creditCard"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="@+id/paymentMethodText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/paymentMethodText"
+                        app:layout_constraintTop_toTopOf="@+id/paymentMethodText" />
+
+                    <View
+                        android:id="@+id/shippingToDivider"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@color/primaryLightColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/paymentMethodText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/subtotalText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="@string/subtotal"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/subtotalNumber"
+                        app:layout_constraintStart_toStartOf="@+id/shippingToText"
+                        app:layout_constraintTop_toBottomOf="@+id/shippingToDivider" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/subtotalNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:gravity="end"
+                        android:hint="@string/subtotalPrice"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="@+id/subtotalText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/subtotalText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/waSalesTaxText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/waSalesTax"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/waSalesTaxNumber"
+                        app:layout_constraintStart_toStartOf="@+id/subtotalText"
+                        app:layout_constraintTop_toBottomOf="@+id/subtotalText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/waSalesTaxNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:hint="@string/waSalesTaxPrice"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="@+id/waSalesTaxText"
+                        app:layout_constraintEnd_toEndOf="@+id/subtotalNumber"
+                        app:layout_constraintTop_toTopOf="@+id/waSalesTaxText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shipping"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/shippingNumber"
+                        app:layout_constraintStart_toStartOf="@+id/waSalesTaxText"
+                        app:layout_constraintTop_toBottomOf="@+id/waSalesTaxText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/shippingNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:hint="@string/shippingPrice"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="@+id/shippingText"
+                        app:layout_constraintEnd_toEndOf="@+id/waSalesTaxNumber"
+                        app:layout_constraintTop_toTopOf="@+id/shippingText" />
+
+                    <View
+                        android:id="@+id/calculationsDivider"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@color/grey"
+                        app:layout_constraintEnd_toEndOf="@+id/shippingNumber"
+                        app:layout_constraintStart_toStartOf="@+id/shippingText"
+                        app:layout_constraintTop_toBottomOf="@+id/shippingText" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/totalAmountText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:text="@string/totalAmount"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/shippingText"
+                        app:layout_constraintTop_toBottomOf="@+id/calculationsDivider" />
+
+                    <com.macode.stopnshop.utilities.SNSTextView
+                        android:id="@+id/totalAmountNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:hint="@string/totalAmountPrice"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/shippingNumber"
+                        app:layout_constraintTop_toBottomOf="@+id/calculationsDivider" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

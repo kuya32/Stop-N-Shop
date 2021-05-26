@@ -36,8 +36,7 @@ data class SoldProduct(
         parcel.readParcelable(Address::class.java.classLoader)!!,
         parcel.readParcelable(Payment::class.java.classLoader)!!,
         parcel.readString()!!
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(ownerID)

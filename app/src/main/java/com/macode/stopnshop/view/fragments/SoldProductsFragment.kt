@@ -2,7 +2,6 @@ package com.macode.stopnshop.view.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macode.stopnshop.R
-import com.macode.stopnshop.databinding.FragmentOrdersBinding
 import com.macode.stopnshop.databinding.FragmentSoldProductsBinding
 import com.macode.stopnshop.model.SoldProduct
 import com.macode.stopnshop.view.adapters.SoldProductListAdapter
@@ -59,7 +57,7 @@ class SoldProductsFragment : BaseFragment() {
 
             binding!!.soldProductsRV.layoutManager = LinearLayoutManager(activity)
             binding!!.soldProductsRV.setHasFixedSize(true)
-            val soldProductAdapter = SoldProductListAdapter(requireActivity(), soldProductList, this@SoldProductsFragment)
+            val soldProductAdapter = SoldProductListAdapter(requireActivity(), soldProductList)
             binding!!.soldProductsRV.adapter = soldProductAdapter
         } else {
             binding!!.noProductSold.visibility = View.VISIBLE

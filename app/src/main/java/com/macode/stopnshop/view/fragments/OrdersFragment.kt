@@ -14,17 +14,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macode.stopnshop.R
-import com.macode.stopnshop.databinding.FragmentDashboardBinding
 import com.macode.stopnshop.databinding.FragmentOrdersBinding
 import com.macode.stopnshop.model.Order
-import com.macode.stopnshop.view.activities.BaseActivity
 import com.macode.stopnshop.view.adapters.OrderListAdapter
-import com.macode.stopnshop.viewmodel.ui.notifications.NotificationsViewModel
 
 class OrdersFragment : BaseFragment() {
 

@@ -3,7 +3,6 @@ package com.macode.stopnshop.view.adapters
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View

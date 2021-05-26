@@ -1,7 +1,6 @@
 package com.macode.stopnshop.view.activities
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -174,7 +173,7 @@ class AddEditPaymentActivity : BaseActivity() {
     }
 
     private fun addMonthSpinner() {
-        val stateAdapter = ArrayAdapter<String>(this@AddEditPaymentActivity, R.layout.state_dropdown_item, resources.getStringArray(
+        val stateAdapter = ArrayAdapter(this@AddEditPaymentActivity, R.layout.state_dropdown_item, resources.getStringArray(
             R.array.numberedMonths))
         binding!!.addEditMonthSpinner.adapter = stateAdapter
 
@@ -195,7 +194,7 @@ class AddEditPaymentActivity : BaseActivity() {
     }
 
     private fun addYearSpinner() {
-        val stateAdapter = ArrayAdapter<String>(this@AddEditPaymentActivity, R.layout.state_dropdown_item, resources.getStringArray(
+        val stateAdapter = ArrayAdapter(this@AddEditPaymentActivity, R.layout.state_dropdown_item, resources.getStringArray(
             R.array.next20Years))
         binding!!.addEditYearSpinner.adapter = stateAdapter
 

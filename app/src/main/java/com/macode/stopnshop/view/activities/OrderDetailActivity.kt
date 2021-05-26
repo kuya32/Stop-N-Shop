@@ -1,7 +1,6 @@
 package com.macode.stopnshop.view.activities
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
@@ -26,7 +25,7 @@ class OrderDetailActivity : BaseActivity() {
         setContentView(binding!!.root)
 
         if (intent.hasExtra(Constants.ORDER_DETAILS)) {
-            orderDetails = intent.getParcelableExtra<Order>(Constants.ORDER_DETAILS)!!
+            orderDetails = intent.getParcelableExtra(Constants.ORDER_DETAILS)!!
         }
 
         setUpToolbar()

@@ -127,27 +127,6 @@ class CartListActivity : BaseActivity() {
         checkCentsDecimalPlacement(totalAmount, binding!!.totalAmountNumber)
     }
 
-    private fun checkCentsDecimalPlacement(price: Double, textView: SNSTextView) {
-        var numberString = ""
-        when (price) {
-            0.0 -> {
-                numberString = "FREE"
-            }
-            else -> {
-                val cents = price.toString().substringAfter(".")
-                numberString = when (cents.length) {
-                    1 -> {
-                        "${price}0"
-                    }
-                    else -> {
-                        price.toString()
-                    }
-                }
-            }
-        }
-        "$$numberString".also { textView.text = it }
-    }
-
     fun deleteCartItemSuccess(title: String) {
         hideProgressDialog()
         showErrorSnackBar("$title successfully deleted from your cart!", false)

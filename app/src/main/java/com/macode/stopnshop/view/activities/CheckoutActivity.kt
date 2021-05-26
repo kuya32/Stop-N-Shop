@@ -25,10 +25,6 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
     private var binding: ActivityCheckoutBinding? = null
     private var isDefaultAddressSet: Boolean = true
     private var isDefaultPaymentSet: Boolean = true
-    private var subtotal: Double = 0.0
-    private var waTaxTotal: Double = 0.0
-    private var shippingTotal: Double = 0.0
-    private var totalAmount: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,45 +148,6 @@ class CheckoutActivity : BaseActivity(), View.OnClickListener {
         val totalAmountNumber: Double = subtotal + waTaxTotal + shippingTotal
         totalAmount = String.format("%.2f", totalAmountNumber).toDouble()
         checkCentsDecimalPlacement(totalAmount, binding!!.totalAmountNumber)
-    }
-
-    private fun checkCentsDecimalPlacement(price: Double, textView: SNSTextView) {
-        val numberString: String
-        when (price) {
-            0.0 -> {
-                numberString = "FREE"
-            }
-            else -> {
-                val cents = price.toString().substringAfter(".")
-                numberString = when (cents.length) {
-                    1 -> {
-                        "${price}0"
-                    }
-                    else -> {
-                        price.toString()
-                    }
-                }
-            }
-        }
-        "$$numberString".also { textView.text = it }
-    }
-
-    private fun calculateShippingTotal(lat: Double, long: Double): Double {
-        val longDiff = Constants.LONGITUDE_HOME_SHIPPING - long
-        var distance = (sin(deg2Rad(Constants.LATITUDE_HOME_SHIPPING)) * sin(deg2Rad(lat))) + (cos(
-            deg2Rad(Constants.LATITUDE_HOME_SHIPPING)
-        ) * cos(deg2Rad(lat)) * cos(deg2Rad(longDiff)))
-        distance = acos(distance)
-        distance = rad2Deg(distance)
-        return distance * 60 * 1.515
-    }
-
-    private fun rad2Deg(distance: Double): Double {
-        return ((distance * 180.0) / Math.PI)
-    }
-
-    private fun deg2Rad(lat: Double): Double {
-        return ((lat * Math.PI) / 180.0)
     }
 
     private fun placeTheOrder() {

@@ -34,8 +34,7 @@ data class Address (
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!
-    ) {
-    }
+    )
 
     override fun describeContents(): Int {
         return 0

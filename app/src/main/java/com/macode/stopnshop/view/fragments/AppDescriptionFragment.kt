@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.macode.stopnshop.R
 import com.macode.stopnshop.databinding.FragmentAppDescriptionBinding
 import com.macode.stopnshop.view.activities.SetUpActivity
 
